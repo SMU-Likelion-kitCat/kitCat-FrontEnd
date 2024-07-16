@@ -1,0 +1,16 @@
+.content-container {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: calc(100vh - 100px);
+    overflow-y: auto;
+}
+
+.nofooter-content-container {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    overflow-y: auto;
+}
+
