@@ -1,13 +1,13 @@
-import React, { lazy, Suspense } from "react"
-import { createBrowserRouter } from "react-router-dom"
-import Loading from "../components/Loading"
-import Layout from "../layout"
+import React, { lazy, Suspense } from "react";
+import { createBrowserRouter } from "react-router-dom";
+import Loading from "../components/Loading";
+import Layout from "../layout";
 
-const Main = lazy(() => import("../page/main"))
-const Intro = lazy(() => import("../page/intro"))
-const Auth = lazy(() => import("../page/auth"))
-const Login = lazy(() => import("../page/auth/login"))
-const Register = lazy(() => import("../page/auth/register"))
+const Main = lazy(() => import("../page/main"));
+const Intro = lazy(() => import("../page/intro"));
+const Auth = lazy(() => import("../page/auth"));
+const Login = lazy(() => import("../page/auth/login"));
+const Register = lazy(() => import("../page/auth/register"));
 
 const router = createBrowserRouter([
   {
@@ -44,11 +44,12 @@ const router = createBrowserRouter([
                 <Register />
               </Suspense>
             ),
+            
           },
         ],
       },
     ],
   },
-])
+]);
 
-export default router
+export default router;
