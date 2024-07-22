@@ -1,26 +1,28 @@
 $font-map: (
-    black: #000000,
-    white: #ffffff,
-    h2: var(--material-theme-sys-light-on-surface, #181d18),
-    t3: var(--material-theme-sys-light-on-primary-container, #002109),
-    t3-ph: var(--material-theme-ref-neutral-neutral70, #aaa),
-    b2-md: var(--material-theme-ref-neutral-neutral50, #757575)
+  black: #000000,
+  white: #ffffff,
+  h2: var(--material-theme-sys-light-on-surface, #181d18),
+  t3: var(--material-theme-sys-light-on-primary-container, #002109),
+  t3-ph: var(--material-theme-ref-neutral-neutral70, #aaa),
+  b2-md: var(--material-theme-ref-neutral-neutral50, #757575),
+  m1: var(--material-theme-ref-neutral-neutral40, #5d5d5d),
+  m2: var(--material-theme-ref-neutral-neutral98, #c5c5c5),
 );
 
 @function _get-font-value($key) {
-    @return map-get($font-map, $key);
+  @return map-get($font-map, $key);
 }
 
 @mixin custom-font-size($weight, $size, $color, $line-height, $letter-spacing) {
-    font-family: Roboto;
-    font-size: $size;
-    font-style: normal;
-    font-weight: $weight;
-    line-height: $line-height;
-    letter-spacing: $letter-spacing;
-    color: _get-font-value($color);
+  font-family: Roboto;
+  font-size: $size;
+  font-style: normal;
+  font-weight: $weight;
+  line-height: $line-height;
+  letter-spacing: $letter-spacing;
+  color: _get-font-value($color);
 }
 
 @mixin custom-font-color($font-color: basic) {
-    color: _get-font-value($font-color);
+  color: _get-font-value($font-color);
 }

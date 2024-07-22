@@ -1,87 +1,86 @@
 .auth-container {
-    @include column-flexbox(start, center);
-    position: relative;
+  @include column-flexbox(start, center);
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  padding: 20px;
+  background-color: #fff;
+
+  .auth-login-container {
+    @include column-flexbox(center, between);
     width: 100%;
-    height: 100vh;
-    padding: 20px;
-    background-color: #fff;
 
-    .auth-login-container {
-        @include column-flexbox(center, between);
-        width: 100%;
-
-        .auth-login-logo-container {
-            @include inline-flexbox(center, center);
-            .auth-login-logo {
-                margin: 81px 0 25px 0;
-                width: 88.163px;
-                height: 34.355px;
-                background: #d9d9d9;
-            }
-        }
-
-        .auth-login-title {
-            @include inline-flexbox(center, center);
-            @include custom-font-size(700, 28px, h2, 36px, -0.56px);
-            letter-spacing: -0.56px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .auth-login-input-container {
-            @include column-flexbox(center, start);
-            gap: 12px;
-            .auth-login-input {
-                box-sizing: border-box;
-                width: 100%;
-                padding: 20px;
-                @include custom-font-size(400, 18px, t3-ph, 24px, -0.36px);
-                border-radius: 12px;
-                border: 1px solid var(--material-theme-ref-neutral-neutral90, #e2e2e2);
-                background: var(--wt-bk-white, #fff);
-            }
-            .auth-login-lost-p {
-                @include custom-font-size(400, 14px, b2-md, 18px, -0.28px);
-                display: flex;
-
-                .auth-login-lost-logo-background {
-                    @include inline-flexbox(center, center);
-                    margin-left: 4px;
-                    background-color: #f0f0f0;
-                    width: 16px;
-                    height: 16px;
-                    border-radius: 50px;
-                }
-            }
-        }
-
-        .auth-login-button {
-            position: absolute;
-            bottom: 160px;
-            background-color: #53e07a;
-            text-align: center;
-            @include custom-font-size(600, 18px, t3, 24px, -0.36px);
-            padding: 18px 110px;
-            border-radius: 12px;
-            width: 90%;
-            transition: background-color 0.3s;
-
-            &.active {
-                background-color: #00a74c;
-            }
-        }
-
-        .auth-login-navigate-register-button {
-            position: absolute;
-            bottom: 86px;
-            text-align: center;
-            @include custom-font-size(600, 18px, t3, 24px, -0.36px);
-            padding: 18px 110px;
-            border-radius: 12px;
-            width: 90%;
-            border-radius: 12px;
-            border: 1px solid var(--material-theme-ref-neutral-neutral90, #e2e2e2);
-            background: var(--wt-bk-white, #fff);
-        }
+    .auth-login-logo-container {
+      @include inline-flexbox(center, center);
+      .auth-login-logo {
+        margin: 81px 0 25px 0;
+        width: 88.163px;
+        height: 34.355px;
+        background: #d9d9d9;
+      }
     }
+
+    .auth-login-title {
+      @include inline-flexbox(center, center);
+      @include custom-font-size(700, 28px, h2, 36px, -0.56px);
+      letter-spacing: -0.56px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .auth-login-input-container {
+      @include column-flexbox(center, start);
+      gap: 12px;
+      .auth-login-input {
+        box-sizing: border-box;
+        width: 100%;
+        padding: 20px;
+        @include custom-font-size(400, 18px, t3-ph, 24px, -0.36px);
+        border-radius: 12px;
+        border: 1px solid var(--material-theme-ref-neutral-neutral90, #e2e2e2);
+        background: var(--wt-bk-white, #fff);
+      }
+      .auth-login-lost-p {
+        @include custom-font-size(400, 14px, b2-md, 18px, -0.28px);
+        display: flex;
+
+        .auth-login-lost-logo-background {
+          @include inline-flexbox(center, center);
+          margin-left: 4px;
+          background-color: #f0f0f0;
+          width: 16px;
+          height: 16px;
+          border-radius: 50px;
+        }
+      }
+    }
+
+    .auth-login-button {
+      position: absolute;
+      bottom: 160px;
+      background-color: #53e07a;
+      text-align: center;
+      @include custom-font-size(600, 18px, t3, 24px, -0.36px);
+      padding: 18px 110px;
+      border-radius: 12px;
+      width: 90%;
+      transition: background-color 0.3s;
+      &.active {
+        background-color: #00a74c;
+      }
+    }
+
+    .auth-login-navigate-register-button {
+      position: absolute;
+      bottom: 86px;
+      text-align: center;
+      @include custom-font-size(600, 18px, t3, 24px, -0.36px);
+      padding: 18px 110px;
+      border-radius: 12px;
+      width: 90%;
+      border-radius: 12px;
+      border: 1px solid var(--material-theme-ref-neutral-neutral90, #e2e2e2);
+      background: var(--wt-bk-white, #fff);
+    }
+  }
 }
