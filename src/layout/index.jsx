@@ -6,7 +6,13 @@ const Layout = () => {
   const location = useLocation()
 
   // footer를 안띄우고 싶은 라우팅을 설정
-  const noFooterPaths = ["/auth", "/auth/login", "/auth/register"]
+  const noFooterPaths = [
+    "/",
+    "/auth",
+    "/auth/login",
+    "/auth/register",
+    "/auth/register/info",
+  ]
 
   // 현재 location이랑 같은지 확인
   const showFooter = !noFooterPaths.some((path) => location.pathname === path)
@@ -20,7 +26,9 @@ const Layout = () => {
       >
         <Outlet />
       </div>
-      <footer className="footer-container">{showFooter && <Footer />}</footer>
+      {showFooter && (
+        <footer className="footer-container">{showFooter && <Footer />}</footer>
+      )}
     </>
   )
 }

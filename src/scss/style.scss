@@ -9,6 +9,9 @@
 @import "./layouts/layout";
 @import "./layouts/footer";
 
+@import "./modules/progessbar";
+
 @import "./page/intro";
-@import "./page/auth";
+@import "./page/auth/auth";
+@import "./page/auth/info";
 @import "./page/record";

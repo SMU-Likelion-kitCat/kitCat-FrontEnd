@@ -1,9 +1,14 @@
-import React from "react"
-import { ReactComponent as LostAroow } from "../../../assets/auth/LostAroow.svg"
-import { useNavigate } from "react-router-dom"
+import React, { useState } from "react";
+import { ReactComponent as LostAroow } from "../../../assets/auth/LostAroow.svg";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const navigete = useNavigate()
+  const [buttonActive, setButtonActive] = useState(false);
+  const buttonActiveState = () => {
+    setButtonActive(!buttonActive);
+  };
+
+  const navigete = useNavigate();
   return (
     <div className="auth-login-container">
       <div className="auth-login-logo-container">
@@ -35,7 +40,12 @@ const Login = () => {
           </div>
         </p>
       </div>
-      <button className="auth-login-button">로그인</button>
+      <button
+        className={`auth-login-button ${buttonActive ? "active" : ""}`}
+        onClick={buttonActiveState}
+      >
+        로그인
+      </button>
       <button
         className="auth-login-navigate-register-button"
         onClick={() => navigete("/auth/register")}
@@ -43,7 +53,7 @@ const Login = () => {
         이메일 회원가입
       </button>
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;
