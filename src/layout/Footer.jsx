@@ -1,13 +1,13 @@
 import React from "react"
 import { useLocation, useNavigate } from "react-router-dom"
 
-import { ReactComponent as CommunityLogo } from "../assets/footer/communityLogo.svg"
+import { ReactComponent as CommunityLogo } from "../assets/footer/CommunityLogo.svg"
 
-import { ReactComponent as HomeLogoActive } from "../assets/footer/homeLogoActive.svg"
+import { ReactComponent as HomeLogoActive } from "../assets/footer/HomeLogoActive.svg"
 
-import { ReactComponent as RecordLogo } from "../assets/footer/recordLogo.svg"
-import { ReactComponent as RecordLogoActive } from "../assets/footer/recordLogoActive.svg"
-import { ReactComponent as RoutineLogo } from "../assets/footer/routineLogo.svg"
+import { ReactComponent as RecordLogo } from "../assets/footer/RecordLogo.svg"
+import { ReactComponent as RecordLogoActive } from "../assets/footer/RecordLogoActive.svg"
+import { ReactComponent as RoutineLogo } from "../assets/footer/RoutineLogo.svg"
 
 const Footer = () => {
   const navigate = useNavigate()
