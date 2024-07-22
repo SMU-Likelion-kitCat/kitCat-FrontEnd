@@ -1,11 +1,38 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 
 const InfoStepTwo = ({ nextStep, nickname }) => {
-  const bmi = "20.9"
-  const bmiState = "정상"
-
   const [height, setHeight] = useState("")
   const [weight, setWeight] = useState("")
+  const [bmi, setBmi] = useState(null)
+  const [bmiState, setBmiState] = useState("")
+  const [bmiColorClass, setBmiColorClass] = useState("normal")
+
+  useEffect(() => {
+    if (height && weight) {
+      const heightInMeters = height / 100
+      const calculatedBmi = (
+        weight /
+        (heightInMeters * heightInMeters)
+      ).toFixed(1)
+      setBmi(calculatedBmi)
+      if (calculatedBmi < 18.5) {
+        setBmiState("저체중")
+        setBmiColorClass("underweight")
+      } else if (calculatedBmi < 24.9) {
+        setBmiState("정상")
+        setBmiColorClass("normal")
+      } else if (calculatedBmi < 29.9) {
+        setBmiState("과체중")
+        setBmiColorClass("overweight")
+      } else if (calculatedBmi < 34.9) {
+        setBmiState("비만")
+        setBmiColorClass("obesity")
+      } else {
+        setBmiState("고도비만")
+        setBmiColorClass("severe-obesity")
+      }
+    }
+  }, [height, weight])
 
   const handleHeightChange = (event) => {
     const value = event.target.value
@@ -19,6 +46,31 @@ const InfoStepTwo = ({ nextStep, nickname }) => {
     if (/^\d*$/.test(value)) {
       setWeight(value)
     }
+  }
+
+  const calculateIndicatorPosition = () => {
+    if (!bmi) return "0%"
+
+    const minBmi = 10
+    const maxBmi = 40
+    const clampedBmi = Math.max(minBmi, Math.min(bmi, maxBmi))
+
+    // 정확한 위치를 계산하기위한 범위 제한
+    const ranges = [
+      { min: 10, max: 18.5, start: 0, end: 20 },
+      { min: 18.5, max: 24.9, start: 20, end: 40 },
+      { min: 24.9, max: 29.9, start: 40, end: 60 },
+      { min: 29.9, max: 34.9, start: 60, end: 80 },
+      { min: 34.9, max: 40, start: 80, end: 100 },
+    ]
+
+    const range = ranges.find((r) => clampedBmi >= r.min && clampedBmi <= r.max)
+    const rangeBmi = clampedBmi - range.min
+    const rangePercentage =
+      (rangeBmi / (range.max - range.min)) * (range.end - range.start)
+    const position = range.start + rangePercentage
+
+    return `${position}%`
   }
 
   return (
@@ -62,13 +114,24 @@ const InfoStepTwo = ({ nextStep, nickname }) => {
         </div>
       </form>
       <div className="auth-register-info-body-bmi-container">
-        <h1 className="auth-register-info-body-bmi-title">
-          나의 체질량 지수 (BMI)
-        </h1>
-        <div className="auth-register-info-body-bmi-state">
-          {bmiState} <span className="bmi-shame">{bmi}</span>
+        <div className="auth-register-info-body-bmi-text-container">
+          <h1 className="auth-register-info-body-bmi-title">
+            나의 체질량 지수 (BMI)
+          </h1>
+
+          <div className={`auth-register-info-body-bmi-state ${bmiColorClass}`}>
+            {bmiState}{" "}
+            <span className="auth-register-info-body-bmi-state-shame">
+              {bmi}
+            </span>
+          </div>
         </div>
-        <div></div>
+        <div className="auth-register-info-body-bmi-bar">
+          <div
+            className="auth-register-info-body-bmi-indicator"
+            style={{ left: calculateIndicatorPosition() }}
+          />
+        </div>
       </div>
       <button className="auth-register-info-next-button" onClick={nextStep}>
         다음
