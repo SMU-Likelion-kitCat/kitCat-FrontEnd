@@ -1,17 +1,15 @@
 import React from "react"
 import { Outlet, useLocation } from "react-router-dom"
+import Footer from "./Footer"
 
 const Layout = () => {
   const location = useLocation()
-  // const isMainPage = location.pathname === "/"
 
-  // 유저정보 모달을 안띄우고 싶은 라우팅을 설정
-  const noFooterPaths = ["/"]
+  // footer를 안띄우고 싶은 라우팅을 설정
+  const noFooterPaths = ["/auth", "/auth/login", "/auth/register"]
 
   // 현재 location이랑 같은지 확인
-  const showFooter = !noFooterPaths.some((path) =>
-    location.pathname.startsWith(path)
-  )
+  const showFooter = !noFooterPaths.some((path) => location.pathname === path)
 
   return (
     <>
@@ -22,6 +20,7 @@ const Layout = () => {
       >
         <Outlet />
       </div>
+      <footer className="footer-container">{showFooter && <Footer />}</footer>
     </>
   )
 }

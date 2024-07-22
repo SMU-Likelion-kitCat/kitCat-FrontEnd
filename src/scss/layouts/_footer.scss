@@ -1,0 +1,33 @@
+.footer-container {
+    @include inline-flexbox(between, center);
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 100px;
+    border-radius: 12px 12px 0px 0px;
+    border-top: 1px solid var(--material-theme-ref-neutral-neutral95, #f0f0f0);
+    box-sizing: border-box;
+    background: var(--wt-bk-white, #fff);
+
+    .footer-item {
+        box-sizing: border-box;
+        @include column-flexbox(start, center);
+        height: 100%;
+        width: 78px;
+        height: 100%;
+        padding-top: 12px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+
+        .footer-item-title {
+            margin-top: 4px;
+            @include custom-font-size(600, 12px, t3-ph, 16px, none);
+
+            &.active {
+                color: var(--material-theme-sys-light-on-surface, #181d18);
+            }
+        }
+    }
+}

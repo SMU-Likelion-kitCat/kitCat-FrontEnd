@@ -1,13 +1,17 @@
-import React, { lazy, Suspense } from "react";
-import { createBrowserRouter } from "react-router-dom";
-import Loading from "../components/Loading";
-import Layout from "../layout";
+import React, { lazy, Suspense } from "react"
+import { createBrowserRouter } from "react-router-dom"
+import Loading from "../components/Loading"
+import Layout from "../layout"
 
-const Main = lazy(() => import("../page/main"));
-const Intro = lazy(() => import("../page/intro"));
-const Auth = lazy(() => import("../page/auth"));
-const Login = lazy(() => import("../page/auth/login"));
-const Register = lazy(() => import("../page/auth/register"));
+const Intro = lazy(() => import("../page/intro"))
+const Auth = lazy(() => import("../page/auth"))
+const Login = lazy(() => import("../page/auth/login"))
+const Register = lazy(() => import("../page/auth/register"))
+const Routine = lazy(() => import("../page/routine"))
+const Record = lazy(() => import("../page/record"))
+const Walk = lazy(() => import("../page/walk"))
+const Community = lazy(() => import("../page/community"))
+const MyPage = lazy(() => import("../page/mypage/index"))
 
 const router = createBrowserRouter([
   {
@@ -44,12 +48,51 @@ const router = createBrowserRouter([
                 <Register />
               </Suspense>
             ),
-            
           },
         ],
       },
+      {
+        path: "routine",
+        element: (
+          <Suspense fallback={<Loading />}>
+            <Routine />
+          </Suspense>
+        ),
+      },
+      {
+        path: "record",
+        element: (
+          <Suspense fallback={<Loading />}>
+            <Record />
+          </Suspense>
+        ),
+      },
+      {
+        path: "walk",
+        element: (
+          <Suspense fallback={<Loading />}>
+            <Walk />
+          </Suspense>
+        ),
+      },
+      {
+        path: "community",
+        element: (
+          <Suspense fallback={<Loading />}>
+            <Community />
+          </Suspense>
+        ),
+      },
+      {
+        path: "mypage",
+        element: (
+          <Suspense fallback={<Loading />}>
+            <MyPage />
+          </Suspense>
+        ),
+      },
     ],
   },
-]);
+])
 
-export default router;
+export default router

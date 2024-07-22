@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 
 const Intro = () => {
-  const [countDown, setCountDown] = useState(5) // 초기값 설정
+  const [countDown, setCountDown] = useState(2) // 초기값 설정
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -19,7 +19,7 @@ const Intro = () => {
       setTimeout(() => {
         navigate("/auth/login")
       }, 1000) // fade-out 애니메이션 시간
-    }, 5000) // 5초 후에 이동
+    }, 2000) // 2초 후에 이동
 
     return () => clearTimeout(timer) // 컴포넌트 언마운트 시 타이머 정리
   }, [navigate])
