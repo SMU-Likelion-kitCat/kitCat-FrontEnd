@@ -4,9 +4,10 @@ $font-map: (
   h2: var(--material-theme-sys-light-on-surface, #181d18),
   t3: var(--material-theme-sys-light-on-primary-container, #002109),
   t3-ph: var(--material-theme-ref-neutral-neutral70, #aaa),
+  t3-sm: var(--material-theme-ref-neutral-neutral80, #c5c5c5),
   b2-md: var(--material-theme-ref-neutral-neutral50, #757575),
   m1: var(--material-theme-ref-neutral-neutral40, #5d5d5d),
-  m2: var(--material-theme-ref-neutral-neutral98, #f6f6f6),
+  m2: var(--material-theme-ref-neutral-neutral98, #f6f6f6)
 );
 
 @function _get-font-value($key) {

@@ -1,20 +1,20 @@
-import { useNavigate } from "react-router-dom";
-import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom"
+import React, { useEffect, useState } from "react"
 
-const MyPet = () => {
-  const petName = "반려견";
-  const navigate = useNavigate();
-  const [isModalOpen, setModalOpen] = useState(false);
-  const [selectedState, setSelectedState] = useState("");
+const InfoStepThree = () => {
+  const petName = "반려견"
+  const navigate = useNavigate()
+  const [isModalOpen, setModalOpen] = useState(false)
+  const [selectedState, setSelectedState] = useState("")
 
   const handleClick = (event) => {
-    event.preventDefault();
-    setModalOpen(true);
-  };
+    event.preventDefault()
+    setModalOpen(true)
+  }
 
   const closeModal = () => {
-    setModalOpen(false);
-  };
+    setModalOpen(false)
+  }
 
   return (
     <div className={`petinfo-container ${isModalOpen ? "modal-open" : ""}`}>
@@ -65,7 +65,7 @@ const MyPet = () => {
         </div>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default MyPet;
+export default InfoStepThree

@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import { ReactComponent as LostAroow } from "../../../assets/auth/LostAroow.svg";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react"
+import { ReactComponent as LostArrow } from "../../../assets/auth/LostArrow.svg"
+import { useNavigate } from "react-router-dom"
 
 const Login = () => {
-  const [buttonActive, setButtonActive] = useState(false);
+  const [buttonActive, setButtonActive] = useState(false)
   const buttonActiveState = () => {
-    setButtonActive(!buttonActive);
-  };
+    setButtonActive(!buttonActive)
+  }
 
-  const navigete = useNavigate();
+  const navigete = useNavigate()
   return (
     <div className="auth-login-container">
       <div className="auth-login-logo-container">
@@ -36,7 +36,7 @@ const Login = () => {
         <p className="auth-login-lost-p">
           비밀번호를 잊어버리셨나요?
           <div className="auth-login-lost-logo-background">
-            <LostAroow />
+            <LostArrow />
           </div>
         </p>
       </div>
@@ -53,7 +53,7 @@ const Login = () => {
         이메일 회원가입
       </button>
     </div>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login
