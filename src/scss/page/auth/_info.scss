@@ -178,116 +178,106 @@
             transition: left 1s ease-in-out;
         }
     }
-}
 
-.modal-open.petinfo-container {
-    visibility: hidden;
-}
-.petinfo-container {
-    @include column-flexbox(start, center);
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    padding: 20px;
-    background-color: #fff;
-
-    .petinfo-title {
+    .auth-register-info-pet-title {
         @include custom-font-size(600, 24px, h2, 34px, -0.48px);
         display: flex;
         justify-content: space-between;
         flex-direction: row;
         width: 100%;
         gap: 83px;
-        .petinfo-content {
+        .auth-register-info-pet-content {
             height: 68px;
             width: 179px;
             margin-top: 20px;
+            .auth-register-info-pet-name {
+                color: #00af50;
+            }
         }
-        .pet-name {
-            color: #00af50;
+
+        .intro-circle {
+            width: 88px;
+            height: 88px;
+            border-radius: 50%;
+            background-color: #d9d9d9;
         }
     }
 
-    .intro-circle {
-        width: 88px;
-        height: 88px;
-        border-radius: 50%;
-        background-color: #d9d9d9;
+    .auth-register-info-pet-list-container {
+        @include inline-flexbox(start, center);
+        width: 100%;
+        margin-top: 20px;
+        gap: 6px;
+        .auth-register-info-pet-list-item {
+            // padding: 14px 14px 14px 20px;
+            @include inline-flexbox(center, center);
+            gap: 6px;
+            min-width: 94px;
+            width: auto;
+            height: 52px;
+            border-radius: 12px;
+            background: var(--material-theme-ref-neutral-neutral98, #f6f6f6);
+        }
     }
 
-    .pet-wrapper {
+    .auth-register-info-pet-container {
         display: flex;
         flex-direction: column;
         width: 100%;
         margin-left: 0px;
         margin-right: 0px;
-        .pet-name-container {
-            .pet-name-title {
-                @include custom-font-size(500, 14px, m1, 18px, -0.28px);
+        .auth-register-info-pet-input-container {
+            .auth-register-info-pet-input-title {
+                @include custom-font-size(400, 14px, m1, 18px, -0.28px);
                 margin-top: 32px;
                 margin-bottom: 12px;
             }
-            .pet-name-input {
+            .auth-register-info-pet-input {
                 display: flex;
                 padding: 20px;
                 width: 100%;
                 height: auto;
                 gap: 26px;
-                border-radius: 12px;
-                border: 1px solid var(--material-theme-ref-neutral-neutral90, #e2e2e2);
-                background: var(--wt-bk-white, #fff);
-            }
-        }
-        .pet-weight-container {
-            .pet-weight-title {
-                @include custom-font-size(500, 14px, m1, 18px, -0.28px);
-                margin-bottom: 12px;
-                margin-top: 32px;
-            }
-            .pet-weight-input {
-                display: flex;
-                padding: 20px;
-                width: 100%;
-                height: auto;
-                gap: 26px;
+                @include custom-font-size(400, 18px, t3-ph, 24px, -0.36px);
                 border-radius: 12px;
                 border: 1px solid var(--material-theme-ref-neutral-neutral90, #e2e2e2);
                 background: var(--wt-bk-white, #fff);
             }
         }
 
-        .pet-state-container {
-            .pet-state-title {
-                @include custom-font-size(500, 14px, m1, 18px, -0.28px);
+        .auth-register-info-pet-modal {
+            @include inline-flexbox(between, center);
+            padding: 20px;
+            margin-top: 12px;
+            width: 100%;
+            gap: 26px;
+            border-radius: 12px;
+            @include custom-font-size(400, 18px, t3-ph, 24px, -0.36px);
+            border: 1px solid var(--material-theme-ref-neutral-neutral90, #e2e2e2);
+            background: var(--wt-bk-white, #fff);
+        }
+
+        .auth-register-info-pet-save-button-container {
+            @include inline-flexbox(end, center);
+            .auth-register-info-pet-save-button {
                 margin-top: 32px;
-                margin-bottom: 12px;
-            }
-            .pet-state-button {
-                display: flex;
-                padding: 20px;
-                width: 100%;
-                height: auto;
-                gap: 26px;
+                @include inline-flexbox(center, center);
+                width: 156px;
+                height: 60px;
+                gap: 8px;
                 border-radius: 12px;
-                border: 1px solid var(--material-theme-ref-neutral-neutral90, #e2e2e2);
-                background: var(--wt-bk-white, #fff);
+                background: var(--material-theme-ref-neutral-neutral98, #f6f6f6);
+
+                &.active {
+                    background: var(--material-theme-ref-primary-primary80, #53e07a);
+                }
             }
         }
     }
-    .pet-save-button {
-        display: flex;
-        width: 156px;
 
-        height: auto;
-        justify-content: center;
-        align-items: center;
-        gap: 8px;
-        border-radius: 12px;
-        background: var(--material-theme-ref-primary-primary80, #53e07a);
-    }
     .pet-next-button {
         position: absolute;
-        bottom: 160px;
+        bottom: 86px;
         background-color: #f6f6f6;
         text-align: center;
         @include custom-font-size(600, 18px, t3, 24px, -0.36px);
@@ -295,52 +285,8 @@
         border-radius: 12px;
         width: 90%;
         gap: 8px;
-
-        // display: flex;
-        // width: 350px;
-        // padding: 18px 150px;
-        // justify-content: center;
-        // align-items: center;
-        // gap: 8px;
     }
 }
-
-// .modal-overlay {
-//   position: fixed;
-//   display: flex;
-//   align-items: flex-end;
-//   justify-content: flex-end;
-//   animation: slideIn 0.3s ease-out;
-// }
-
-// @keyframes slideIn {
-//   from {
-//     transform: translateY(100%);
-//     opacity: 0;
-//   }
-//   to {
-//     transform: translateY(0);
-//     opacity: 1;
-//   }
-// }
-
-// .modal-content {
-//   display: flex;
-//   border-radius: 20px 20px 0px 0px;
-//   background: #fff;
-//   width: 390px;
-//   padding: 24px 0px 94px 0px;
-//   flex-direction: column;
-//   justify-content: flex-end;
-//   align-items: flex-start;
-//   gap: 16px;
-//   bottom: 0px;
-//   background-color: #fff;
-//   z-index: 1000;
-//   h2 {
-//     margin-bottom: 10px;
-//   }
-// }
 
 /* 모달 오버레이 스타일 설정 */
 .modal-overlay {
