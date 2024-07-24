@@ -5,7 +5,7 @@
   @include column-flexbox(start, center);
   position: relative;
   width: 100%;
-  height: 100vh;
+  // height: 100vh;
   padding: 20px;
   background-color: #fff;
 
@@ -92,112 +92,82 @@
       }
     }
   }
-  .pet-save-button {
-    display: flex;
-    width: 156px;
-
-    height: auto;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-    border-radius: 12px;
-    background: var(--material-theme-ref-primary-primary80, #53e07a);
+  .pet-save-button-wrapper {
+    width: 100%;
+    @include inline-flexbox(end, center);
+    margin-top: 32px;
+    .pet-save-button {
+      position: relative;
+      padding: 18px 61.5px;
+      text-align: center;
+      border-radius: 12px;
+      background: var(--material-theme-ref-primary-primary80, #53e07a);
+    }
   }
+
   .pet-next-button {
     position: absolute;
     bottom: 160px;
+    left: 50%;
+    transform: translateX(-50%);
     background-color: #f6f6f6;
     text-align: center;
-    @include custom-font-size(600, 18px, t3, 24px, -0.36px);
+    @include custom-font-size(600, 18px, m2, 24px, -0.36px);
     padding: 18px 150px;
     border-radius: 12px;
     width: 90%;
-    gap: 8px;
-
-    // display: flex;
-    // width: 350px;
-    // padding: 18px 150px;
-    // justify-content: center;
-    // align-items: center;
-    // gap: 8px;
   }
 }
 
-// .modal-overlay {
-//   position: fixed;
-//   display: flex;
-//   align-items: flex-end;
-//   justify-content: flex-end;
-//   animation: slideIn 0.3s ease-out;
-// }
-
-// @keyframes slideIn {
-//   from {
-//     transform: translateY(100%);
-//     opacity: 0;
-//   }
-//   to {
-//     transform: translateY(0);
-//     opacity: 1;
-//   }
-// }
-
-// .modal-content {
-//   display: flex;
-//   border-radius: 20px 20px 0px 0px;
-//   background: #fff;
-//   width: 390px;
-//   padding: 24px 0px 94px 0px;
-//   flex-direction: column;
-//   justify-content: flex-end;
-//   align-items: flex-start;
-//   gap: 16px;
-//   bottom: 0px;
-//   background-color: #fff;
-//   z-index: 1000;
-//   h2 {
-//     margin-bottom: 10px;
-//   }
-// }
-/* 모달 오버레이 스타일 설정 */
 .modal-overlay {
   position: fixed;
   visibility: visible;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
+
   display: flex;
-  align-items: flex-end; /* 모달 콘텐츠를 화면 하단에 정렬 */
-  justify-content: center; /* 모달 콘텐츠를 중앙에 정렬 */
-  background-color: rgba(0, 0, 0, 0.5); /* 오버레이 배경 색상 */
-  z-index: 999; /* 모달 오버레이를 다른 모든 요소 위에 표시 */
+  align-items: flex-end;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
-/* 모달 콘텐츠 스타일 설정 */
 .modal-content {
   background-color: #fff;
-  width: 100%;
-  max-width: 390px; /* 모달의 최대 너비 설정 */
   border-radius: 20px 20px 0 0;
-  padding: 24px 16px; /* 상단과 좌우 패딩 설정 */
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  position: relative;
-
   animation: slideIn 0.3s ease-out;
-  z-index: 1000; /* 모달 콘텐츠를 오버레이 위에 표시 */
+  width: 430px;
+  padding: 24px 0px 94px 0px;
+  justify-content: flex-end;
+  align-items: flex-start;
+  gap: 16px;
+
+  h2 {
+    @include custom-font-size(600, 20px, h2, 28px, -0.4px);
+    width: 280px;
+    padding-left: 20px;
+  }
+  li {
+    padding: 10px 20px;
+    margin: 10px 0;
+    border-radius: 8px;
+    background-color: #fff;
+    @include custom-font-size(500, 18px, h2, 24px, -0.36px);
+  }
+
+  li:hover {
+    background-color: #f0f0f0;
+  }
 }
 
-/* 애니메이션 설정 */
 @keyframes slideIn {
   from {
-    transform: translateY(100%); /* 화면 하단에서 시작 */
+    transform: translateY(100%);
     opacity: 0;
   }
   to {
-    transform: translateY(0); /* 화면 하단으로부터 이동 */
+    transform: translateY(0);
     opacity: 1;
   }
 }
