@@ -1,0 +1,173 @@
+.modal-open.petinfo-container {
+  visibility: hidden;
+}
+.petinfo-container {
+  @include column-flexbox(start, center);
+  position: relative;
+  width: 100%;
+  // height: 100vh;
+  padding: 20px;
+  background-color: #fff;
+
+  .petinfo-title {
+    @include custom-font-size(600, 24px, h2, 34px, -0.48px);
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    width: 100%;
+    gap: 83px;
+    .petinfo-content {
+      height: 68px;
+      width: 179px;
+      margin-top: 20px;
+    }
+    .pet-name {
+      color: #00af50;
+    }
+  }
+
+  .intro-circle {
+    width: 88px;
+    height: 88px;
+    border-radius: 50%;
+    background-color: #d9d9d9;
+  }
+
+  .pet-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-left: 0px;
+    margin-right: 0px;
+    .pet-name-container {
+      .pet-name-title {
+        @include custom-font-size(500, 14px, m1, 18px, -0.28px);
+        margin-top: 32px;
+        margin-bottom: 12px;
+      }
+      .pet-name-input {
+        display: flex;
+        padding: 20px;
+        width: 100%;
+        height: auto;
+        gap: 26px;
+        border-radius: 12px;
+        border: 1px solid var(--material-theme-ref-neutral-neutral90, #e2e2e2);
+        background: var(--wt-bk-white, #fff);
+      }
+    }
+    .pet-weight-container {
+      .pet-weight-title {
+        @include custom-font-size(500, 14px, m1, 18px, -0.28px);
+        margin-bottom: 12px;
+        margin-top: 32px;
+      }
+      .pet-weight-input {
+        display: flex;
+        padding: 20px;
+        width: 100%;
+        height: auto;
+        gap: 26px;
+        border-radius: 12px;
+        border: 1px solid var(--material-theme-ref-neutral-neutral90, #e2e2e2);
+        background: var(--wt-bk-white, #fff);
+      }
+    }
+
+    .pet-state-container {
+      .pet-state-title {
+        @include custom-font-size(500, 14px, m1, 18px, -0.28px);
+        margin-top: 32px;
+        margin-bottom: 12px;
+      }
+      .pet-state-button {
+        display: flex;
+        padding: 20px;
+        width: 100%;
+        height: auto;
+        gap: 26px;
+        border-radius: 12px;
+        border: 1px solid var(--material-theme-ref-neutral-neutral90, #e2e2e2);
+        background: var(--wt-bk-white, #fff);
+      }
+    }
+  }
+  .pet-save-button-wrapper {
+    width: 100%;
+    @include inline-flexbox(end, center);
+    margin-top: 32px;
+    .pet-save-button {
+      position: relative;
+      padding: 18px 61.5px;
+      text-align: center;
+      border-radius: 12px;
+      background: var(--material-theme-ref-primary-primary80, #53e07a);
+    }
+  }
+
+  .pet-next-button {
+    position: absolute;
+    bottom: 160px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #f6f6f6;
+    text-align: center;
+    @include custom-font-size(600, 18px, m2, 24px, -0.36px);
+    padding: 18px 150px;
+    border-radius: 12px;
+    width: 90%;
+  }
+}
+
+.modal-overlay {
+  position: fixed;
+  visibility: visible;
+  top: 0;
+  left: 0;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  background-color: #fff;
+  border-radius: 20px 20px 0 0;
+  display: flex;
+  flex-direction: column;
+  animation: slideIn 0.3s ease-out;
+  width: 430px;
+  padding: 24px 0px 94px 0px;
+  justify-content: flex-end;
+  align-items: flex-start;
+  gap: 16px;
+
+  h2 {
+    @include custom-font-size(600, 20px, h2, 28px, -0.4px);
+    width: 280px;
+    padding-left: 20px;
+  }
+  li {
+    padding: 10px 20px;
+    margin: 10px 0;
+    border-radius: 8px;
+    background-color: #fff;
+    @include custom-font-size(500, 18px, h2, 24px, -0.36px);
+  }
+
+  li:hover {
+    background-color: #f0f0f0;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
