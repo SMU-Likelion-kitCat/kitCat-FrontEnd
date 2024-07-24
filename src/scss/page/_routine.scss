@@ -1,0 +1,236 @@
+.routine-container {
+  .routine-container-top {
+    padding-left: 20px;
+    padding-right: 20px;
+    background: #ffffff;
+
+    .calendar-icon {
+      width: 28px;
+      height: 28px;
+    }
+    .routine-header {
+      margin-top: 44px;
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .routine-title {
+      font-weight: 700;
+      font-size: 28px;
+      line-height: 36px;
+      letter-spacing: -0.56px;
+      text-align: center;
+    }
+
+    .routine-subtitle {
+      font-weight: 700;
+      font-size: 28px;
+      line-height: 36px;
+      letter-spacing: -0.56px;
+      text-align: left;
+    }
+
+    .bmi-info {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 8px;
+      background-color: #e0f7e0;
+      padding: 20px;
+      border-radius: 8px;
+      align-items: center;
+      margin-top: 20px;
+      margin-bottom: 28px;
+
+      .bmi-score {
+        font-weight: bold;
+        color: #2b8a3e;
+      }
+    }
+  }
+
+  .routine-container-bottom {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 25%;
+    background: #f7f7f7;
+
+    .routine-info {
+      .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+        padding-top: 24px;
+
+        .routine-subtitle {
+          font-weight: 600;
+          font-size: 18px;
+          line-height: 24px;
+          letter-spacing: -0.36px;
+        }
+        .more-button {
+          font-size: 12px;
+          background: none;
+          border: none;
+          color: #8f8f8f;
+          cursor: pointer;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+
+      .routine-list {
+        display: flex;
+        overflow-x: scroll;
+        border-radius: 8px;
+        margin-bottom: 11px;
+
+        /* 스크롤바를 보이지 않게 설정 */
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* IE and Edge */
+        
+        &::-webkit-scrollbar { /* Chrome, Safari */
+          display: none;
+        }
+
+        .routine-card {
+          display: flex;
+          min-width: 330px;
+          background-color: #ffffff;
+          border-radius: 12px;
+          overflow: hidden;
+          margin-right: 16px;
+
+          .highlight-bar {
+            width: 12px;
+            background-color: #E1F0FB; /* Change this color to match your design */
+          }
+
+          .card-content {
+            padding: 20px;
+            width: 100%;
+            
+            h2 {
+              font-size: 18px;
+              font-weight: bold;
+              margin-bottom: 8px;
+            }
+
+            p {
+              font-size: 14px;
+              color: #555555;
+              margin-bottom: 16px;
+            }
+
+            .progress-container {
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+            }
+
+            .progress-bar {
+              width: 80%;
+              height: 8px;
+              background-color: #e0e0e0;
+              border-radius: 4px;
+              overflow: hidden;
+
+              .progress {
+                height: 100%;
+                background-color: #007bff;
+              }
+            }
+
+            .progress-text {
+              font-size: 14px;
+              font-weight: bold;
+              display: flex;
+              align-items: center;
+
+              .progress-value {
+                color: #1E76DE;
+                margin-right: 2px;
+              }
+
+              &::after {
+                content: "/100";
+                color: #757575;
+              }
+            }
+          }
+        }
+
+        .recommended-routine-card {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          min-width: 260px;
+          background-color: #ffffff;
+          border-radius: 12px;
+          
+          margin-right: 16px;
+          padding: 20px;
+
+          h2 {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 8px;
+          }
+
+          p {
+            font-size: 14px;
+            color: #555555;
+            margin-bottom: 16px;
+          }
+
+          .add-button {
+            font-size: 14px;
+            background-color: #ffffff;
+            border: 1px solid #e2e2e2;
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            color: #555555;
+
+            &:hover {
+              background-color: #f0f0f0;
+            }
+          }
+        }
+      }
+    }
+
+    .create-routine-button {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      padding: 14px 20px;
+      gap: 8px;
+      position: fixed; /* 수정된 부분: absolute를 fixed로 변경 */
+      width: 195px;
+      height: 52px;
+      bottom: 120px; /* 화면 하단에서 20px 떨어지도록 설정 */
+      left: calc(50% - 195px / 2); /* 화면 중앙에 위치하도록 수정 */
+      background: #ffffff;
+      border: 1px solid #e2e2e2;
+      box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.05),
+        0px 16px 24px rgba(0, 0, 0, 0.1), 0px 24px 40px rgba(0, 0, 0, 0.02);
+      border-radius: 12px;
+      font-size: 16px;
+      color: #181d18;
+      cursor: pointer;
+      text-align: center;
+    
+      &:hover {
+        background-color: #f0f0f0;
+      }
+    }
+    
+  }
+}
