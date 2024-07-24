@@ -4,7 +4,8 @@ import { useLocation, useNavigate } from "react-router-dom"
 import { ReactComponent as CommunityLogo } from "../assets/footer/CommunityLogo.svg"
 import { ReactComponent as CommunityLogoActive } from "../assets/footer/CommunityLogoActive.svg"
 
-import { ReactComponent as HomeLogoActive } from "../assets/footer/HomeLogoActive.svg"
+import { ReactComponent as WalkLogo } from "../assets/footer/WalkLogo.svg"
+import { ReactComponent as WalkLogoActive } from "../assets/footer/WalkLogoActive.svg"
 
 import { ReactComponent as RecordLogo } from "../assets/footer/RecordLogo.svg"
 // import { ReactComponent as RecordLogoActive } from "../assets/footer/RecordLogo.svg"
@@ -24,7 +25,7 @@ const Footer = () => {
   return (
     <>
       <div className="footer-item" onClick={() => navigate("/walk")}>
-        {isActive("/walk") ? <HomeLogoActive /> : <HomeLogoActive />}
+        {isActive("/walk") ? <WalkLogoActive /> : <WalkLogo />}
         <div
           className={
             isActive("/walk") ? "footer-item-title active" : "footer-item-title"

@@ -1,0 +1,51 @@
+// 모달 오버레이 스타일 설정
+.register-modal-container {
+    position: fixed;
+    visibility: visible;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    @include inline-flexbox(center, end);
+    background-color: rgba(0, 0, 0, 0.5); /* 오버레이 배경 색상 */
+    z-index: 999; /* 모달 오버레이를 다른 모든 요소 위에 표시 */
+
+    .register-modal-content {
+        @include column-flexbox(end, start);
+        background-color: #fff;
+        border-radius: 20px 20px 0 0;
+        animation: slideIn 0.3s ease-out;
+        width: 430px;
+        padding: 24px 0px 94px 0px;
+        gap: 16px;
+
+        h2 {
+            @include custom-font-size(600, 20px, h2, 28px, -0.4px);
+            width: 280px;
+            padding-left: 20px;
+        }
+        li {
+            width: 430px;
+            padding: 20px 20px;
+
+            border-radius: 8px;
+            background-color: #fff;
+            @include custom-font-size(500, 18px, h2, 24px, -0.36px);
+        }
+
+        li:hover {
+            background-color: #f6f6f6;
+        }
+    }
+
+    @keyframes slideIn {
+        from {
+            transform: translateY(100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+}
