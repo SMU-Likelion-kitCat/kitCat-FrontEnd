@@ -1,0 +1,101 @@
+.mybody-container {
+  @include column-flexbox(start, center);
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  padding: 20px;
+  background-color: #fff;
+
+  .mybody-title {
+    @include custom-font-size(600, 24px, h2, 34px, -0.56px);
+    margin-top: 20px;
+    text-align: left;
+    width: 100%;
+
+    .name {
+      color: #00af50;
+    }
+  }
+
+  .form-wrapper {
+    display: flex;
+    padding: 0;
+    flex-direction: column;
+    margin-top: 36px;
+    width: 100%;
+
+    .input-text-container {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      @include custom-font-size(500, 14px, m1, 18px, -0.28px);
+    }
+
+    .input-container {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      width: 100%;
+
+      .input-wrapper {
+        position: relative;
+        flex: 1;
+
+        input {
+          width: 100%;
+          height: 80px;
+          padding: 20px;
+          @include custom-font-size(700, 28px, h2, 36px, -0.56px);
+          border: 1px solid var(--material-theme-ref-neutral-neutral90, #e2e2e2);
+          background: var(--wt-bk-white, #fff);
+          border-radius: 12px;
+          outline: none;
+        }
+
+        .fixed-text {
+          position: absolute;
+          top: 50%;
+          right: 20px;
+          transform: translateY(-50%);
+          color: #aaaaaa;
+          pointer-events: none;
+          @include custom-font-size(500, 18px, t3-ph, 24px, -0.36px);
+        }
+      }
+    }
+  }
+
+  .bmi-container {
+    margin-top: 61px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+
+    .bmi-text {
+      @include custom-font-size(500, 14px, m1, 18px, -0.28px);
+    }
+    .bmi-state {
+      @include custom-font-size(600, 16px, m1, 24px, -0.32px);
+      display: flex;
+      align-items: center;
+      margin-left: auto; // Aligns to the right
+    }
+    .bmi-shame {
+      margin-left: 8px;
+    }
+  }
+
+  .mybody-next-button {
+    position: absolute;
+    bottom: 160px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #f6f6f6;
+    text-align: center;
+    @include custom-font-size(600, 18px, t3, 24px, -0.36px);
+    padding: 18px 110px;
+    border-radius: 12px;
+    width: 90%;
+  }
+}
