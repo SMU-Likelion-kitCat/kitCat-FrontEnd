@@ -126,7 +126,7 @@ const InfoStepThree = () => {
           petInfos.length > 0 ? "active" : ""
         }`}
         disabled={petInfos.length === 0}
-        onClick={() => navigate("/next-step")}
+        onClick={() => navigate("/walk")}
       >
         다음
       </button>

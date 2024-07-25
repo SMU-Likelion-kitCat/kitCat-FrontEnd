@@ -1,7 +1,7 @@
 import { useState, useRef } from "react"
 import { useDispatch } from "react-redux"
 import { setLocation } from "../redux/location"
-import { setCurrentLocation } from "../services/movementService"
+import { setCurrentLocation } from "../utils/movement"
 
 /**
  * 사용자가 움직이는 것을 계속 감지하기 위해 watchPosition 설정하는 Custom Hooks

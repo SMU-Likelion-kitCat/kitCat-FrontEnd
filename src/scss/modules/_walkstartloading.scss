@@ -1,0 +1,14 @@
+.walk-start-loading-container {
+    position: absolute; /* 부모 요소의 상대적 위치를 기준으로 */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--material-theme-key-colors-primary, #00af50);
+    z-index: 5; /* Ensure this is higher than the footer */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 48px;
+}

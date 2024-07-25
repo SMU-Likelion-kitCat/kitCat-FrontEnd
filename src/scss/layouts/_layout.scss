@@ -1,5 +1,6 @@
 .content-container {
-    position: absolute;
+    // position: absolute;
+    position: relative;
     top: 0;
     width: 100%;
     height: calc(100vh - 100px);
@@ -7,9 +8,10 @@
 }
 
 .nofooter-content-container {
-    position: absolute;
+    // position: absolute;
+    position: relative;
     top: 0;
     width: 100%;
-    // height: 100vh;
+    height: 100vh;
     overflow-y: auto;
 }
