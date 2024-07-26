@@ -2,7 +2,6 @@
 .auth-register-info-next-button {
   position: absolute;
   bottom: 86px;
-
   background-color: #f6f6f6;
   text-align: center;
   @include custom-font-size(600, 18px, t3-sm, 24px, -0.36px);
@@ -20,7 +19,6 @@
 .auth-register-info-container {
   width: 100%;
   height: 100vh;
-
   .auth-register-info-back-button {
     @include inline-flexbox(start, center);
   }
@@ -32,7 +30,6 @@
       padding-top: 20px;
       text-align: center;
     }
-
     .auth-register-info-content-logo {
       width: 232px;
       height: 232px;
@@ -203,7 +200,6 @@
     justify-content: space-between;
     .petinfo-content {
       height: 68px;
-
       width: 179px;
     }
     .pet-name {

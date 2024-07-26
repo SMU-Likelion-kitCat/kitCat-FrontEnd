@@ -1,9 +1,9 @@
-import React from "react"
-import { Outlet, useLocation } from "react-router-dom"
-import Footer from "./Footer"
+import React from "react";
+import { Outlet, useLocation } from "react-router-dom";
+import Footer from "./Footer";
 
 const Layout = () => {
-  const location = useLocation()
+  const location = useLocation();
 
   // footer를 안띄우고 싶은 라우팅을 설정
   const noFooterPaths = [
@@ -12,10 +12,10 @@ const Layout = () => {
     "/auth/login",
     "/auth/register",
     "/auth/register/info",
-  ]
+  ];
 
   // 현재 location이랑 같은지 확인
-  const showFooter = !noFooterPaths.some((path) => location.pathname === path)
+  const showFooter = !noFooterPaths.some((path) => location.pathname === path);
 
   return (
     <>
@@ -30,7 +30,7 @@ const Layout = () => {
         <footer className="footer-container">{showFooter && <Footer />}</footer>
       )}
     </>
-  )
-}
+  );
+};
 
-export default Layout
+export default Layout;
