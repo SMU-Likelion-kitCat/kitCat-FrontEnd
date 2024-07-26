@@ -1,4 +1,4 @@
-import { setLocation, updateDistanceAndSteps } from "../redux/location"
+import { setLocation, updateDistance } from "../redux/location"
 import haversineDistance from "./haversineDistance"
 
 let intervalRef = null
@@ -29,7 +29,7 @@ export const startMovement = (dispatch, initialLocation) => {
 
         if (dist >= 5 && dist < 20) {
           dispatch(
-            updateDistanceAndSteps({
+            updateDistance({
               distance: dist,
               steps: dist / averageStepLength,
             })

@@ -17,13 +17,19 @@ import StopWalk from "./components/StopWalk"
 import { ReactComponent as DogModalClose } from "../../assets/walk/DogModalClose.svg"
 import { ReactComponent as CheckDog } from "../../assets/walk/CheckDog.svg"
 
+import calculateBMICalories from "../../utils/walk/calculateBMICalories"
+import calculatePetCalories from "../../utils/walk/calculatePetCalories"
+
 const Walk = () => {
   const [loadingCount, setLoadingCount] = useState(3)
   const [timer, setTimer] = useState("00:00:00")
   const [isPaused, setIsPaused] = useState(false) // 일시정지 상태 추가
   const [showDogSelection, setShowDogSelection] = useState(false) // 강아지 선택 모달 상태 추가
   const [selectedDogs, setSelectedDogs] = useState([]) // 선택된 강아지 상태 추가
-
+  const userInfo = {
+    height: 180,
+    weight: 72,
+  }
   const { error, requestLocation, clearWatcher } = useGeoLocation({
     enableHighAccuracy: false,
     timeout: 1000 * 30,
@@ -66,17 +72,18 @@ const Walk = () => {
     return () => clearInterval(timerInterval)
   }, [location.tracking, location.walkStartTime, isPaused])
 
-  const calculateCalories = (distance, weight, factor) => {
-    return (distance * weight * factor).toFixed(2)
-  }
-
   const onClickStartTracking = useCallback(() => {
+    if (selectedDogs.length === 0) {
+      // 선택된 강아지가 없는 경우 첫 번째 강아지를 자동 선택
+      setSelectedDogs([dogs[0]])
+    }
+
     dispatch(setLoadingState(true))
     requestLocation()
     dispatch(setTrackingState(true))
     startMovement(dispatch, location)
     setShowFooter(false)
-  }, [requestLocation, dispatch, location, setShowFooter])
+  }, [requestLocation, dispatch, location, setShowFooter, selectedDogs])
 
   const onClickPauseTracking = () => {
     setIsPaused(true)
@@ -92,24 +99,22 @@ const Walk = () => {
     clearWatcher()
     setShowFooter(true)
 
-    const ownerWeight = 70 // kg
-    const petWeight = 10 // kg
-    const ownerCalFactor = 0.035
-    const petCalFactor = 0.04
-
-    const ownerCalories = calculateCalories(
+    const { height, weight } = userInfo
+    const ownerCalories = calculateBMICalories(
       location.distance,
-      ownerWeight,
-      ownerCalFactor
+      weight,
+      height
     )
-    const petCalories = calculateCalories(
-      location.distance,
-      petWeight,
-      petCalFactor
-    )
-
     dispatch(updateOwnerCalories(ownerCalories))
-    dispatch(updatePetCalories(petCalories))
+
+    selectedDogs.forEach((dog) => {
+      const petCalories = calculatePetCalories(
+        location.distance,
+        dog.weight,
+        dog.petState
+      )
+      dispatch(updatePetCalories({ petId: dog.id, calories: petCalories }))
+    })
   }
 
   const handleDogSelection = (dog) => {
@@ -123,9 +128,27 @@ const Walk = () => {
   }
 
   const dogs = [
-    { id: 1, name: "몽몽이", image: "/path_to_image_1" },
-    { id: 2, name: "왕왕이", image: "/path_to_image_2" },
-    { id: 3, name: "초코", image: "/path_to_image_3" },
+    {
+      id: 1,
+      name: "몽몽이",
+      image: "/path_to_image_1",
+      weight: 5,
+      petState: "성장기 (4~12개월)",
+    },
+    {
+      id: 2,
+      name: "왕왕이",
+      image: "/path_to_image_2",
+      weight: 8,
+      petState: "미중성 성견",
+    },
+    {
+      id: 3,
+      name: "초코",
+      image: "/path_to_image_3",
+      weight: 12,
+      petState: "중성화 완료 성견",
+    },
   ]
 
   if (error) return <div>{error}</div>
