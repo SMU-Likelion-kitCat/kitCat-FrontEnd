@@ -1,55 +1,17 @@
-import React, { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import React from "react"
 import { ReactComponent as DownArrow } from "../../../../../assets/auth/register/DownArrow.svg"
 import { ReactComponent as CloseIcon } from "../../../../../assets/auth/register/CloseIcon.svg"
 
-const InfoStepThree = () => {
-  const petName = "반려견"
-  const navigate = useNavigate()
-  const [isModalOpen, setModalOpen] = useState(false)
-  const [petInfoInput, setPetInfoInput] = useState({
-    name: "",
-    weight: "",
-    petState: "",
-  })
-  const [petInfos, setPetInfos] = useState([])
-
-  const handleClick = (event) => {
-    event.preventDefault()
-    setModalOpen(true)
-  }
-
-  const closeModal = (state) => {
-    setPetInfoInput({
-      ...petInfoInput,
-      petState: state,
-    })
-    setModalOpen(false)
-  }
-
-  const onChangeInput = (e) => {
-    const { name, value } = e.target
-    const newInput = {
-      ...petInfoInput,
-      [name]: value,
-    }
-    setPetInfoInput(newInput)
-  }
-
-  const onSubmitPetInfo = (e) => {
-    e.preventDefault()
-    setPetInfos([...petInfos, petInfoInput])
-    setPetInfoInput({
-      name: "",
-      weight: "",
-      petState: "",
-    })
-  }
-
-  const removePet = (index) => {
-    setPetInfos(petInfos.filter((_, i) => i !== index))
-  }
-
+const InfoStepThree = ({
+  petInfoInput,
+  petInfos,
+  onChangeInput,
+  onSubmitPetInfo,
+  removePet,
+  handleClick,
+  closeModal,
+  isModalOpen,
+}) => {
   const isFormValid =
     petInfoInput.name && petInfoInput.weight && petInfoInput.petState
 
@@ -57,7 +19,7 @@ const InfoStepThree = () => {
     <>
       <div className="auth-register-info-pet-title">
         <div className="auth-register-info-pet-content">
-          <span className="auth-register-info-pet-name">{petName}</span>의{" "}
+          <span className="auth-register-info-pet-name">반려견</span>의
           <br />
           정보를 알려주세요
         </div>
@@ -120,16 +82,6 @@ const InfoStepThree = () => {
           </button>
         </div>
       </form>
-
-      <button
-        className={`auth-register-info-next-button ${
-          petInfos.length > 0 ? "active" : ""
-        }`}
-        disabled={petInfos.length === 0}
-        onClick={() => navigate("/walk")}
-      >
-        다음
-      </button>
 
       {isModalOpen && (
         <div

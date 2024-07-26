@@ -133,9 +133,6 @@ const InfoStepTwo = ({ nextStep, nickname }) => {
           />
         </div>
       </div>
-      <button className="auth-register-info-next-button" onClick={nextStep}>
-        다음
-      </button>
     </>
   )
 }

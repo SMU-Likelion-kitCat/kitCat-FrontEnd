@@ -11,12 +11,6 @@ const InfoStepOne = ({ nextStep, nickname }) => {
         <br />몇 가지만 여쭤볼게요
       </h1>
       <div className="auth-register-info-content-logo"></div>
-      <button
-        className="auth-register-info-next-button active"
-        onClick={nextStep}
-      >
-        계속하기
-      </button>
     </>
   )
 }
