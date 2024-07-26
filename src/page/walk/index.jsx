@@ -158,6 +158,7 @@ const Walk = () => {
                   isPaused={isPaused}
                   timer={timer}
                   location={location}
+                  selectedDogs={selectedDogs}
                 />
               ) : (
                 <StartWalk
