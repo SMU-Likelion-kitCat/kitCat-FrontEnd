@@ -4,9 +4,9 @@ import { ReactComponent as OpenPassword } from "../../../../assets/auth/OpenPass
 import { ReactComponent as Check } from "../../../../assets/auth/Check.svg"
 
 const StepTwo = ({
-  passWord,
-  setPassWord,
-  confirmPassword,
+  password = "",
+  setPassword,
+  confirmPassword = "",
   setConfirmPassword,
   nextStep,
   isFocused,
@@ -15,15 +15,15 @@ const StepTwo = ({
   const [imageState, setImageState] = useState(false)
   const [isConfirmFocused, setIsConfirmFocused] = useState(false)
 
-  const isLength = passWord.length >= 8 && passWord.length <= 15
+  const isLength = password.length >= 8 && password.length <= 15
   const specialLetter = /[`~!@#$%^&*|\\'\";:\/?]/gi
-  const isSpecial = specialLetter.test(passWord)
+  const isSpecial = specialLetter.test(password)
   const duplication = /([A-Za-z0-9`~!@#$%^&*(){}[\]-_=+\\|;:'",.<>\/?])\1{3,}/g
-  const isDuplication = duplication.test(passWord)
-  const passwordsMatch = passWord === confirmPassword
+  const isDuplication = duplication.test(password)
+  const passwordsMatch = password === confirmPassword
 
   const handlePassWordInput = (e) => {
-    setPassWord(e.target.value)
+    setPassword(e.target.value)
   }
 
   const handleConfirmInput = (e) => {
@@ -46,7 +46,7 @@ const StepTwo = ({
           className={`auth-register-input ${isFocused ? "focused" : ""}`}
           placeholder="비밀번호 입력"
           type={imageState ? "text" : "password"}
-          value={passWord}
+          value={password}
           onChange={handlePassWordInput}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
@@ -84,12 +84,12 @@ const StepTwo = ({
         <div className="auth-register-password-condition">
           <span
             className={`circle ${
-              !isDuplication && passWord !== "" ? "active" : ""
+              !isDuplication && password !== "" ? "active" : ""
             }`}
           >
-            {!isDuplication && passWord !== "" && <Check />}
+            {!isDuplication && password !== "" && <Check />}
           </span>
-          <p className={`${!isDuplication && passWord !== "" ? "active" : ""}`}>
+          <p className={`${!isDuplication && password !== "" ? "active" : ""}`}>
             똑같은 문자가 4번 반복되면 안돼요
           </p>
         </div>

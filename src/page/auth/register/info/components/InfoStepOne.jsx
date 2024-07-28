@@ -1,6 +1,6 @@
 import React from "react"
 
-const InfoStepOne = ({ nextStep, nickname }) => {
+const InfoStepOne = ({ nickname }) => {
   return (
     <>
       <h1 className="auth-register-info-content-title">

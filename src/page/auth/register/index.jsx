@@ -18,18 +18,21 @@ const Register = () => {
   const [step, setStep] = useState(1)
   const [signupInfo, setSignupInfo] = useState({
     email: "",
-    passWord: "",
+    password: "",
     confirmPassword: "",
     nickname: "",
+    height: 0,
+    weight: 0,
+    bmi: 0,
+    petInfos: [],
   })
   const [isFocused, setIsFocused] = useState(false)
-  const [nicknames] = useState(["김은진", "박준형"]) // Example existing nicknames
   const navigate = useNavigate()
 
   useEffect(() => {
     if (
       step > 3 &&
-      (!signupInfo.email || !signupInfo.passWord || !signupInfo.nickname)
+      (!signupInfo.email || !signupInfo.password || !signupInfo.nickname)
     ) {
       navigate("/auth/register")
     }
@@ -68,9 +71,9 @@ const Register = () => {
             )}
             {step === 2 && (
               <StepTwo
-                passWord={signupInfo.passWord}
-                setPassWord={(passWord) =>
-                  setSignupInfo({ ...signupInfo, passWord })
+                password={signupInfo.password}
+                setPassword={(password) =>
+                  setSignupInfo({ ...signupInfo, password })
                 }
                 confirmPassword={signupInfo.confirmPassword}
                 setConfirmPassword={(confirmPassword) =>
@@ -87,7 +90,6 @@ const Register = () => {
                 setNickname={(nickname) =>
                   setSignupInfo({ ...signupInfo, nickname })
                 }
-                nicknames={nicknames}
                 isFocused={isFocused}
                 setIsFocused={setIsFocused}
                 nextStep={nextStep}
@@ -96,7 +98,7 @@ const Register = () => {
           </div>
         </div>
       ) : (
-        <Outlet context={signupInfo} />
+        <Outlet context={[signupInfo, setSignupInfo]} />
       )}
     </>
   )

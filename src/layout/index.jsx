@@ -24,6 +24,10 @@ const Layout = () => {
   const footerVisible =
     showFooter && !noFooterPaths.some((path) => location.pathname === path)
 
+  // const useNofooterRoutineLayout = "/routine/".some((path) =>
+  //   path.include(location.pathname)
+  // )
+
   // nofooter-content-container로 표시되어야 하는 경로 정의
   const footerPathsWithNoFooterLayout = [
     "/",

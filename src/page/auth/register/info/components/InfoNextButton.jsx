@@ -1,8 +1,42 @@
 import React from "react"
 import { useNavigate } from "react-router-dom"
+import { registerUser } from "../../../../../api"
+import { useDispatch, useSelector } from "react-redux"
+import { setToken } from "../../../../../redux/auth"
 
-const InfoNextButton = ({ step, nextStep, petInfos }) => {
+const InfoNextButton = ({ step, nextStep, signupInfo }) => {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
+
+  const handleNextStep = async () => {
+    if (step === 2) {
+      console.log(signupInfo)
+      try {
+        const userInfo = {
+          email: signupInfo.email,
+          password: signupInfo.password,
+          height: signupInfo.height,
+          weight: signupInfo.weight,
+        }
+        const accessToken = await registerUser(userInfo)
+        console.log("회원가입 완료, 토큰:", accessToken)
+        dispatch(setToken(accessToken))
+        nextStep()
+      } catch (e) {
+        console.error(e)
+      }
+    } else if (step === 3) {
+      try {
+        console.log("펫 등록 완료", signupInfo.petInfos)
+        navigate("/walk")
+      } catch (e) {
+        console.error(e)
+      }
+    } else {
+      nextStep()
+    }
+  }
+
   if (step === 1) {
     return (
       <button
@@ -14,7 +48,10 @@ const InfoNextButton = ({ step, nextStep, petInfos }) => {
     )
   } else if (step === 2) {
     return (
-      <button className="auth-register-info-next-button" onClick={nextStep}>
+      <button
+        className="auth-register-info-next-button"
+        onClick={handleNextStep}
+      >
         다음
       </button>
     )
@@ -22,10 +59,10 @@ const InfoNextButton = ({ step, nextStep, petInfos }) => {
     return (
       <div
         className={`auth-register-info-next-button ${
-          petInfos.length > 0 ? "active" : ""
+          signupInfo.petInfos && signupInfo.petInfos.length > 0 ? "active" : ""
         }`}
-        disabled={petInfos.length === 0}
-        onClick={() => navigate("/walk")}
+        disabled={!signupInfo.petInfos || signupInfo.petInfos.length === 0}
+        onClick={handleNextStep}
       >
         완료
       </div>
