@@ -1,0 +1,192 @@
+.community-content-container {
+  width: 100%;
+  height: calc(100vh - 100px);
+  position: relative;
+  padding: 20px;
+  .community-content-title-wrapper {
+    display: flex;
+    padding-top: 44px;
+    justify-content: space-between;
+    .community-content-title {
+      @include custom-font-size(700, 24px, t3, 28px, -0.36px);
+    }
+  }
+
+  .community-content-list-wrapper {
+    .over-hr {
+      background-color: #000;
+      border: none;
+      width: 100%;
+      height: 1px;
+      margin: 20px auto 20px auto;
+    }
+
+    .community-content-list {
+      .community-content-state {
+        .community-content-list-response {
+          @include custom-font-size(500, 14px, b2-md, 18px, -0.36px);
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          width: 100%;
+          align-items: center;
+          .community-content-user-info {
+            display: flex;
+            flex-direction: row;
+            .community-content-user-name {
+              padding-right: 8px;
+            }
+            .community-content-user-time {
+              padding-left: 8px;
+            }
+          }
+        }
+      }
+    }
+
+    .community-content-list-title {
+      padding-top: 12px;
+      padding-bottom: 20px;
+    }
+    .community-content-response-count {
+      display: flex;
+      align-items: center;
+      gap: 0px 10px;
+      .community-content-comment-icon-wrapper {
+        padding: 8px 12px;
+
+        @include inline-flexbox(start, center);
+        height: 34px;
+        width: 53px;
+        border-radius: 8px;
+
+        background: var(--material-theme-ref-neutral-neutral98, #f6f6f6);
+
+        .community-content-comment-icon {
+        }
+
+        .community-content-comment-count {
+          padding-left: 4px;
+          @include custom-font-size(500, 14px, m6, 18px, -0.36px);
+        }
+      }
+
+      .community-content-heart-icon-wrapper {
+        padding: 8px 12px;
+        @include inline-flexbox(start, center);
+        height: 34px;
+        width: 53px;
+        border-radius: 8px;
+        background: var(--material-theme-ref-neutral-neutral98, #f6f6f6);
+
+        .community-content-heart-icon {
+        }
+
+        .community-content-heart-count {
+          padding-left: 4px;
+          @include custom-font-size(500, 14px, m5, 18px, -0.36px);
+        }
+      }
+    }
+    .under-hr {
+      background-color: #000;
+      border: none;
+      width: 100%;
+      height: 1px;
+      margin: 20px auto 0 auto;
+    }
+  }
+
+  .community-new-button {
+    width: 114px;
+    height: 52px;
+    border-radius: 12px;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    border: 1px solid var(--gray-gray200, #e2e2e2);
+    background: var(--wt-bk-white, #fff);
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.05),
+      0px 16px 24px 0px rgba(0, 0, 0, 0.1),
+      0px 24px 40px 0px rgba(0, 0, 0, 0.02);
+    .community-new-button-wrapper {
+      display: flex;
+      flex-direction: row;
+      padding: 14px 20px;
+    }
+    .community-new-button-text {
+      padding-left: 8px;
+      //   여기 글자크기 16이데 그렇게 하면 삐져나가
+      @include custom-font-size(600, 14px, t3, 24px, -0.36px);
+    }
+  }
+}
+
+.community-new-container {
+  width: 100%;
+  height: calc(100vh - 100px);
+  position: relative;
+  padding: 20px;
+  .community-new-header {
+    display: flex;
+    padding-top: 38px;
+    align-items: center;
+    justify-content: space-between;
+    .community-new-edit-button {
+      border-radius: 8px;
+      background: var(--material-theme-ref-primary-primary80, #53e07a);
+      @include custom-font-size(600, 16px, h2, 24px, -0.32px);
+      text-align: center;
+      width: 54px;
+      height: 40px;
+    }
+  }
+  .community-new-title-input {
+    @include custom-font-size(700, 24px, m3, 32px, -0.48px);
+    margin-top: 22px;
+  }
+  .title-hr {
+    margin: 20px 0px;
+  }
+  .community-new-content-input {
+    @include custom-font-size(600, 16px, m3, 24px, -0.32px);
+  }
+  .community-new-add-picture {
+    width: 72px;
+    height: 72px;
+    border-radius: 8px;
+    border: 1px solid var(--material-theme-ref-neutral-neutral90, #e2e2e2);
+    background: var(--wt-bk-white, #fff);
+    cursor: pointer;
+    .community-new-add-picture-icon-wrapper {
+      display: flex;
+      flex-direction: column;
+      padding: 14px 12px 23px 22px;
+      //   padding: 15px 12px 17px 20px;
+      .community-new-add-picture-plus-icon {
+        margin-left: 20px;
+      }
+      .community-new-add-picture-icon {
+      }
+    }
+
+    input {
+      display: none;
+    }
+  }
+
+  .community-new-image-preview {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 20px;
+
+    img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      margin: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+  }
+}

@@ -11,7 +11,11 @@ $font-map: (
   b3-smb: var(--Schemes-On-Primary, #fff),
   b3-md: var(--material-theme-ref-neutral-neutral60, #8f8f8f),
   m1: var(--material-theme-ref-neutral-neutral40, #5d5d5d),
-  m2: var(--material-theme-ref-neutral-neutral98, #f6f6f6)
+  m2: var(--material-theme-ref-neutral-neutral98, #f6f6f6),
+  m3: var(--material-theme-ref-neutral-neutral90, #e2e2e2),
+  m4: var(--gray-gray800, #333),
+  m5: var(--material-theme-ref-error-error60, #ff5449),
+  m6: #2b75cb,
 );
 
 @function _get-font-value($key) {
@@ -27,6 +31,15 @@ $font-map: (
   letter-spacing: $letter-spacing;
   color: _get-font-value($color);
 }
+// @mixin custom-font-pre($weight, $size, $color, $line-height, $letter-spacing) {
+//   font-family: Pretendard;
+//   font-size: $size;
+//   font-style: normal;
+//   font-weight: $weight;
+//   line-height: $line-height;
+//   letter-spacing: $letter-spacing;
+//   color: _get-font-value($color);
+// }
 
 @mixin custom-font-color($font-color: basic) {
   color: _get-font-value($font-color);

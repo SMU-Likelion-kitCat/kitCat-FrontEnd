@@ -1,0 +1,205 @@
+.routine-calendar-container {
+  @include column-flexbox(center, between);
+  padding-left: 20px;
+  padding-right: 20px;
+  background: #ffffff;
+
+  .routine-calendar-header {
+    display: flex;
+    align-items: center;
+    margin-top: 64px;
+    margin-bottom: 32px;
+
+    .routine-calendar-back-button {
+      width: 28px;
+      height: 28px;
+      cursor: pointer;
+      margin-right: 16px; /* Add spacing between the icon and title */
+    }
+
+    .routine-calendar-title {
+      @include custom-font-size(700, 24px, t3, 28px, -0.36px);
+    }
+  }
+
+  .routine-calendar {
+    display: flex;
+    padding-top: 3px;
+    padding-left: 16px;
+    padding-right: 16px;
+    flex-direction: column;
+    align-items: center;
+
+    width: 100%;
+
+    .routine-calendar-month {
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      color: #181d18;
+
+      font-family: Roboto;
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 28px; /* 140% */
+      letter-spacing: -0.4px;
+
+      .month-nav-button {
+        background: #e0e0e0;
+        border: none;
+        width: 25px;
+        height: 24px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        margin: 0 10px;
+        padding: 0;
+
+        &.right {
+          transform: scaleX(-1);
+        }
+      }
+    }
+
+    .routine-calendar-day-labels,
+    .routine-calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 10px;
+      width: 100%;
+      max-width: 600px; /* Adjust based on design needs */
+    }
+
+    .routine-calendar-day-labels {
+      text-align: center;
+      margin-bottom: 10px;
+      font-weight: bold;
+
+      font-family: Roboto;
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 550;
+      line-height: 16px; /* 133.333% */
+      letter-spacing: -0.24px;
+
+      color: var(--material-theme-ref-neutral-neutral60, #8f8f8f);
+
+      .routine-calendar-day-label {
+        padding: 5px 0;
+      }
+
+      .sunday {
+        color: #ba1a1a;
+      }
+
+      .saturday {
+        color: #33818e;
+      }
+    }
+
+    .routine-calendar-grid {
+      .routine-calendar-day {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 10px;
+        background: #ffffff;
+        border-radius: 8px;
+        text-align: center;
+
+        font-family: Roboto;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 24px; /* 150% */
+        letter-spacing: -0.32px;
+
+        &.empty {
+          background: transparent;
+        }
+
+        &.sunday .routine-calendar-date {
+          color: #ba1a1a;
+        }
+
+        &.saturday .routine-calendar-date {
+          color: #33818e;
+        }
+
+        .routine-calendar-date {
+          margin-bottom: 5px;
+        }
+
+        .routine-calendar-dots {
+          display: flex;
+          gap: 4px;
+
+          .routine-calendar-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+          }
+        }
+      }
+    }
+  }
+}
+
+.boundary {
+  margin-top: 28px;
+  border: 6px solid #f6f6f6;
+}
+
+.routine-details {
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 8px;
+  margin-top: 20px;
+
+  h2 {
+    margin-bottom: 16px;
+    font-family: Roboto;
+    font-size: 18px;
+    font-weight: 700;
+
+    color: var(--material-theme-ref-neutral-neutral50, #757575);
+
+    /* Body/B1-medium */
+    font-family: Roboto;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 24px; /* 150% */
+    letter-spacing: -0.32px;
+  }
+
+  .routine-detail-item {
+    background: #ffffff;
+    border-radius: 8px;
+    border: 1px solid var(--material-theme-ref-neutral-neutral90, #E2E2E2);
+    padding: 10px;
+    margin-bottom: 10px;
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: 500;
+    color: #181d18;
+
+    h3 {
+      margin: 0;
+      margin-bottom: 5px;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    p {
+      margin: 0;
+      font-size: 14px;
+      color: #606060;
+    }
+  }
+}

@@ -18,39 +18,73 @@
 .auth-register-info-container {
     width: 100%;
     height: 100vh;
-    overflow-y: hidden;
-    @include column-flexbox(between, center);
+    .auth-register-info-back-button {
+        @include inline-flexbox(start, center);
+    }
 
-    .auth-register-info-main-content-container {
-        width: 100%;
-        height: 100%;
-        overflow-y: auto;
-        .auth-register-info-back-button {
-            margin-top: 64px;
-            @include inline-flexbox(start, center);
-        }
-
-        .auth-register-info-content-container {
-            @include column-flexbox(center, center);
-            .auth-register-info-content-title {
-                @include custom-font-size(600, 24px, h2, 34px, -0.56px);
-                padding-top: 20px;
-                text-align: center;
-            }
-
-            .auth-register-info-content-logo {
-                @include inline-flexbox(center, center);
-                width: 322px;
-                height: 195px;
-                margin-top: 96px;
-            }
-        }
-
-        .auth-register-info-body-title {
+    .auth-register-info-content-container {
+        @include column-flexbox(center, center);
+        .auth-register-info-content-title {
             @include custom-font-size(600, 24px, h2, 34px, -0.56px);
-            margin-top: 20px;
-            text-align: left;
+            padding-top: 20px;
+            text-align: center;
+        }
+        .auth-register-info-content-logo {
+            width: 232px;
+            height: 232px;
+            margin-top: 78px;
+            border-radius: 50%;
+            background-color: #ccc;
+        }
+    }
+
+    .auth-register-info-body-title {
+        @include custom-font-size(600, 24px, h2, 34px, -0.56px);
+        margin-top: 20px;
+        text-align: left;
+        width: 100%;
+        height: 100vh;
+        overflow-y: hidden;
+        @include column-flexbox(between, center);
+
+        .auth-register-info-main-content-container {
             width: 100%;
+            height: 100%;
+            overflow-y: auto;
+            .auth-register-info-back-button {
+                margin-top: 64px;
+                @include inline-flexbox(start, center);
+            }
+
+            .auth-register-info-content-container {
+                @include column-flexbox(center, center);
+                .auth-register-info-content-title {
+                    @include custom-font-size(600, 24px, h2, 34px, -0.56px);
+                    padding-top: 20px;
+                    text-align: center;
+                }
+
+                .auth-register-info-content-logo {
+                    @include inline-flexbox(center, center);
+                    width: 322px;
+                    height: 195px;
+                    margin-top: 96px;
+                }
+            }
+
+            .auth-register-info-body-title {
+                @include custom-font-size(600, 24px, h2, 34px, -0.56px);
+                margin-top: 20px;
+                text-align: left;
+                width: 100%;
+                height: 80px;
+                padding: 20px;
+                @include custom-font-size(700, 28px, h2, 36px, -0.56px);
+                border: 1px solid var(--material-theme-ref-neutral-neutral90, #e2e2e2);
+                background: var(--wt-bk-white, #fff);
+                border-radius: 12px;
+                outline: none;
+            }
 
             .auth-register-info-body-title-name {
                 color: #00af50;
@@ -287,3 +321,4 @@
         }
     }
 }
+// }

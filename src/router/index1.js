@@ -10,30 +10,13 @@ const Register = lazy(() => import("../page/auth/register"))
 const Info = lazy(() => import("../page/auth/register/info"))
 
 const Routine = lazy(() => import("../page/routine"))
-const OngoingRoutineList = lazy(() =>
-  import("../page/routine/components/OngoingRoutineList")
-)
-const RecommendedRoutineList = lazy(() =>
-  import("../page/routine/components/RecommendedRoutineList")
-)
-const RoutineRecord = lazy(() =>
-  import("../page/routine/components/RoutineRecord")
-)
-const RoutineCreate = lazy(() =>
-  import("../page/routine/components/RoutineCreate")
-)
-const RoutineEdit = lazy(() => import("../page/routine/components/RoutineEdit"))
-const RoutineDetail = lazy(() =>
-  import("../page/routine/components/RoutineDetail")
-)
-const RecommendRoutineDetail = lazy(() =>
-  import("../page/routine/components/RecommendRoutineDetail")
-)
-
 const Record = lazy(() => import("../page/record"))
 const Walk = lazy(() => import("../page/walk"))
 const Community = lazy(() => import("../page/community"))
 const MyPage = lazy(() => import("../page/mypage"))
+const Result = lazy(() => import("../page/walk/result"))
+const Post = lazy(() => import("../page/community/components/Post"))
+const New = lazy(() => import("../page/community/components/New"))
 
 const router = createBrowserRouter([
   {
@@ -90,64 +73,6 @@ const router = createBrowserRouter([
             <Routine />
           </Suspense>
         ),
-        children: [
-          {
-            path: "ongoing",
-            element: (
-              <Suspense fallback={<Loading />}>
-                <OngoingRoutineList />
-              </Suspense>
-            ),
-          },
-          {
-            path: "recommend",
-            element: (
-              <Suspense fallback={<Loading />}>
-                <RecommendedRoutineList />
-              </Suspense>
-            ),
-          },
-          {
-            path: "record",
-            element: (
-              <Suspense fallback={<Loading />}>
-                <RoutineRecord />
-              </Suspense>
-            ),
-          },
-          {
-            path: "create",
-            element: (
-              <Suspense fallback={<Loading />}>
-                <RoutineCreate />
-              </Suspense>
-            ),
-          },
-          {
-            path: "ongoing/:id",
-            element: (
-              <Suspense fallback={<Loading />}>
-                <RoutineDetail />
-              </Suspense>
-            ),
-          },
-          {
-            path: "ongoing/:id/edit",
-            element: (
-              <Suspense fallback={<Loading />}>
-                <RoutineEdit />
-              </Suspense>
-            ),
-          },
-          {
-            path: "recommend/:id",
-            element: (
-              <Suspense fallback={<Loading />}>
-                <RecommendRoutineDetail />
-              </Suspense>
-            ),
-          },
-        ],
       },
       {
         path: "record",
@@ -164,6 +89,16 @@ const router = createBrowserRouter([
             <Walk />
           </Suspense>
         ),
+        children: [
+          {
+            path: "result",
+            element: (
+              <Suspense fallback={<Loading />}>
+                <Result />
+              </Suspense>
+            ),
+          },
+        ],
       },
       {
         path: "community",
@@ -172,6 +107,24 @@ const router = createBrowserRouter([
             <Community />
           </Suspense>
         ),
+        children: [
+          {
+            path: "postId/:postId",
+            element: (
+              <Suspense fallback={<Loading />}>
+                <Post />
+              </Suspense>
+            ),
+          },
+          {
+            path: "new",
+            element: (
+              <Suspense fallback={<Loading />}>
+                <New />
+              </Suspense>
+            ),
+          },
+        ],
       },
       {
         path: "mypage",

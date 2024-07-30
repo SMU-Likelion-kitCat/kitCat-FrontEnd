@@ -1,0 +1,310 @@
+.routine-container {
+  @include column-flexbox(center, between);
+
+  .routine-container-main {
+    padding-left: 20px;
+    padding-right: 20px;
+    background: #ffffff;
+
+    &.sub {
+      background: #f7f7f7;
+    }
+
+    .routine-header {
+      margin-top: 64px;
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .routine-back-button {
+        width: 28px;
+        height: 28px;
+        cursor: pointer;
+        margin-right: 16px; /* Add spacing between the icon and title */
+      }
+
+      .routine-title {
+        font-weight: 700;
+        font-size: 28px;
+        line-height: 36px;
+        letter-spacing: -0.56px;
+        text-align: left; /* Align the title text to the left */
+      }
+
+      .icon-container {
+        display: flex;
+        gap: 16px; /* Adjust the gap between icons as needed */
+
+        .routine-icon {
+          width: 28px;
+          height: 28px;
+        }
+      }
+    }
+
+    .routine-subtitle {
+      font-weight: 700;
+      font-size: 28px;
+      line-height: 36px;
+      letter-spacing: -0.56px;
+      text-align: left;
+    }
+
+    .bmi-info {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 8px;
+      padding: 20px;
+      border-radius: 8px;
+      align-items: center;
+      margin-top: 20px;
+      margin-bottom: 28px;
+
+      &.저체중 {
+        background-color: rgba(131, 182, 232, 0.1);
+      }
+
+      &.표준 {
+        background-color: rgba(84, 173, 13, 0.1);
+      }
+
+      &.과체중 {
+        background-color: rgba(253, 213, 5, 0.1);
+      }
+
+      &.비만 {
+        background-color: rgba(255, 138, 2, 0.1);
+      }
+
+      &.고도비만 {
+        background-color: rgba(254, 77, 0, 0.1);
+      }
+
+      .bmi-score {
+        font-weight: bold;
+      }
+
+      .bmi-score.저체중 {
+        color: #4b8ed1;
+      }
+
+      .bmi-score.표준 {
+        color: #54ad0d;
+      }
+
+      .bmi-score.과체중 {
+        color: #dcb426;
+      }
+
+      .bmi-score.비만 {
+        color: #ff8a02;
+      }
+
+      .bmi-score.고도비만 {
+        color: #fe4d00;
+      }
+    }
+    .subroutine-header {
+      display: flex;
+      align-items: center;
+      margin-top: 64px;
+      margin-bottom: 32px;
+
+      .subroutine-back-button {
+        width: 28px;
+        height: 28px;
+        cursor: pointer;
+        margin-right: 16px; /* Add spacing between the icon and title */
+      }
+
+      .subroutine-title {
+        @include custom-font-size(700, 24px, t3, 28px, -0.36px);
+      }
+    }
+
+    .routine-info {
+      .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+        padding-top: 24px;
+
+        .routine-subtitle {
+          font-weight: 600;
+          font-size: 18px;
+          line-height: 24px;
+          letter-spacing: -0.36px;
+        }
+        .more-button {
+          font-size: 12px;
+          background: none;
+          border: none;
+          color: #8f8f8f;
+          cursor: pointer;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+
+      .routine-list {
+        border-radius: 8px;
+
+        /* 스크롤바를 보이지 않게 설정 */
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* IE and Edge */
+
+        &::-webkit-scrollbar {
+          /* Chrome, Safari */
+          display: none;
+        }
+
+        &.slide {
+          display: flex;
+          overflow-x: scroll;
+          margin-bottom: 11px;
+        }
+        &.scroll {
+          overflow-y: scroll;
+          margin-bottom: 20px;
+
+          .routine-card {
+            margin-right: 0;
+            margin-bottom: 20px;
+          }
+          .recommended-routine-card {
+            margin-right: 0;
+            margin-bottom: 20px;
+          }
+        }
+
+        .routine-card {
+          display: flex;
+          min-width: 350px;
+          background-color: #ffffff;
+          border: 1px solid #e2e2e2;
+          border-radius: 12px;
+          overflow: hidden;
+          margin-right: 16px;
+
+          .highlight-bar {
+            width: 12px;
+            background-color: #e1f0fb; /* Change this color to match your design */
+          }
+
+          .card-content {
+            padding: 20px;
+            width: 100%;
+
+            h2 {
+              font-size: 18px;
+              font-weight: bold;
+              margin-bottom: 8px;
+            }
+
+            p {
+              font-size: 14px;
+              color: #555555;
+              margin-bottom: 16px;
+            }
+
+            .progress-container {
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+            }
+
+            .progress-bar {
+              width: 78%;
+              height: 8px;
+              background-color: #e0e0e0;
+              border-radius: 4px;
+              overflow: hidden;
+
+              .progress {
+                height: 100%;
+                background-color: #007bff;
+              }
+            }
+
+            .progress-text {
+              font-size: 14px;
+              font-weight: bold;
+              display: flex;
+              align-items: center;
+
+              .progress-value {
+                color: #1e76de;
+                margin-right: 2px;
+              }
+
+              &::after {
+                content: "/100";
+                color: #757575;
+              }
+            }
+          }
+        }
+
+        .recommended-routine-card {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          min-width: 280px;
+          background-color: #ffffff;
+          border: 1px solid #e2e2e2;
+          border-radius: 12px;
+
+          margin-right: 16px;
+          padding: 20px;
+
+          h2 {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 8px;
+          }
+
+          p {
+            font-size: 14px;
+            color: #555555;
+            margin-bottom: 16px;
+          }
+
+          .add-button {
+            font-size: 14px;
+            background-color: #ffffff;
+            border: 1px solid #c5c5c5;
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            color: #454545;
+
+            overflow: hidden;
+            color: var(--material-theme-ref-neutral-neutral30, #454545);
+            text-overflow: ellipsis;
+
+            /* Body/B2-semibold */
+            font-family: Roboto;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 18px; /* 128.571% */
+            letter-spacing: -0.28px;
+
+            &:hover {
+              background-color: #f0f0f0;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .routine-container-boundary {
+    border: 6px solid #f6f6f6;
+  }
+}
