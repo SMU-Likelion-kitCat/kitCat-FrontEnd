@@ -1,16 +1,15 @@
 import React from "react"
 import RoutineDashboard from "./components/RoutineDashboard"
-import OngoingRoutineList from "./components/OngoingRoutineList"
-
 import { Outlet, useLocation } from "react-router-dom"
-const Routine = () => {
-  const location = useLocation();
 
-  const isRoutinePath = location.pathname == "/routine";
+const Routine = () => {
+  const location = useLocation()
+
+  const isRoutinePath = location.pathname == "/routine"
   return (
     <div>
-      {isRoutinePath && <RoutineDashboard/>}
-      <Outlet/>
+      {isRoutinePath && <RoutineDashboard />}
+      <Outlet />
     </div>
   )
 }

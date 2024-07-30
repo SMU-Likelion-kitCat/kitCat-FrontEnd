@@ -18,6 +18,8 @@ const Layout = () => {
     "/auth/login",
     "/auth/register",
     "/auth/register/info",
+    "/routine/ongoing",
+    "/routine/ongoing:id",
   ]
 
   // showFooter true이고 noFooterPaths에 정의되지 않았을 때, footer가 표시
