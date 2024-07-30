@@ -26,6 +26,7 @@
         height: 100%;
         overflow-y: auto;
         .auth-register-info-back-button {
+            margin-top: 64px;
             @include inline-flexbox(start, center);
         }
 
@@ -38,11 +39,10 @@
             }
 
             .auth-register-info-content-logo {
-                width: 232px;
-                height: 232px;
-                margin-top: 78px;
-                border-radius: 50%;
-                background-color: #ccc;
+                @include inline-flexbox(center, center);
+                width: 322px;
+                height: 195px;
+                margin-top: 96px;
             }
         }
 

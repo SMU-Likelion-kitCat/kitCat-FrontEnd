@@ -9,7 +9,7 @@ const InfoNextButton = ({ step, nextStep, signupInfo }) => {
   const dispatch = useDispatch()
 
   const handleNextStep = async () => {
-    if (step === 2) {
+    if (step === 5) {
       console.log(signupInfo)
       try {
         const userInfo = {
@@ -26,7 +26,7 @@ const InfoNextButton = ({ step, nextStep, signupInfo }) => {
       } catch (e) {
         console.error(e)
       }
-    } else if (step === 3) {
+    } else if (step === 6) {
       try {
         console.log("펫 등록 완료", signupInfo.petInfos)
         navigate("/walk")
@@ -38,7 +38,7 @@ const InfoNextButton = ({ step, nextStep, signupInfo }) => {
     }
   }
 
-  if (step === 1) {
+  if (step === 4) {
     return (
       <button
         className="auth-register-info-next-button active"
@@ -47,7 +47,7 @@ const InfoNextButton = ({ step, nextStep, signupInfo }) => {
         계속하기
       </button>
     )
-  } else if (step === 2) {
+  } else if (step === 5) {
     return (
       <button
         className="auth-register-info-next-button"
@@ -56,7 +56,7 @@ const InfoNextButton = ({ step, nextStep, signupInfo }) => {
         다음
       </button>
     )
-  } else if (step === 3) {
+  } else if (step === 6) {
     return (
       <div
         className={`auth-register-info-next-button ${

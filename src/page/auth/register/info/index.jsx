@@ -7,7 +7,6 @@ import { useNavigate, useOutletContext } from "react-router-dom"
 import InfoNextButton from "./components/InfoNextButton"
 
 const Info = () => {
-  const [step, setStep] = useState(1)
   const navigate = useNavigate()
   const [signupInfo, setSignupInfo] = useOutletContext()
   const [isModalOpen, setModalOpen] = useState(false)
@@ -74,12 +73,17 @@ const Info = () => {
   }
 
   const backStep = () => {
-    if (step > 1) setStep(step - 1)
+    if (signupInfo.step > 4) {
+      setSignupInfo({ ...signupInfo, step: signupInfo.step - 1 })
+    } else if (signupInfo.step === 4) {
+      setSignupInfo({ ...signupInfo, step: signupInfo.step - 1 })
+      navigate("/auth/register", { state: { signupInfo } })
+    }
   }
 
   const nextStep = () => {
-    if (step < 3) {
-      setStep(step + 1)
+    if (signupInfo.step < 6) {
+      setSignupInfo({ ...signupInfo, step: signupInfo.step + 1 })
     }
   }
 
@@ -95,14 +99,16 @@ const Info = () => {
         </div>
 
         <div className="auth-register-info-content-container">
-          {step === 1 && <InfoStepOne nickname={signupInfo.nickname} />}
-          {step === 2 && (
+          {signupInfo.step === 4 && (
+            <InfoStepOne nickname={signupInfo.nickname} />
+          )}
+          {signupInfo.step === 5 && (
             <InfoStepTwo
               userInfo={signupInfo}
               setUserInfo={handleUserInfoUpdate}
             />
           )}
-          {step === 3 && (
+          {signupInfo.step === 6 && (
             <InfoStepThree
               handleClick={handleClick}
               petInfoInput={petInfoInput}
@@ -117,7 +123,7 @@ const Info = () => {
         </div>
       </div>
       <InfoNextButton
-        step={step}
+        step={signupInfo.step}
         nextStep={nextStep}
         signupInfo={signupInfo}
         setSignupInfo={setSignupInfo}
