@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { ReactComponent as Logo } from "../../assets/Logo.svg"
 
 const Intro = () => {
   const [countDown, setCountDown] = useState(2) // 초기값 설정
@@ -26,7 +27,9 @@ const Intro = () => {
 
   return (
     <div className="intro-container">
-      <div className="intro-circle">{countDown}</div>
+      {/* <div className="intro-circle"> */}
+      <Logo />
+      {/* </div> */}
     </div>
   )
 }

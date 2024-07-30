@@ -13,6 +13,7 @@ const InfoNextButton = ({ step, nextStep, signupInfo }) => {
       console.log(signupInfo)
       try {
         const userInfo = {
+          nickname: signupInfo.nickname,
           email: signupInfo.email,
           password: signupInfo.password,
           height: signupInfo.height,

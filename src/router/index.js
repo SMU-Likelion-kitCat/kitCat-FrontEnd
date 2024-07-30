@@ -14,6 +14,7 @@ const Record = lazy(() => import("../page/record"))
 const Walk = lazy(() => import("../page/walk"))
 const Community = lazy(() => import("../page/community"))
 const MyPage = lazy(() => import("../page/mypage"))
+const Result = lazy(() => import("../page/walk/result"))
 
 const router = createBrowserRouter([
   {
@@ -86,6 +87,16 @@ const router = createBrowserRouter([
             <Walk />
           </Suspense>
         ),
+        children: [
+          {
+            path: "result",
+            element: (
+              <Suspense fallback={<Loading />}>
+                <Result />
+              </Suspense>
+            ),
+          },
+        ],
       },
       {
         path: "community",

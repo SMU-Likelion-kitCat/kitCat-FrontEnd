@@ -1,0 +1,108 @@
+.walk-controls-backboard-dog-walk-kcal-info {
+    @include column-flexbox(center, center);
+    width: 148px;
+    h2 {
+        @include custom-font-size(400, 12px, b3-md, 16px, -0.24px);
+    }
+
+    .walk-controls-backboard-dog-selection-container {
+        width: 145px;
+        padding: 0;
+        @include column-flexbox(center, center);
+        .walk-controls-backboard-dog-selection-info-container {
+            @include inline-flexbox(between, center);
+            gap: 8px;
+            .walk-controls-backboard-dog-selection-info {
+                height: 36px;
+                width: 88px;
+                @include inline-flexbox(between, center);
+                gap: 6px;
+
+                .walk-controls-backboard-dog-selection-profile {
+                    width: 28px;
+                    height: 28px;
+                    border-radius: 50%;
+                    border: 1px solid var(--material-theme-ref-neutral-neutral80, #c5c5c5);
+                }
+                p {
+                    padding-top: 5px;
+                    @include inline-flexbox(center, center);
+                    width: 54px;
+                    @include custom-font-size(600, 32px, h2, 36px, -0.64px);
+                }
+            }
+        }
+        .walk-controls-backboard-dog-selection-step-container {
+            @include inline-flexbox(between, center);
+            width: 20px;
+            .walk-controls-backboard-dog-selection-step {
+                width: 4px;
+                height: 4px;
+                background-color: var(--material-theme-ref-neutral-neutral90, #e2e2e2);
+                border-radius: 50%;
+
+                &.active {
+                    background-color: var(--material-theme-key-colors-primary, #00af50);
+                }
+            }
+        }
+    }
+}
+
+.walk-result-info-dog-walk-kcal-info {
+    width: 192px;
+    h2 {
+        @include custom-font-size(400, 12px, b3-md, 16px, -0.24px);
+    }
+
+    .walk-controls-backboard-dog-selection-container {
+        width: 100%;
+        @include column-flexbox(center, center);
+        gap: 6px;
+
+        .walk-controls-backboard-dog-selection-info-container {
+            @include inline-flexbox(space-between, center);
+            width: 192px;
+            gap: 6px;
+
+            .walk-controls-backboard-dog-selection-info {
+                @include inline-flexbox(between, center);
+                height: 36px;
+                margin-right: 54px;
+
+                .walk-controls-backboard-dog-selection-profile {
+                    width: 28px;
+                    height: 28px;
+                    border-radius: 50%;
+                    border: 1px solid var(--material-theme-ref-neutral-neutral80, #c5c5c5);
+                }
+                p {
+                    padding-top: 5px;
+                    @include inline-flexbox(center, center);
+                    width: 54px;
+                    @include custom-font-size(600, 32px, h2, 36px, -0.64px);
+                }
+            }
+
+            svg {
+                flex-shrink: 0;
+            }
+        }
+
+        .walk-controls-backboard-dog-selection-step-container {
+            @include inline-flexbox(between, center);
+            width: 20px;
+
+            .walk-controls-backboard-dog-selection-step {
+                width: 4px;
+                height: 4px;
+                background-color: var(--material-theme-ref-neutral-neutral90, #e2e2e2);
+                border-radius: 50%;
+
+                &.active {
+                    background-color: var(--material-theme-key-colors-primary, #00af50);
+                }
+            }
+        }
+    }
+}

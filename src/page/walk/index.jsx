@@ -10,26 +10,23 @@ import {
 import { useGeoLocation } from "../../hooks/useGeoLocation"
 import { startMovement, stopMovement } from "../../utils/movement"
 import { useFooterVisibility } from "../../layout"
-
 import StartWalk from "./components/StartWalk"
 import StopWalk from "./components/StopWalk"
-
 import { ReactComponent as DogModalClose } from "../../assets/walk/DogModalClose.svg"
 import { ReactComponent as CheckDog } from "../../assets/walk/CheckDog.svg"
-
 import calculateBMICalories from "../../utils/walk/calculateBMICalories"
 import calculatePetCalories from "../../utils/walk/calculatePetCalories"
+import { Outlet, useNavigate } from "react-router-dom"
 
 const Walk = () => {
-  const [loadingCount, setLoadingCount] = useState(3)
-  const [timer, setTimer] = useState("00:00:00")
-  const [isPaused, setIsPaused] = useState(false) // 일시정지 상태 추가
-  const [showDogSelection, setShowDogSelection] = useState(false) // 강아지 선택 모달 상태 추가
-  const [selectedDogs, setSelectedDogs] = useState([]) // 선택된 강아지 상태 추가
-  const userInfo = {
-    height: 180,
-    weight: 72,
-  }
+  const [loadingCount, setLoadingCount] = useState(3) // 로딩 타이머 설정
+  const [timer, setTimer] = useState("00:00:00") // 타이머 설정
+  const [isPaused, setIsPaused] = useState(false) // 일시정지 유무
+  const [showDogSelection, setShowDogSelection] = useState(false) // 강아지 모달 유무
+  const [selectedDogs, setSelectedDogs] = useState([]) // 산책에 선택한 강아지
+  const [currentDogIndex, setCurrentDogIndex] = useState(0) // 현재 보고 있는 강아지 정보
+  const navigate = useNavigate()
+  const userInfo = { height: 180, weight: 72 }
   const { error, requestLocation, clearWatcher } = useGeoLocation({
     enableHighAccuracy: false,
     timeout: 1000 * 30,
@@ -74,30 +71,30 @@ const Walk = () => {
 
   const onClickStartTracking = useCallback(() => {
     if (selectedDogs.length === 0) {
-      // 선택된 강아지가 없는 경우 첫 번째 강아지를 자동 선택
       setSelectedDogs([dogs[0]])
     }
 
     dispatch(setLoadingState(true))
     requestLocation()
-    dispatch(setTrackingState(true))
+    dispatch(setTrackingState({ tracking: true, trackingState: "start" }))
     startMovement(dispatch, location)
     setShowFooter(false)
   }, [requestLocation, dispatch, location, setShowFooter, selectedDogs])
 
   const onClickPauseTracking = () => {
     setIsPaused(true)
+    dispatch(setTrackingState({ tracking: true, trackingState: "pause" }))
   }
 
   const onClickRestartTracking = () => {
     setIsPaused(false)
+    dispatch(setTrackingState({ tracking: true, trackingState: "restart" }))
   }
 
   const onClickStopTracking = () => {
     stopMovement()
-    dispatch(setTrackingState(false))
+    dispatch(setTrackingState({ tracking: false, trackingState: "stop" }))
     clearWatcher()
-    setShowFooter(true)
 
     const { height, weight } = userInfo
     const ownerCalories = calculateBMICalories(
@@ -115,7 +112,36 @@ const Walk = () => {
       )
       dispatch(updatePetCalories({ petId: dog.id, calories: petCalories }))
     })
+
+    navigate("/walk/result", {
+      state: {
+        path: location.path,
+        distance: location.distance,
+        timer,
+        ownerCalories,
+        selectedDogs,
+        petCalories: location.petCalories,
+      },
+    })
   }
+
+  const handleNextDog = () => {
+    setCurrentDogIndex((prevIndex) =>
+      prevIndex === selectedDogs.length - 1 ? 0 : prevIndex + 1
+    )
+  }
+
+  const handlePrevDog = () => {
+    setCurrentDogIndex((prevIndex) =>
+      prevIndex === 0 ? selectedDogs.length - 1 : prevIndex - 1
+    )
+  }
+
+  const currentDog = selectedDogs[currentDogIndex]
+
+  const currentDogCalories = location.petCalories.find(
+    (calorie) => calorie.petId === currentDog.id
+  )
 
   const handleDogSelection = (dog) => {
     if (selectedDogs.some((selectedDog) => selectedDog.id === dog.id)) {
@@ -153,6 +179,10 @@ const Walk = () => {
 
   if (error) return <div>{error}</div>
 
+  if (location.trackingState === "stop") {
+    return <Outlet />
+  }
+
   return (
     <>
       {location.loading ? (
@@ -182,6 +212,11 @@ const Walk = () => {
                   timer={timer}
                   location={location}
                   selectedDogs={selectedDogs}
+                  currentDog={currentDog}
+                  currentDogCalories={currentDogCalories}
+                  currentDogIndex={currentDogIndex}
+                  handleNextDog={handleNextDog}
+                  handlePrevDog={handlePrevDog}
                 />
               ) : (
                 <StartWalk

@@ -1,5 +1,15 @@
 import axios from "axios"
 
+export const loginUser = async (user) => {
+  try {
+    const res = await axios.post("/api/v1/user/login", user)
+    return res.data
+  } catch (e) {
+    console.error(e)
+    throw e
+  }
+}
+
 export const registerUser = async (userInfo) => {
   try {
     const res = await axios.post("/api/v1/user/register", userInfo)

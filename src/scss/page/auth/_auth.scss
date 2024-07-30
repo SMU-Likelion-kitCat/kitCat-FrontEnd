@@ -1,246 +1,246 @@
 .auth-container {
-    @include column-flexbox(start, center);
-    position: relative;
+  @include column-flexbox(start, center);
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  padding: 20px;
+  background-color: #fff;
+
+  .auth-login-container {
+    @include column-flexbox(center, between);
     width: 100%;
-    height: 100vh;
-    padding: 20px;
-    background-color: #fff;
 
-    .auth-login-container {
-        @include column-flexbox(center, between);
-        width: 100%;
-
-        .auth-login-logo-container {
-            @include inline-flexbox(center, center);
-            .auth-login-logo {
-                margin: 81px 0 25px 0;
-                width: 88.163px;
-                height: 34.355px;
-                background: #d9d9d9;
-            }
-        }
-
-        .auth-login-title {
-            @include inline-flexbox(center, center);
-            @include custom-font-size(700, 28px, h2, 36px, -0.56px);
-            letter-spacing: -0.56px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .auth-login-input-container {
-            @include column-flexbox(center, start);
-            gap: 12px;
-            .auth-login-input {
-                box-sizing: border-box;
-                width: 100%;
-                padding: 20px;
-                @include custom-font-size(400, 18px, t3-ph, 24px, -0.36px);
-                border-radius: 12px;
-                border: 1px solid var(--material-theme-ref-neutral-neutral90, #e2e2e2);
-                background: var(--wt-bk-white, #fff);
-            }
-            .auth-login-lost-p {
-                @include custom-font-size(400, 14px, b2-md, 18px, -0.28px);
-                display: flex;
-
-                .auth-login-lost-logo-background {
-                    @include inline-flexbox(center, center);
-                    margin-left: 4px;
-                    background-color: #f0f0f0;
-                    width: 16px;
-                    height: 16px;
-                    border-radius: 50px;
-                }
-            }
-        }
-
-        .auth-login-button {
-            position: absolute;
-            bottom: 160px;
-            background-color: #53e07a;
-            text-align: center;
-            @include custom-font-size(600, 18px, t3, 24px, -0.36px);
-            padding: 18px 110px;
-            border-radius: 12px;
-            width: 90%;
-            transition: background-color 0.3s;
-
-            &.active {
-                background-color: #00a74c;
-            }
-        }
-
-        .auth-login-navigate-register-button {
-            position: absolute;
-            bottom: 86px;
-            text-align: center;
-            @include custom-font-size(600, 18px, t3, 24px, -0.36px);
-            padding: 18px 110px;
-            border-radius: 12px;
-            width: 90%;
-            border-radius: 12px;
-            border: 1px solid var(--material-theme-ref-neutral-neutral90, #e2e2e2);
-            background: var(--wt-bk-white, #fff);
-        }
+    .auth-login-logo-container {
+      @include inline-flexbox(center, center);
+      .auth-login-logo {
+        margin: 81px 0 35px 0;
+        // width: 88.163px;
+        // height: 34.355px;
+        // background: #d9d9d9;
+      }
     }
 
-    .auth-register-container {
-        @include column-flexbox(center, between);
+    .auth-login-title {
+      @include inline-flexbox(center, center);
+      @include custom-font-size(700, 28px, h2, 36px, -0.56px);
+      letter-spacing: -0.56px;
+      margin-bottom: 35px;
+      text-align: center;
+    }
+
+    .auth-login-input-container {
+      @include column-flexbox(center, start);
+      gap: 12px;
+      .auth-login-input {
+        box-sizing: border-box;
         width: 100%;
-        
-        .auth-register-back-button {
-          width: 28px;
-          height: 28px;
-          margin-top: 64px;
-          margin-bottom: 20px;
-          cursor: pointer;
-        }
-    
-        .auth-register-progress-container {
+        padding: 20px;
+        @include custom-font-size(400, 18px, t3-ph, 24px, -0.36px);
+        border-radius: 12px;
+        border: 1px solid var(--material-theme-ref-neutral-neutral90, #e2e2e2);
+        background: var(--wt-bk-white, #fff);
+      }
+      .auth-login-lost-p {
+        @include custom-font-size(400, 14px, b2-md, 18px, -0.28px);
+        display: flex;
+
+        .auth-login-lost-logo-background {
           @include inline-flexbox(center, center);
-          width: 100%;
-          margin-bottom: 32px;
-    
-          .progress-bar {
-            width: 100%;
-            height: 10px;
-            background-color: #e0e0e0;
-            border-radius: 5px;
-            overflow: hidden;
-          }
-    
-          .progress {
-            height: 10px;
-            background-color: #00AF50;
-            width: 0;
-            transition: width 0.3s ease;
-          }
-        }
-    
-        .auth-register-title {
-          @include inline-flexbox(flex-start, center);
-          @include custom-font-size(700, 28px, h2, 36px, -0.56px);
-          letter-spacing: -0.56px;
-          margin-bottom: 24px;
-          text-align: left;
-        }
-    
-        .auth-register-input-container {
-          @include column-flexbox(center, start);
-          position: relative; // Ensure positioning context for the icon
-          gap: 12px;
-          width: 100%;
-        
-          .auth-register-input {
-            box-sizing: border-box;
-            width: 100%;
-            padding: 20px;
-            @include custom-font-size(400, 18px, t3-ph, 24px, -0.36px);
-            border-radius: 12px;
-            border: 1px solid var(--material-theme-ref-neutral-neutral90, #e2e2e2);
-            background: var(--wt-bk-white, #fff);
-            transition: border-color 0.3s;
-        
-            &.focused {
-              color: #181D18;
-              border-color: #00AF50;
-            }
-          }
-        
-          .auth-register-input-icon {
-            position: absolute;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 20px;
-            height: 20px;
-            cursor: pointer;
-          }
-        
-          .auth-register-error {
-            color: red;
-            font-size: 14px;
-            margin-top: 8px;
-            position: absolute; // Make sure it doesn't affect the layout
-            bottom: -24px; // Adjust as needed to fit well below the input
-            left: 20px; // Align with input field
-            width: calc(100% - 40px); // Ensure full width considering padding
-          }
-        }
-
-        .auth-register-char-count{
-          color: #B7B7B7;
-        }
-
-        .auth-register-condition-wrap{
-          margin-top:12px;
-          margin-bottom: 20px;
-        }
-        
-        .auth-register-password-condition {
-          display: flex;
-          align-items: center;
-          margin-bottom: 9px;
-        
-          .circle {
-            width: 20px;
-            height: 20px;
-            border: 1px solid #D0D0D0;
-            border-radius: 50%;
-            margin-right: 8px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            &.active {
-              background-color: #149D9D;
-              border-color: #149D9D;
-            }
-            img {
-              display: block;
-              width: 9.92px;
-              height: 7.57px;
-              filter: brightness(0) invert(1); /* Ensures the image is visible on dark backgrounds */
-            }
-          }
-        
-          p {
-            color: #525252;
-            font-size: 14px;
-            font-weight: 400;
-            line-height: 18px;
-            &.active {
-              color: #149D9D;
-            }
-          }
-        }
-    
-        .auth-register-next-button {
-          position: absolute;
-          bottom: 86px;
-          text-align: center;
-          @include custom-font-size(600, 18px, t3, 24px, -0.36px);
-          padding: 18px 110px;
-          border-radius: 12px;
-          width: 90%;
-          background: var(--wt-bk-white, #fff);
-          cursor: pointer;
-          transition: background-color 0.3s;
-    
-          &:disabled {
-            background-color: #F6F6F6;
-            color: #C5C5C5;
-            cursor: not-allowed;
-          }
-    
-          &:not(:disabled) {
-            background-color: #53e07a;
-            color: #002109;
-          }
-    
-          &:hover:not(:disabled) {
-            background-color: #00a74c;
-          }
+          margin-left: 4px;
+          background-color: #f0f0f0;
+          width: 16px;
+          height: 16px;
+          border-radius: 50px;
         }
       }
+    }
+
+    .auth-login-button {
+      position: absolute;
+      bottom: 160px;
+      background-color: #53e07a;
+      text-align: center;
+      @include custom-font-size(600, 18px, t3, 24px, -0.36px);
+      padding: 18px 110px;
+      border-radius: 12px;
+      width: 90%;
+      transition: background-color 0.3s;
+
+      &.active {
+        background-color: #00a74c;
+      }
+    }
+
+    .auth-login-navigate-register-button {
+      position: absolute;
+      bottom: 86px;
+      text-align: center;
+      @include custom-font-size(600, 18px, t3, 24px, -0.36px);
+      padding: 18px 110px;
+      border-radius: 12px;
+      width: 90%;
+      border-radius: 12px;
+      border: 1px solid var(--material-theme-ref-neutral-neutral90, #e2e2e2);
+      background: var(--wt-bk-white, #fff);
+    }
+  }
+
+  .auth-register-container {
+    @include column-flexbox(center, between);
+    width: 100%;
+
+    .auth-register-back-button {
+      width: 28px;
+      height: 28px;
+      margin-top: 64px;
+      margin-bottom: 20px;
+      cursor: pointer;
+    }
+
+    .auth-register-progress-container {
+      @include inline-flexbox(center, center);
+      width: 100%;
+      margin-bottom: 32px;
+
+      .progress-bar {
+        width: 100%;
+        height: 10px;
+        background-color: #e0e0e0;
+        border-radius: 5px;
+        overflow: hidden;
+      }
+
+      .progress {
+        height: 10px;
+        background-color: #00af50;
+        width: 0;
+        transition: width 0.3s ease;
+      }
+    }
+
+    .auth-register-title {
+      @include inline-flexbox(flex-start, center);
+      @include custom-font-size(700, 28px, h2, 36px, -0.56px);
+      letter-spacing: -0.56px;
+      margin-bottom: 24px;
+      text-align: left;
+    }
+
+    .auth-register-input-container {
+      @include column-flexbox(center, start);
+      position: relative; // Ensure positioning context for the icon
+      gap: 12px;
+      width: 100%;
+
+      .auth-register-input {
+        box-sizing: border-box;
+        width: 100%;
+        padding: 20px;
+        @include custom-font-size(400, 18px, t3-ph, 24px, -0.36px);
+        border-radius: 12px;
+        border: 1px solid var(--material-theme-ref-neutral-neutral90, #e2e2e2);
+        background: var(--wt-bk-white, #fff);
+        transition: border-color 0.3s;
+
+        &.focused {
+          color: #181d18;
+          border-color: #00af50;
+        }
+      }
+
+      .auth-register-input-icon {
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+      }
+
+      .auth-register-error {
+        color: red;
+        font-size: 14px;
+        margin-top: 8px;
+        position: absolute; // Make sure it doesn't affect the layout
+        bottom: -24px; // Adjust as needed to fit well below the input
+        left: 20px; // Align with input field
+        width: calc(100% - 40px); // Ensure full width considering padding
+      }
+    }
+
+    .auth-register-char-count {
+      color: #b7b7b7;
+    }
+
+    .auth-register-condition-wrap {
+      margin-top: 12px;
+      margin-bottom: 20px;
+    }
+
+    .auth-register-password-condition {
+      display: flex;
+      align-items: center;
+      margin-bottom: 9px;
+
+      .circle {
+        width: 20px;
+        height: 20px;
+        border: 1px solid #d0d0d0;
+        border-radius: 50%;
+        margin-right: 8px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        &.active {
+          background-color: #149d9d;
+          border-color: #149d9d;
+        }
+        img {
+          display: block;
+          width: 9.92px;
+          height: 7.57px;
+          filter: brightness(0) invert(1); /* Ensures the image is visible on dark backgrounds */
+        }
+      }
+
+      p {
+        color: #525252;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 18px;
+        &.active {
+          color: #149d9d;
+        }
+      }
+    }
+
+    .auth-register-next-button {
+      position: absolute;
+      bottom: 86px;
+      text-align: center;
+      @include custom-font-size(600, 18px, t3, 24px, -0.36px);
+      padding: 18px 110px;
+      border-radius: 12px;
+      width: 90%;
+      background: var(--wt-bk-white, #fff);
+      cursor: pointer;
+      transition: background-color 0.3s;
+
+      &:disabled {
+        background-color: #f6f6f6;
+        color: #c5c5c5;
+        cursor: not-allowed;
+      }
+
+      &:not(:disabled) {
+        background-color: #53e07a;
+        color: #002109;
+      }
+
+      &:hover:not(:disabled) {
+        background-color: #00a74c;
+      }
+    }
+  }
 }
