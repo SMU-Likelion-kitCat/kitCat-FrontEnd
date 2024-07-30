@@ -1,15 +1,16 @@
+import gwangil from "../../../assets/community/artworks-CGAHtflzN25NllgL-F6AgTQ-t500x500.jpg";
+
 const Dum = [
   {
     postId: 1,
     author: "나",
     elapsedTime: "10분",
     title: "정준경 개패기",
-    picture:
-      "src/assets/community/artworks-CGAHtflzN25NllgL-F6AgTQ-t500x500.jpg",
+    picture: gwangil,
     content: "정준경을 개패보아요",
-    response: 334,
+    response: 2,
 
-    comments: [
+    comment: [
       {
         id: 1,
         author: "광일",
@@ -29,6 +30,15 @@ const Dum = [
         elapsedTime: "1시간",
       },
     ],
+  },
+  {
+    postId: 2,
+    author: "너",
+    elapsedTime: "20분",
+    title: "신구앙일",
+    picture: gwangil,
+    content: "광일짜아ㅉ앙맨",
+    response: 3,
   },
 ];
 
