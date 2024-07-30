@@ -18,6 +18,7 @@ const InfoNextButton = ({ step, nextStep, signupInfo }) => {
           password: signupInfo.password,
           height: signupInfo.height,
           weight: signupInfo.weight,
+          bmi: signupInfo.bmi,
         }
         const accessToken = await registerUser(userInfo)
         console.log("회원가입 완료, 토큰:", accessToken)

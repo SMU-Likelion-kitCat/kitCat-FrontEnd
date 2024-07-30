@@ -79,9 +79,9 @@
 import apiConfig from "./apiConfig"
 
 // 로그인 유저 정보 조회
-export const loginUserInfo = async (user) => {
+export const loginUserInfo = async () => {
   try {
-    const res = await apiConfig.post("/user/info", user)
+    const res = await apiConfig.get("/user/info")
     return res.data
   } catch (e) {
     console.error(e)
@@ -148,6 +148,38 @@ export const checkEmail = async (email) => {
     if (e.response && e.response.status === 409) {
       return false
     }
+    console.error(e)
+    throw e
+  }
+}
+
+// 루틴 생성
+export const createRoutine = async (routineData) => {
+  try {
+    const res = await apiConfig.post("/routine/save", routineData)
+    return res.data
+  } catch (e) {
+    console.error(e)
+    throw e
+  }
+}
+
+// 루틴 목록 조회
+export const getRoutines = async () => {
+  try {
+    const res = await apiConfig.get("/routine/list")
+    return res.data
+  } catch (e) {
+    console.error(e)
+    throw e
+  }
+}
+
+export const getRoutineDetail = async (routineId) => {
+  try {
+    const res = await apiConfig.get(`/routine/record/${routineId}`)
+    return res.data
+  } catch (e) {
     console.error(e)
     throw e
   }
