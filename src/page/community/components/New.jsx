@@ -6,6 +6,7 @@ import { ReactComponent as AddPicturePlus } from "../../../assets/community/AddP
 // import { ReactComponent as Delete } from "../../../assets/community/Delete.svg";
 const New = () => {
   const navigate = useNavigate();
+  const handlePostSubmit = () => {};
 
   return (
     <div className="community-new-container">
@@ -14,20 +15,25 @@ const New = () => {
           onClick={() => navigate(-1)}
           className="community-back-button"
         />
-        <button className="community-new-edit-button">확인</button>
+        <button
+          onClick={handlePostSubmit}
+          className="community-new-edit-button"
+        >
+          확인
+        </button>
       </div>
-      {/* <textarea
+
+      <input
+        type="text"
+        placeholder="글 제목을 입력하세요."
         className="community-new-title-input"
-        placeholder="글 제목을 입력하세요"
-      ></textarea> */}
-      <div className="community-new-title-input">
-        <div contenteditable="true">이곳에 텍스트를 입력하세요.</div>
-      </div>
+      ></input>
       <hr className="title-hr" />
-      <textarea
+      <input
+        type="text"
         className="community-new-content-input"
         placeholder="내용을 입력하세요"
-      ></textarea>
+      ></input>
       <div>
         <form>
           <div className="community-new-add-picture">

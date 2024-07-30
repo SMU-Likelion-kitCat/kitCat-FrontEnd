@@ -1,15 +1,20 @@
-import React, { useState, createContext, useContext } from "react"
-import { Outlet, useLocation } from "react-router-dom"
-import Footer from "./Footer"
+import React, { useState, createContext, useContext } from "react";
+import { Outlet, useLocation } from "react-router-dom";
+import Footer from "./Footer";
 
 // footer 표시를 위한 컨텍스트 생성
-const FooterVisibilityContext = createContext()
+const FooterVisibilityContext = createContext();
 
-export const useFooterVisibility = () => useContext(FooterVisibilityContext)
+export const useFooterVisibility = () => useContext(FooterVisibilityContext);
+
+// footer 표시를 위한 컨텍스트 생성
+const FooterVisibilityContext = createContext();
+
+export const useFooterVisibility = () => useContext(FooterVisibilityContext);
 
 const Layout = () => {
-  const [showFooter, setShowFooter] = useState(true)
-  const location = useLocation()
+  const [showFooter, setShowFooter] = useState(true);
+  const location = useLocation();
 
   // footer가 표시되지 않아야 하는 경로 정의
   const noFooterPaths = [
@@ -20,11 +25,11 @@ const Layout = () => {
     "/auth/register/info",
     "/routine/ongoing",
     "/routine/ongoing:id",
-  ]
+  ];
 
   // showFooter true이고 noFooterPaths에 정의되지 않았을 때, footer가 표시
   const footerVisible =
-    showFooter && !noFooterPaths.some((path) => location.pathname === path)
+    showFooter && !noFooterPaths.some((path) => location.pathname === path);
 
   // const useNofooterRoutineLayout = "/routine/".some((path) =>
   //   path.include(location.pathname)
@@ -38,10 +43,10 @@ const Layout = () => {
     "/auth/login",
     "/auth/register",
     "/auth/register/info",
-  ]
+  ];
   const useNofooterLayout = footerPathsWithNoFooterLayout.some(
     (path) => location.pathname === path
-  )
+  );
 
   return (
     <FooterVisibilityContext.Provider value={{ showFooter, setShowFooter }}>
@@ -62,7 +67,7 @@ const Layout = () => {
         </footer>
       )}
     </FooterVisibilityContext.Provider>
-  )
-}
+  );
+};
 
-export default Layout
+export default Layout;
