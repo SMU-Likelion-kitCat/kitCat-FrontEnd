@@ -8,9 +8,9 @@ const FooterVisibilityContext = createContext();
 export const useFooterVisibility = () => useContext(FooterVisibilityContext);
 
 // footer 표시를 위한 컨텍스트 생성
-const FooterVisibilityContext = createContext();
+// const FooterVisibilityContext = createContext();
 
-export const useFooterVisibility = () => useContext(FooterVisibilityContext);
+// export const useFooterVisibility = () => useContext(FooterVisibilityContext);
 
 const Layout = () => {
   const [showFooter, setShowFooter] = useState(true);

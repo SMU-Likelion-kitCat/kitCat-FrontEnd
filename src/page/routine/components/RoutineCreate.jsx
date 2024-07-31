@@ -442,31 +442,31 @@
 
 // export default RoutineForm
 
-import React, { useState, useRef, useEffect } from "react"
-import { ReactComponent as BackArrow } from "../../../assets/auth/register/BackArrow.svg"
-import { ReactComponent as Close } from "../../../assets/routine/Close.svg"
-import { ReactComponent as DropBoxArrow } from "../../../assets/routine/DropBoxArrow.svg"
-import { ReactComponent as GreenCheck } from "../../../assets/routine/GreenCheck.svg"
-import { ReactComponent as Check } from "../../../assets/routine/Check.svg"
-import { ReactComponent as ResetTurn } from "../../../assets/routine/ResetTurn.svg"
-import { ReactComponent as Exclam } from "../../../assets/routine/Exclamation.svg"
-import { useNavigate } from "react-router-dom"
-import { createRoutine } from "../../../api" // API 호출 함수 가져오기
+import React, { useState, useRef, useEffect } from "react";
+import { ReactComponent as BackArrow } from "../../../assets/auth/register/BackArrow.svg";
+import { ReactComponent as Close } from "../../../assets/routine/Close.svg";
+import { ReactComponent as DropBoxArrow } from "../../../assets/routine/DropBoxArrow.svg";
+import { ReactComponent as GreenCheck } from "../../../assets/routine/GreenCheck.svg";
+import { ReactComponent as Check } from "../../../assets/routine/Check.svg";
+import { ReactComponent as ResetTurn } from "../../../assets/routine/ResetTurn.svg";
+import { ReactComponent as Exclam } from "../../../assets/routine/Exclamation.svg";
+import { useNavigate } from "react-router-dom";
+import { createRoutine } from "../../../api"; // API 호출 함수 가져오기
 
 // 루틴 등록하는 컴포넌트
 const RoutineForm = () => {
-  const [isModalOpen, setModalOpen] = useState(false)
-  const [isUnitDropdownOpen, setUnitDropdownOpen] = useState(false)
-  const [isAmountDropdownOpen, setAmountDropdownOpen] = useState(false)
-  const [selectedUnit, setSelectedUnit] = useState("하루")
-  const [selectedAmount, setSelectedAmount] = useState("1")
-  const [routineName, setRoutineName] = useState("")
-  const [finalGoal, setFinalGoal] = useState("")
-  const [stepGoalUnit, setStepGoalUnit] = useState("")
-  const [selectedDuration, setSelectedDuration] = useState("")
-  const [todayDate, setTodayDate] = useState(new Date())
-  const [selectedColor, setSelectedColor] = useState(null)
-  const [selectedRoutineType, setSelectedRoutineType] = useState("")
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [isUnitDropdownOpen, setUnitDropdownOpen] = useState(false);
+  const [isAmountDropdownOpen, setAmountDropdownOpen] = useState(false);
+  const [selectedUnit, setSelectedUnit] = useState("하루");
+  const [selectedAmount, setSelectedAmount] = useState("1");
+  const [routineName, setRoutineName] = useState("");
+  const [finalGoal, setFinalGoal] = useState("");
+  const [stepGoalUnit, setStepGoalUnit] = useState("");
+  const [selectedDuration, setSelectedDuration] = useState("");
+  const [todayDate, setTodayDate] = useState(new Date());
+  const [selectedColor, setSelectedColor] = useState(null);
+  const [selectedRoutineType, setSelectedRoutineType] = useState("");
 
   const colors = [
     "#F8DEDE",
@@ -475,11 +475,11 @@ const RoutineForm = () => {
     "#E1F0FB",
     "#F1EBF9",
     "#FFEAF4",
-  ]
+  ];
 
   useEffect(() => {
-    setTodayDate(new Date())
-  }, [])
+    setTodayDate(new Date());
+  }, []);
 
   const formatDate = (date) => {
     const options = {
@@ -487,30 +487,30 @@ const RoutineForm = () => {
       month: "2-digit",
       day: "2-digit",
       weekday: "short",
-    }
-    const formatter = new Intl.DateTimeFormat("ko-KR", options)
-    const parts = formatter.formatToParts(date)
+    };
+    const formatter = new Intl.DateTimeFormat("ko-KR", options);
+    const parts = formatter.formatToParts(date);
 
-    const day = parts.find((part) => part.type === "day").value
-    const month = parts.find((part) => part.type === "month").value
-    const year = parts.find((part) => part.type === "year").value
-    const weekday = parts.find((part) => part.type === "weekday").value
+    const day = parts.find((part) => part.type === "day").value;
+    const month = parts.find((part) => part.type === "month").value;
+    const year = parts.find((part) => part.type === "year").value;
+    const weekday = parts.find((part) => part.type === "weekday").value;
 
-    return `${year}.${month}.${day} (${weekday})`
-  }
+    return `${year}.${month}.${day} (${weekday})`;
+  };
 
-  const navigate = useNavigate()
-  const unitDropdownRef = useRef(null)
-  const amountDropdownRef = useRef(null)
+  const navigate = useNavigate();
+  const unitDropdownRef = useRef(null);
+  const amountDropdownRef = useRef(null);
 
   const handleSubmit = async (event) => {
-    event.preventDefault()
+    event.preventDefault();
 
     const routineTypeMapping = {
       "시간 목표를 달성하는 방식": "시간 목표",
       "칼로리 목표를 달성하는 방식": "칼로리 목표",
       "산책 거리 목표를 달성하는 방식": "산책 거리 목표",
-    }
+    };
 
     const routineData = {
       name: routineName,
@@ -522,60 +522,60 @@ const RoutineForm = () => {
       routineTerm: selectedDuration,
       routineBase: selectedUnit,
       count: selectedAmount,
-    }
+    };
 
     try {
-      const response = await createRoutine(routineData)
-      console.log("루틴 만들기 성공:", response)
-      navigate("../../routine/ongoing")
+      const response = await createRoutine(routineData);
+      console.log("루틴 만들기 성공:", response);
+      navigate("../../routine/ongoing");
     } catch (error) {
-      console.error("루틴 만들기 실패:", error)
+      console.error("루틴 만들기 실패:", error);
     }
-  }
+  };
 
   const handleClick = (event) => {
-    event.preventDefault()
-    setModalOpen(true)
-  }
+    event.preventDefault();
+    setModalOpen(true);
+  };
 
   const closeModal = () => {
-    setModalOpen(false)
-  }
+    setModalOpen(false);
+  };
 
   const handleMoreClick_Back = () => {
-    navigate("../../routine")
-  }
+    navigate("../../routine");
+  };
 
   const toggleUnitDropdown = () => {
-    setUnitDropdownOpen(!isUnitDropdownOpen)
-  }
+    setUnitDropdownOpen(!isUnitDropdownOpen);
+  };
 
   const toggleAmountDropdown = () => {
-    setAmountDropdownOpen(!isAmountDropdownOpen)
-  }
+    setAmountDropdownOpen(!isAmountDropdownOpen);
+  };
 
   const handleUnitSelect = (unit) => {
-    setSelectedUnit(unit)
-    setUnitDropdownOpen(false)
-  }
+    setSelectedUnit(unit);
+    setUnitDropdownOpen(false);
+  };
 
   const handleAmountSelect = (amount) => {
-    setSelectedAmount(amount)
-    setAmountDropdownOpen(false)
-  }
+    setSelectedAmount(amount);
+    setAmountDropdownOpen(false);
+  };
 
   const handleDurationSelect = (duration) => {
-    setSelectedDuration(duration)
-  }
+    setSelectedDuration(duration);
+  };
 
   const handleColorSelect = (color) => {
-    setSelectedColor(color)
-  }
+    setSelectedColor(color);
+  };
 
   const handleRoutineTypeSelect = (type) => {
-    setSelectedRoutineType(type)
-    closeModal()
-  }
+    setSelectedRoutineType(type);
+    closeModal();
+  };
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -583,46 +583,46 @@ const RoutineForm = () => {
         unitDropdownRef.current &&
         !unitDropdownRef.current.contains(event.target)
       ) {
-        setUnitDropdownOpen(false)
+        setUnitDropdownOpen(false);
       }
       if (
         amountDropdownRef.current &&
         !amountDropdownRef.current.contains(event.target)
       ) {
-        setAmountDropdownOpen(false)
+        setAmountDropdownOpen(false);
       }
-    }
-    document.addEventListener("mousedown", handleClickOutside)
+    };
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside)
-    }
-  }, [])
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const getFinalGoalLabel = () => {
     switch (selectedRoutineType) {
       case "시간 목표를 달성하는 방식":
-        return "최종 목표 시간"
+        return "최종 목표 시간";
       case "칼로리 목표를 달성하는 방식":
-        return "최종 목표 칼로리"
+        return "최종 목표 칼로리";
       case "산책 거리 목표를 달성하는 방식":
-        return "최종 목표 거리"
+        return "최종 목표 거리";
       default:
-        return "최종 목표"
+        return "최종 목표";
     }
-  }
+  };
 
   const getFinalGoalUnit = () => {
     switch (selectedRoutineType) {
       case "시간 목표를 달성하는 방식":
-        return "분"
+        return "분";
       case "칼로리 목표를 달성하는 방식":
-        return "kcal"
+        return "kcal";
       case "산책 거리 목표를 달성하는 방식":
-        return "m"
+        return "m";
       default:
-        return ""
+        return "";
     }
-  }
+  };
 
   const isFormValid = () => {
     return (
@@ -634,8 +634,8 @@ const RoutineForm = () => {
       selectedDuration &&
       selectedColor &&
       selectedRoutineType
-    )
-  }
+    );
+  };
 
   return (
     <div className="setroutine-container">
@@ -830,14 +830,14 @@ const RoutineForm = () => {
               type="button"
               className="setroutine-reset-button"
               onClick={() => {
-                setRoutineName("")
-                setFinalGoal("")
-                setStepGoalUnit("")
-                setSelectedUnit("하루")
-                setSelectedAmount("1")
-                setSelectedDuration("1주")
-                setSelectedColor(null)
-                setSelectedRoutineType("")
+                setRoutineName("");
+                setFinalGoal("");
+                setStepGoalUnit("");
+                setSelectedUnit("하루");
+                setSelectedAmount("1");
+                setSelectedDuration("1주");
+                setSelectedColor(null);
+                setSelectedRoutineType("");
               }}
             >
               초기화
@@ -888,7 +888,7 @@ const RoutineForm = () => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default RoutineForm
+export default RoutineForm;

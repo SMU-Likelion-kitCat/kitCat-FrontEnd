@@ -76,6 +76,7 @@
 //   }
 // }
 
+import axios from "axios";
 import apiConfig from "./apiConfig";
 
 // 로그인 유저 정보 조회
@@ -181,6 +182,30 @@ export const getRoutineDetail = async (routineId) => {
     return res.data;
   } catch (e) {
     console.error(e);
+    throw e;
+  }
+};
+
+export const postShowAll = async (listData) => {
+  try {
+    const res = await axios.get(`/post/show/all`, { params: listData });
+    return res.data;
+  } catch (e) {
+    console.error(e);
+    throw e;
+  }
+};
+
+export const postCreate = async (formData) => {
+  try {
+    const res = await axios.post(`/post/create`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return res.data;
+  } catch (e) {
+    console.log(e.response?.data || e.message);
     throw e;
   }
 };
