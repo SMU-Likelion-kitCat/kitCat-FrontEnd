@@ -7,15 +7,18 @@ $font-map: (
   t3-sm: var(--material-theme-ref-neutral-neutral80, #c5c5c5),
   sh: var(--material-theme-ref-neutral-neutral30, #454545),
   b2-md: var(--material-theme-ref-neutral-neutral50, #757575),
+  b2-sm: var(--material-theme-ref-secondary-secondary40, #49654b),
   b3-sm: var(--material-theme-ref-primary-primary30, #005322),
+  b3-smg: var(--Schemes-Primary, #34693f),
   b3-smb: var(--Schemes-On-Primary, #fff),
   b3-md: var(--material-theme-ref-neutral-neutral60, #8f8f8f),
+  b3-mdg: var(--material-theme-ref-neutral-neutral35, #515151),
   m1: var(--material-theme-ref-neutral-neutral40, #5d5d5d),
   m2: var(--material-theme-ref-neutral-neutral98, #f6f6f6),
   m3: var(--material-theme-ref-neutral-neutral90, #e2e2e2),
   m4: var(--gray-gray800, #333),
   m5: var(--material-theme-ref-error-error60, #ff5449),
-  m6: #2b75cb,
+  m6: #2b75cb
 );
 
 @function _get-font-value($key) {

@@ -1,6 +1,6 @@
 import React from "react"
 import { ReactComponent as DogLogo } from "../../../assets/walk/DogLogo.svg"
-import { ReactComponent as CurrentPosition } from "../../../assets/walk/CurrentPosition.svg"
+import { ReactComponent as ChatBotIcon } from "../../../assets/ChatBotIcon.svg"
 import { ReactComponent as StartIcon } from "../../../assets/walk/StartIcon.svg"
 
 const StartWalk = ({
@@ -45,9 +45,13 @@ const StartWalk = ({
             <p className="walk-controls-start-button-text">산책 시작</p>
           </button>
         </div>
-        <div className="walk-controls-current-position">
-          <CurrentPosition />
+        {/* <div className="walk-controls-chatbot-icon-container"> */}
+        <div className="walk-controls-chatbot-icon">
+          <ChatBotIcon />
+          챗봇
         </div>
+
+        {/* </div> */}
       </div>
     </div>
   )

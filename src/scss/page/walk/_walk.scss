@@ -221,8 +221,16 @@
                 }
             }
 
-            .walk-controls-current-position {
-                @include inline-flexbox(center, center);
+            .walk-controls-chatbot-icon {
+                @include column-flexbox(center, center);
+                background-color: #fff;
+                width: 64px;
+                height: 64px;
+                border-radius: 50%;
+                z-index: 1;
+                filter: drop-shadow(0px 0px 12px rgba(0, 0, 0, 0.2));
+
+                @include custom-font-size(600, 10px, b3-smg, 16px, -0.2px);
             }
         }
     }
