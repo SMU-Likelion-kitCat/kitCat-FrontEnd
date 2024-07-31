@@ -1,12 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
 import { ReactComponent as CommunityAddIcon } from "../../../assets/community/CommunityAddIcon.svg";
 import { ReactComponent as Comment } from "../../../assets/community/Comment.svg";
 import { ReactComponent as Heart } from "../../../assets/community/Heart.svg";
 import { ReactComponent as NewButton } from "../../../assets/community/NewButton.svg";
+import { ReactComponent as FillHeart } from "../../../assets/community/FillHeart.svg";
 import Dum from "../../community/components/Dum";
 import { useNavigate } from "react-router-dom";
-const Main = (post) => {
+
+const Main = () => {
   const navigate = useNavigate();
+
+  const [postLikes, setPostLikes] = useState(
+    Dum.reduce((likes, post) => {
+      likes[post.postId] = {
+        isLiked: false,
+        likeCount: post.response,
+      };
+      return likes;
+    }, {})
+  );
+
+  const handleLikeClick = (postId, e) => {
+    e.stopPropagation();
+
+    setPostLikes((prevPostLikes) => {
+      const post = prevPostLikes[postId];
+      return {
+        ...prevPostLikes,
+        [postId]: {
+          isLiked: !post.isLiked,
+          likeCount: post.isLiked ? post.likeCount - 1 : post.likeCount + 1,
+        },
+      };
+    });
+  };
+
   return (
     <>
       <div className="community-content-container">
@@ -18,9 +46,8 @@ const Main = (post) => {
           <div
             key={post.postId}
             className="community-content-list-wrapper"
-            onClick={() => navigate(`/community/${post.postId}`)}
+            onClick={() => navigate(`/community/postId/${post.postId}`)}
           >
-            <hr className="over-hr" />
             <div className="community-content-list">
               <div className="community-content-state">
                 <div className="community-content-list-response">
@@ -41,14 +68,24 @@ const Main = (post) => {
                   <div className="community-content-comment-icon">
                     <Comment />
                   </div>
-                  <div className="community-content-comment-count">5</div>
-                </div>
-                <div className="community-content-heart-icon-wrapper">
-                  <div className="community-content-heart-icon">
-                    <Heart />
+                  <div className="community-content-comment-count">
+                    {post.comments ? post.comments.length : 0}
                   </div>
+                </div>
+                <div
+                  className="community-content-heart-icon-wrapper"
+                  onClick={(e) => handleLikeClick(post.postId, e)}
+                >
+                  <div className="community-content-heart-icon">
+                    {postLikes[post.postId]?.isLiked ? (
+                      <FillHeart />
+                    ) : (
+                      <Heart />
+                    )}
+                  </div>
+
                   <div className="community-content-heart-count">
-                    {post.response}
+                    {postLikes[post.postId]?.likeCount || 0}
                   </div>
                 </div>
               </div>
@@ -71,4 +108,5 @@ const Main = (post) => {
     </>
   );
 };
+
 export default Main;

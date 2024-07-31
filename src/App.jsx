@@ -30,8 +30,10 @@ import "./scss/style.scss"
 import { RouterProvider } from "react-router-dom"
 import router from "./router"
 import { Provider, useDispatch } from "react-redux"
-import store from "./redux/store"
+import { PersistGate } from "redux-persist/integration/react"
+
 import { startTokenCheckInterval } from "./components/LoginCheck"
+import { store, persistor } from "./redux/store"
 
 const AppContent = () => {
   const dispatch = useDispatch()
@@ -46,7 +48,9 @@ const AppContent = () => {
 const App = () => {
   return (
     <Provider store={store}>
-      <AppContent />
+      <PersistGate loading={null} persistor={persistor}>
+        <AppContent />
+      </PersistGate>
     </Provider>
   )
 }

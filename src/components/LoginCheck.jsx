@@ -3,7 +3,7 @@ import { useSelector } from "react-redux"
 import { Navigate } from "react-router-dom"
 
 import apiConfig from "../api/apiConfig"
-import store from "../redux/store"
+import { store } from "../redux/store"
 import { logout } from "../redux/auth"
 
 const LoginCheck = ({ element }) => {
