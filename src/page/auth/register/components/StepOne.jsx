@@ -1,33 +1,33 @@
-import React, { useState } from "react"
-import { ReactComponent as Resetbutton } from "../../../../assets/auth/Reset.svg"
-import { checkEmail } from "../../../../api" // Import the API function
+import React, { useState } from "react";
+import { ReactComponent as Resetbutton } from "../../../../assets/auth/Reset.svg";
+import { checkEmail } from "../../../../api"; // Import the API function
 
 const StepOne = ({ email, setEmail, nextStep, isFocused, setIsFocused }) => {
-  const [isEmailValid, setIsEmailValid] = useState(true)
-  const [isChecking, setIsChecking] = useState(false)
+  const [isEmailValid, setIsEmailValid] = useState(true);
+  const [isChecking, setIsChecking] = useState(false);
 
   const isValidEmail =
-    email.includes("@") && (email.includes(".com") || email.includes(".net"))
+    email.includes("@") && (email.includes(".com") || email.includes(".net"));
 
   const onClickDuplicateCheck = async () => {
-    setIsChecking(true)
+    setIsChecking(true);
     try {
-      const isAvailable = await checkEmail(email)
-      setIsEmailValid(isAvailable)
+      const isAvailable = await checkEmail(email);
+      setIsEmailValid(isAvailable);
       if (isAvailable) {
-        nextStep()
-        console.log("등록 가능")
+        nextStep();
+        console.log("등록 가능");
       }
     } catch (e) {
       if (e.response && e.response.status === 409) {
-        console.log(e.response.status, "이메일 중복")
+        console.log(e.response.status, "이메일 중복");
       } else if (e.response && e.response.status === 404) {
-        console.log(e.response.status, "엔드포인트 오류")
+        console.log(e.response.status, "엔드포인트 오류");
       }
-      setIsEmailValid(false)
+      setIsEmailValid(false);
     }
-    setIsChecking(false)
-  }
+    setIsChecking(false);
+  };
 
   return (
     <div>
@@ -68,7 +68,7 @@ const StepOne = ({ email, setEmail, nextStep, isFocused, setIsFocused }) => {
         다음
       </button>
     </div>
-  )
-}
+  );
+};
 
-export default StepOne
+export default StepOne;

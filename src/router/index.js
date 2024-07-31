@@ -252,26 +252,27 @@
 
 // export default router
 
-import React, { lazy, Suspense } from "react"
-import { createBrowserRouter } from "react-router-dom"
-import Loading from "../components/Loading"
-import Layout from "../layout"
-import recommendRouter from "./recommendRouter"
-import LoginCheck from "../components/LoginCheck"
+import React, { lazy, Suspense } from "react";
+import { createBrowserRouter } from "react-router-dom";
+import Loading from "../components/Loading";
+import Layout from "../layout";
+import recommendRouter from "./recommendRouter";
+import LoginCheck from "../components/LoginCheck";
 
-const Intro = lazy(() => import("../page/intro"))
-const Auth = lazy(() => import("../page/auth"))
-const Login = lazy(() => import("../page/auth/login"))
-const Register = lazy(() => import("../page/auth/register"))
-const Info = lazy(() => import("../page/auth/register/info"))
+const Intro = lazy(() => import("../page/intro"));
+const Auth = lazy(() => import("../page/auth"));
+const Login = lazy(() => import("../page/auth/login"));
+const Register = lazy(() => import("../page/auth/register"));
+const Info = lazy(() => import("../page/auth/register/info"));
 
-const Routine = lazy(() => import("../page/routine"))
+const Routine = lazy(() => import("../page/routine"));
 
-const Record = lazy(() => import("../page/record"))
-const Walk = lazy(() => import("../page/walk"))
-const Community = lazy(() => import("../page/community"))
-const MyPage = lazy(() => import("../page/mypage"))
-const Result = lazy(() => import("../page/walk/result"))
+const Record = lazy(() => import("../page/record"));
+const Walk = lazy(() => import("../page/walk"));
+const Community = lazy(() => import("../page/community"));
+const MyPage = lazy(() => import("../page/mypage"));
+const MyPageEdit = lazy(() => import("../page/mypage/components/ProfileEdit"));
+const Result = lazy(() => import("../page/walk/result"));
 
 const router = createBrowserRouter([
   {
@@ -378,9 +379,19 @@ const router = createBrowserRouter([
             <LoginCheck element={<MyPage />} />
           </Suspense>
         ),
+        children: [
+          {
+            path: "edit",
+            element: (
+              <Suspense fallback={<Loading />}>
+                <LoginCheck element={<MyPageEdit />} />
+              </Suspense>
+            ),
+          },
+        ],
       },
     ],
   },
-])
+]);
 
-export default router
+export default router;

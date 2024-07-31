@@ -16,6 +16,8 @@ $font-map: (
   m4: var(--gray-gray800, #333),
   m5: var(--material-theme-ref-error-error60, #ff5449),
   m6: #2b75cb,
+  m7: #54ad0d,
+  m8: #00af50,
 );
 
 @function _get-font-value($key) {

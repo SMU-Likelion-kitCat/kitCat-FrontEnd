@@ -1,7 +1,16 @@
-import React from "react"
+import React from "react";
+import { Outlet, useLocation } from "react-router-dom";
+import MyPageMain from "./components/MypageMain";
 
-const index = () => {
-  return <div>index</div>
-}
+const MyPage = () => {
+  const location = useLocation();
+  const isMyPagePath = location.pathname === "/mypage";
+  return (
+    <>
+      {isMyPagePath && <MyPageMain />}
+      <Outlet />
+    </>
+  );
+};
 
-export default index
+export default MyPage;

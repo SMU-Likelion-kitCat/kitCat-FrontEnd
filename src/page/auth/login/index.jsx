@@ -70,45 +70,45 @@
 
 // export default Login
 
-import React, { useState } from "react"
-import { ReactComponent as LostArrow } from "../../../assets/auth/LostArrow.svg"
-import { ReactComponent as TitleLogo } from "../../../assets/TitleLogo.svg"
-import { useNavigate } from "react-router-dom"
-import { useDispatch } from "react-redux"
-import { loginUser } from "../../../api"
-import { setToken } from "../../../redux/auth"
+import React, { useState } from "react";
+import { ReactComponent as LostArrow } from "../../../assets/auth/LostArrow.svg";
+import { ReactComponent as TitleLogo } from "../../../assets/TitleLogo.svg";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../../../api";
+import { setToken } from "../../../redux/auth";
 
 const Login = () => {
   const [loginInput, setLoginInput] = useState({
     email: "",
     password: "",
-  })
-  const [buttonActive, setButtonActive] = useState(false)
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
+  });
+  const [buttonActive, setButtonActive] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const onChangeInput = (e) => {
-    const { name, value } = e.target
+    const { name, value } = e.target;
     setLoginInput((prevState) => ({
       ...prevState,
       [name]: value,
-    }))
-  }
+    }));
+  };
 
   const handleLogin = async () => {
-    setButtonActive((prev) => !prev)
+    setButtonActive((prev) => !prev);
 
-    if (!buttonActive) return
+    if (!buttonActive) return;
 
     try {
-      const accessToken = await loginUser(loginInput)
-      dispatch(setToken(accessToken))
-      navigate("/walk")
-      console.error("로그인 성공")
+      const accessToken = await loginUser(loginInput);
+      dispatch(setToken(accessToken));
+      navigate("/walk");
+      console.error("로그인 성공");
     } catch (e) {
-      console.error("로그인 실패", e)
+      console.error("로그인 실패", e);
     }
-  }
+  };
 
   return (
     <div className="auth-login-container">
@@ -151,6 +151,7 @@ const Login = () => {
       <button
         className={`auth-login-button ${buttonActive ? "active" : ""}`}
         onClick={handleLogin}
+
         // disabled={!buttonActive}
       >
         로그인
@@ -162,7 +163,7 @@ const Login = () => {
         이메일 회원가입
       </button>
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

@@ -123,10 +123,9 @@ const New = ({ onPostSubmit }) => {
     }
 
     try {
-      const newPost = await postCreate(formData); // 이미 JSON 데이터가 반환되므로 await res.json() 호출 필요 없음
+      const newPost = await postCreate(formData);
       console.log("새 게시물:", newPost);
-      onPostSubmit(newPost); // 상위 컴포넌트로 새 게시물 전달
-      navigate("/community");
+      onPostSubmit(newPost);
     } catch (error) {
       console.error("게시글 작성에 실패했습니다.", error);
     }
