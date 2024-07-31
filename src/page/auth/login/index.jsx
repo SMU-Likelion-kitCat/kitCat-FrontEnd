@@ -24,6 +24,7 @@ const Login = () => {
       dispatch(resetAuthState())
       dispatch(resetLocationState())
       dispatch({ type: "RESET_ALL_STATE" }) // 전체 상태 초기화
+      console.log("상태 초기화 완료", auth, location)
     }
   }, [dispatch, auth.nickname, location.longitude])
 

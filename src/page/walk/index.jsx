@@ -517,7 +517,11 @@
 import { useCallback, useState, useEffect } from "react"
 import KakaoMap from "../../components/KakaoMap"
 import { useDispatch, useSelector } from "react-redux"
-import { setTrackingState, setLoadingState } from "../../redux/location"
+import {
+  setTrackingState,
+  setTrackingTime,
+  setLoadingState,
+} from "../../redux/location"
 import { useGeoLocation } from "../../hooks/useGeoLocation"
 import { startMovement, stopMovement } from "../../utils/movement"
 import { useFooterVisibility } from "../../layout"
@@ -533,11 +537,13 @@ const Walk = () => {
   const [loadingCount, setLoadingCount] = useState(3) // 로딩 타이머 설정
   const [timer, setTimer] = useState("00:00:00") // 타이머 설정
   const [isPaused, setIsPaused] = useState(false) // 일시정지 유무
-  const [pausedTime, setPausedTime] = useState(0) // 일시정지된 총 시간
-  const [lastPausedAt, setLastPausedAt] = useState(null) // 마지막으로 일시정지된 시간
   const [showDogSelection, setShowDogSelection] = useState(false) // 강아지 모달 유무
   const [selectedDogs, setSelectedDogs] = useState([]) // 산책에 선택한 강아지
   const [currentDogIndex, setCurrentDogIndex] = useState(0) // 현재 보고 있는 강아지 정보
+
+  const [startTime, setStartTime] = useState(null)
+  const [elapsedTime, setElapsedTime] = useState(0)
+
   const navigate = useNavigate()
 
   const { error, requestLocation, clearWatcher } = useGeoLocation({
@@ -554,6 +560,38 @@ const Walk = () => {
   useEffect(() => {
     requestLocation()
   }, [])
+
+  const formatTime = (milliseconds) => {
+    const totalSeconds = Math.floor(milliseconds / 1000) // 1초, 2초
+    const hours = Math.floor(totalSeconds / 3600)
+      .toString()
+      .padStart(2, "0")
+    const minutes = Math.floor((totalSeconds % 3600) / 60)
+      .toString()
+      .padStart(2, "0")
+    const seconds = (totalSeconds % 60).toString().padStart(2, "0")
+    return `${hours}:${minutes}:${seconds}`
+  }
+
+  useEffect(() => {
+    let interval
+
+    // 멈춘상태가 아니고 시작시간이 있다면
+    if (!isPaused && startTime) {
+      console.log("시작 시간", startTime) // 시작한 시간 형식 17224 2009 8263
+      interval = setInterval(() => {
+        const currentTime = new Date().getTime() // 17224 2009 8263
+        console.log("currentTime", currentTime)
+
+        const totalElapsed = elapsedTime + (currentTime - startTime)
+        // 현재시간에서 시작시간을 빼면 1000 형식
+        console.log("totalElapsed", totalElapsed)
+        setTimer(formatTime(totalElapsed))
+      }, 1000)
+    }
+
+    return () => clearInterval(interval)
+  }, [isPaused, startTime, elapsedTime])
 
   useEffect(() => {
     const fetchUserInfo = async () => {
@@ -578,6 +616,7 @@ const Walk = () => {
         const petRes = await petInfo()
         console.log("받아온 petRes 배열", petRes)
         dispatch(setPetInfos(petRes))
+        setSelectedDogs(petRes)
       } catch (e) {
         console.error("fetchPetInfo error", e)
       }
@@ -596,15 +635,7 @@ const Walk = () => {
     if (auth.isLoggedIn === true && auth.petInfos.length === 0) {
       fetchPetInfo()
     }
-  }, [
-    auth.isLoggedIn,
-    auth.height,
-    auth.weight,
-    auth.bmi,
-    auth.nickname,
-    auth.petInfos.length,
-    dispatch,
-  ])
+  }, [auth.isLoggedIn])
 
   // 로딩 화면 관련 설정
   useEffect(() => {
@@ -618,39 +649,10 @@ const Walk = () => {
     }
   }, [location.loading, loadingCount, dispatch])
 
-  // 타이머 관련 설정
-  useEffect(() => {
-    let timerInterval
-    if (location.tracking && !isPaused) {
-      timerInterval = setInterval(() => {
-        const startTime = new Date(location.walkStartTime)
-        const now = new Date()
-        const elapsedPausedTime =
-          isPaused && lastPausedAt ? new Date() - lastPausedAt : 0
-        const totalPausedTime = pausedTime + elapsedPausedTime
-        const elapsedTime = new Date(now - startTime - totalPausedTime)
-        const hours = String(elapsedTime.getUTCHours()).padStart(2, "0")
-        const minutes = String(elapsedTime.getUTCMinutes()).padStart(2, "0")
-        const seconds = String(elapsedTime.getUTCSeconds()).padStart(2, "0")
-        setTimer(`${hours}:${minutes}:${seconds}`)
-      }, 1000)
-    } else {
-      clearInterval(timerInterval)
-    }
-    return () => clearInterval(timerInterval)
-  }, [
-    location.tracking,
-    location.walkStartTime,
-    isPaused,
-    pausedTime,
-    lastPausedAt,
-  ])
-
   const onClickStartTracking = useCallback(() => {
-    if (selectedDogs.length === 0 && auth.petInfos.length > 0) {
-      setSelectedDogs([auth.petInfos[0]])
-    }
-
+    setIsPaused(false)
+    setStartTime(new Date().getTime())
+    setElapsedTime(0) // 임시저장 시간
     dispatch(setLoadingState(true))
     requestLocation()
     dispatch(setTrackingState({ tracking: true, trackingState: "start" }))
@@ -660,31 +662,36 @@ const Walk = () => {
 
   const onClickPauseTracking = () => {
     setIsPaused(true)
-    setLastPausedAt(new Date()) // 일시정지 시간 설정
+    // 정지 버튼을 누른 기준으로 현재시간
+    const pauseCurrentTime = new Date().getTime()
+    // 멈춘시간을 elapsedTime에 임시저장
+    setElapsedTime(
+      (prevElapsedTime) => prevElapsedTime + (pauseCurrentTime - startTime)
+    )
+    dispatch(setTrackingTime(formatTime(elapsedTime))) // 리덕스에도 멈춘시간을 임시저장
     dispatch(setTrackingState({ tracking: true, trackingState: "pause" }))
-    stopMovement() // Pause movement updates
+    stopMovement()
   }
 
   const onClickRestartTracking = () => {
     setIsPaused(false)
-    if (lastPausedAt) {
-      const pausedDuration = new Date() - lastPausedAt // 일시정지된 시간 계산
-      setPausedTime((prevPausedTime) => prevPausedTime + pausedDuration)
-      setLastPausedAt(null) // 일시정지 시간 초기화
-    }
+    setStartTime(new Date().getTime())
     dispatch(setTrackingState({ tracking: true, trackingState: "restart" }))
     startMovement(dispatch, location, selectedDogs, auth)
   }
 
   const onClickStopTracking = () => {
+    const currentTime = new Date().getTime()
+    setElapsedTime(
+      (prevElapsedTime) => prevElapsedTime + (currentTime - startTime)
+    )
     stopMovement()
     dispatch(setTrackingState({ tracking: false, trackingState: "stop" }))
     clearWatcher()
-
     navigate("/walk/result", {
       state: {
         path: location.path,
-        distance: location.distance / 1000, // Convert to km
+        distance: location.distance / 1000,
         timer,
         ownerCalories: location.ownerCalories,
         selectedDogs,
@@ -726,6 +733,7 @@ const Walk = () => {
   if (location.trackingState === "stop") {
     return <Outlet />
   }
+
   return (
     <>
       {location.loading ? (
@@ -796,7 +804,11 @@ const Walk = () => {
                       <CheckDog />
                     </div>
                   )}
-                  <img src={dog.image} alt={dog.name} />
+
+                  <img
+                    src={`https://seumu-s3-bucket.s3.ap-northeast-2.amazonaws.com/${dog.image}`}
+                    alt={dog.name}
+                  />
                 </div>
                 <p className="walk-dog-selection-item-name">{dog.name}</p>
               </div>

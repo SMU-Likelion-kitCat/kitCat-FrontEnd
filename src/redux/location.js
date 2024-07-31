@@ -177,6 +177,9 @@ const locationSlice = createSlice({
         state.walkStartTime = new Date().toISOString()
       }
     },
+    setTrackingTime: (state, action) => {
+      state.walkStartTime = action.payload
+    },
     setLoadingState: (state, action) => {
       state.loading = action.payload
     },
@@ -201,6 +204,7 @@ export const {
   resetLocation,
   updateDistance,
   setTrackingState,
+  setTrackingTime,
   setLoadingState,
   updateOwnerCalories,
   updatePetCalories,

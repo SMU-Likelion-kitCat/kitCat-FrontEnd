@@ -99,12 +99,6 @@ const StopWalk = ({
   handleNextDog,
   handlePrevDog,
 }) => {
-  const formatCalories = (calories) => {
-    if (!calories) return "000"
-    const formattedCalories = Math.round(calories).toString().padStart(3, "0")
-    return formattedCalories
-  }
-
   return (
     <div className="walk-controls-backboard-container">
       <div className="walk-controls-backboard-item-container">
@@ -140,10 +134,8 @@ const StopWalk = ({
           <WalkInfo
             timer={timer}
             distance={location.distance / 1000}
-            ownerCalories={location.ownerCalories}
             currentDog={currentDog}
             currentDogCalories={currentDogCalories}
-            formatCalories={formatCalories}
             selectedDogs={selectedDogs}
             currentDogIndex={currentDogIndex}
             handleNextDog={handleNextDog}

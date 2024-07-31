@@ -42,7 +42,7 @@ const InfoStepThree = ({
             {
               name: petInfoInput.name,
               weight: parseFloat(petInfoInput.weight),
-              // growthStatus: petInfoInput.petState,
+              growthStatus: petInfoInput.petState,
             },
             ...petInfos,
           ],

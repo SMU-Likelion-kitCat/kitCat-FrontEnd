@@ -159,7 +159,6 @@ const WalkDogKcal = ({
   handleNextDog,
   handlePrevDog,
   currentDogCalories,
-  formatCalories,
   selectedDogs,
   currentDogIndex,
   resultPage,
@@ -167,8 +166,10 @@ const WalkDogKcal = ({
   const stepContainerRef = useRef(null)
 
   useEffect(() => {
+    console.log(currentDogCalories)
     const stepContainer = stepContainerRef.current
     const childCount = stepContainer.childElementCount
+    console.log(currentDog)
 
     if (childCount === 1) {
       stepContainer.style.justifyContent = "center"
@@ -176,6 +177,11 @@ const WalkDogKcal = ({
       stepContainer.style.justifyContent = "space-between"
     }
   }, [selectedDogs])
+
+  const formatDogCalories = (calories) => {
+    if (!calories) return "0000"
+    return Math.round(calories).toString().padStart(4, "0")
+  }
 
   return (
     <div
@@ -193,15 +199,15 @@ const WalkDogKcal = ({
             <img
               className="walk-controls-backboard-dog-selection-profile"
               src={
-                currentDog?.image ||
+                `https://seumu-s3-bucket.s3.ap-northeast-2.amazonaws.com/${currentDog?.image}` ||
                 "https://png.pngtree.com/png-vector/20230221/ourmid/pngtree-cute-dog-illustration-png-image_6612074.png"
               }
               alt={currentDog?.name || "Dog"}
             />
             <p>
               {currentDogCalories
-                ? formatCalories(currentDogCalories.calories)
-                : "000"}
+                ? formatDogCalories(currentDogCalories.calories)
+                : "0000"}
             </p>
           </div>
           <DogRightArrow onClick={handleNextDog} />
