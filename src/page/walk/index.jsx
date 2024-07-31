@@ -12,7 +12,12 @@ import { useFooterVisibility } from "../../layout"
 import StartWalk from "./components/StartWalk"
 import StopWalk from "./components/StopWalk"
 import { Outlet, useNavigate } from "react-router-dom"
-import { loginUserInfo, petInfo } from "../../api"
+import {
+  createWalkRecord,
+  getRoutines,
+  loginUserInfo,
+  petInfo,
+} from "../../api"
 import { setUserInfo, setPetInfos } from "../../redux/auth"
 
 import { ReactComponent as DogModalClose } from "../../assets/walk/DogModalClose.svg"
@@ -26,8 +31,9 @@ const Walk = () => {
   const [showDogSelection, setShowDogSelection] = useState(false) // 강아지 모달 유무
   const [selectedDogs, setSelectedDogs] = useState([]) // 산책에 선택한 강아지
   const [currentDogIndex, setCurrentDogIndex] = useState(0) // 현재 보고 있는 강아지 정보
+  const [viewRoutines, setViewRoutines] = useState([]) // 현재 진행 중인 루틴을 가져오는 상태
 
-  const [startTime, setStartTime] = useState(null)
+  const [startTime, setStartTime] = useState(null) // 시작 시간 상태 17224 2009 8263 형식
   const [elapsedTime, setElapsedTime] = useState(0)
 
   const navigate = useNavigate()
@@ -68,6 +74,7 @@ const Walk = () => {
       interval = setInterval(() => {
         const currentTime = new Date().getTime() // 17224 2009 8263
         console.log("currentTime", currentTime)
+        console.log("elapsedTime", elapsedTime) // 0000 일시 정지 시 저장 시간
 
         const totalElapsed = elapsedTime + (currentTime - startTime)
         // 현재시간에서 시작시간을 빼면 1000 형식
@@ -77,7 +84,7 @@ const Walk = () => {
     }
 
     return () => clearInterval(interval)
-  }, [isPaused, startTime, elapsedTime])
+  }, [isPaused, startTime])
 
   useEffect(() => {
     const fetchUserInfo = async () => {
@@ -108,6 +115,15 @@ const Walk = () => {
       }
     }
 
+    const fetchRoutines = async () => {
+      try {
+        const routinesRes = await getRoutines()
+        console.log("받아온 routinesRes 배열", routinesRes)
+        setViewRoutines(routinesRes)
+      } catch (e) {
+        console.error("fetchRoutines error", e)
+      }
+    }
     if (
       auth.isLoggedIn === true &&
       (auth.height === 0 ||
@@ -121,6 +137,8 @@ const Walk = () => {
     if (auth.isLoggedIn === true && auth.petInfos.length === 0) {
       fetchPetInfo()
     }
+
+    fetchRoutines() // 루틴 정보 가져오기
   }, [auth.isLoggedIn])
 
   // 로딩 화면 관련 설정
@@ -166,14 +184,39 @@ const Walk = () => {
     startMovement(dispatch, location, selectedDogs, auth)
   }
 
-  const onClickStopTracking = () => {
+  const onClickStopTracking = async () => {
     const currentTime = new Date().getTime()
-    setElapsedTime(
-      (prevElapsedTime) => prevElapsedTime + (currentTime - startTime)
-    )
+    const totalElapseTime = elapsedTime + (currentTime - startTime)
+    setElapsedTime(totalElapseTime)
+    // setElapsedTime(
+    //   (prevElapsedTime) => prevElapsedTime + (currentTime - startTime)
+    // )
     stopMovement()
     dispatch(setTrackingState({ tracking: false, trackingState: "stop" }))
     clearWatcher()
+
+    // 산책 기록 저장
+    const walkRecordData = {
+      distance: location.distance,
+      walkTime: Math.floor(totalElapseTime / 1000), // 초 단위로 변환
+      petRecords: selectedDogs.map((dog) => {
+        const dogCalories = location.petCalories.find(
+          (calorie) => calorie.petId === dog.id
+        )
+        return {
+          petId: dog.id,
+          calorie: dogCalories ? parseFloat(dogCalories.calories) : 0,
+        }
+      }),
+    }
+
+    try {
+      const response = await createWalkRecord(walkRecordData)
+      console.log("산책 기록 저장 완료", response)
+    } catch (e) {
+      console.error("산책 기록 저장 실패", e)
+    }
+
     navigate("/walk/result", {
       state: {
         path: location.path,
@@ -184,6 +227,7 @@ const Walk = () => {
         petCalories: location.petCalories,
       },
     })
+    console.log("location 객체 확인", location)
   }
 
   const handleNextDog = () => {
@@ -257,33 +301,72 @@ const Walk = () => {
                 />
               ) : (
                 <>
-                  <div className="walk-routine-container">
-                    <div className="walk-routine-item-container">
-                      <div>
+                  {/* <div className="walk-routine-container">
+                    {viewRoutines.map((routine, index) => (
+                      <div key={index} className="walk-routine-item-container">
                         <div>
-                          <h2>진행중인 루틴</h2>
-                          <h3>4주 진행중인 루틴</h3>
-                          <p>1주차 · 102kcal</p>
+                          <div>
+                            <h2>진행중인 루틴</h2>
+                            <h3>{routine.name}</h3>
+                            <p>{routine.description}</p>
+                          </div>
+                          <div className="walk-routine-item-start-button-container">
+                            <div className="walk-routine-item-start-button">
+                              <p>시작</p>
+                            </div>
+                          </div>
+                          <div className="walk-routine-item-achieve-percentage-container">
+                            <div className="progress-bar">
+                              <div
+                                className="progress"
+                                style={{ width: `${routine.progress || 71}%` }}
+                              ></div>
+                            </div>
+                            <div className="progress-text-container">
+                              <span className="progress-text-one">
+                                {routine.progress || 71}
+                              </span>
+                              <span className="progress-text-two">/100</span>
+                            </div>
+                          </div>
                         </div>
-                        <div className="walk-routine-item-start-button-container">
-                          <div className="walk-routine-item-start-button">
-                            <p>시작</p>
+
+               
+                      </div>
+                    ))}
+                  </div> */}
+
+                  <div className="walk-routine-container">
+                    {viewRoutines.map((routine, index) => (
+                      <div key={index} className="walk-routine-item-container">
+                        <div className="walk-routine-info-container">
+                          <div>
+                            <h2>진행중인 루틴</h2>
+                            <h3>{routine.name}</h3>
+                            <p>{routine.description}</p>
+                          </div>
+                          <div className="walk-routine-item-start-button-container">
+                            <div className="walk-routine-item-start-button">
+                              <p>시작</p>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="walk-routine-item-achieve-percentage-container">
+                          <div className="progress-bar">
+                            <div
+                              className="progress"
+                              style={{ width: `${routine.progress || 71}%` }}
+                            ></div>
+                          </div>
+                          <div className="progress-text-container">
+                            <span className="progress-text-one">
+                              {routine.progress || 71}
+                            </span>
+                            <span className="progress-text-two">/100</span>
                           </div>
                         </div>
                       </div>
-                      <div className="walk-routine-item-achieve-percentage-container">
-                        <div className="progress-bar">
-                          <div
-                            className="progress"
-                            style={{ width: "71%" }}
-                          ></div>
-                        </div>
-                        <div className="progress-text-container">
-                          <span className="progress-text-one">71</span>
-                          <span className="progress-text-two">/100</span>
-                        </div>
-                      </div>
-                    </div>
+                    ))}
                   </div>
                   <div className="walk-controls-current-position-icon">
                     <CurrentPosition />

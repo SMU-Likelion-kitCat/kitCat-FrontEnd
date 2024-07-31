@@ -1,24 +1,27 @@
 .walk-routine-container {
-    @include column-flexbox(center, center);
+    @include inline-flexbox(center, center);
     position: absolute;
     top: 64px;
-    // left: 20px;
     width: 100%;
     height: 128px;
     z-index: 1;
 
-    overflow-x: auto; // Add horizontal scroll
-    // white-space: nowrap; // Prevent line break
+    overflow-x: auto; // Allow horizontal scrolling
+    // white-space: nowrap; // Prevent line breaks within children
 
     .walk-routine-item-container {
-        width: 320px;
+        @include column-flexbox(center, center);
+        // width: 320px;
+        min-width: 320px;
         height: 128px;
         padding: 20px;
         border-radius: 12px;
         background-color: #fff;
         box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.2);
-        div {
-            @include inline-flexbox(between, start);
+
+        .walk-routine-info-container {
+            @include inline-flexbox(between, center);
+            width: 100%;
             div {
                 @include column-flexbox(center, start);
                 h2 {
@@ -29,7 +32,6 @@
                     @include custom-font-size(600, 16px, h2, 24px, -0.32px);
                     margin-bottom: 2px;
                 }
-
                 p {
                     @include custom-font-size(500, 12px, b3-mdg, 16px, -0.24px);
                 }
@@ -68,9 +70,8 @@
             }
 
             .progress-text-container {
-                display: inline;
-                width: 44px;
-
+                display: flex;
+                align-items: center;
                 color: var(--material-theme-ref-neutral-neutral50, #757575);
 
                 .progress-text-one {
@@ -92,6 +93,7 @@
                     font-weight: 600;
                     line-height: 18px; /* 128.571% */
                     letter-spacing: -0.28px;
+                    margin-left: 2px;
                 }
             }
         }

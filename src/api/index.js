@@ -118,3 +118,14 @@ export const getRoutineDetail = async (routineId) => {
     throw e
   }
 }
+
+// 산책 정보 저장
+export const createWalkRecord = async (walkRecordData) => {
+  try {
+    const res = await apiConfig.post("/record/save", { walkRecordData })
+    return res.data
+  } catch (e) {
+    console.error(e)
+    throw e
+  }
+}
