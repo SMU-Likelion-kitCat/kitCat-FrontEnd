@@ -89,7 +89,7 @@ const RecordKakaoMap = ({ record, mapId }) => {
   }
 
   return (
-    <div ref={mapRef} style={{ height: "400px", width: "100%" }}>
+    <div ref={mapRef} style={{ width: "100%" }}>
       {isInView && (
         <KakaoMap
           location={null}

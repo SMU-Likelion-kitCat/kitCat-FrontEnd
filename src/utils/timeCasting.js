@@ -19,10 +19,21 @@ export const formatDateAndTime = (dateTimeString) => {
   if (!dateTimeString) return { date: "N/A", time: "N/A" }
 
   const [date, time] = dateTimeString.split("T")
-  const [year, month, day] = date.split("-")
+  const [_, month, day] = date.split("-")
   const formattedDate = `${month}.${day}`
   const [hour, minute] = time.split(":")
   const formattedTime = `${hour}:${minute}`
 
   return { date: formattedDate, time: formattedTime }
+}
+
+export const formatHourMinute = (dateTimeString) => {
+  if (!dateTimeString) return { date: "N/A", time: "N/A" }
+
+  const [_, time] = dateTimeString.split("T")
+
+  const [hour, minute] = time.split(":")
+  const formattedTime = `${hour}:${minute}`
+
+  return formattedTime
 }

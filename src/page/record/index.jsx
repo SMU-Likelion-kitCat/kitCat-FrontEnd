@@ -316,6 +316,7 @@
 // import { fetchWalkRecord } from "../../api"
 // import RecordKakaoMap from "./components/RecordKakaoMap"
 // import RecordWalkInfo from "./components/RecordWalkInfo"
+// import { formatHourMinute } from "../../utils/timeCasting"
 
 // const daysInMonth = (year, month) => new Date(year, month + 1, 0).getDate()
 // const dayLabels = ["일", "월", "화", "수", "목", "금", "토"]
@@ -324,7 +325,12 @@
 //   const today = new Date()
 //   const [year, setYear] = useState(today.getFullYear())
 //   const [month, setMonth] = useState(today.getMonth())
-//   const [selectedDate, setSelectedDate] = useState(null)
+//   // const [selectedDate, setSelectedDate] = useState(isToday)
+//   const [selectedDate, setSelectedDate] = useState({
+//     year: today.getFullYear(),
+//     month: today.getMonth(),
+//     day: today.getDate(),
+//   })
 //   const [selectedRoutineData, setSelectedRoutineData] = useState([])
 //   const [showFullMonth, setShowFullMonth] = useState(true)
 //   const [isArrowRotated, setIsArrowRotated] = useState(true)
@@ -402,6 +408,11 @@
 //         year === today.getFullYear() &&
 //         month === today.getMonth() &&
 //         day === today.getDate()
+//       const isSelected =
+//         selectedDate &&
+//         selectedDate.year === year &&
+//         selectedDate.month === month &&
+//         selectedDate.day === day
 //       const dayClass =
 //         (firstDay + day - 1) % 7 === 0
 //           ? "sunday"
@@ -414,9 +425,18 @@
 //           key={day}
 //           onClick={() => handleDateClick(day)}
 //         >
-//           <div className={`record-calendar-date ${isToday ? "today" : ""}`}>
-//             {isToday && <div className="highlight-circle"></div>}
+//           <div
+//             className={`record-calendar-date ${isToday ? "today" : ""} ${
+//               isSelected ? "highlight-circle" : ""
+//             }`}
+//           >
 //             {day}
+//             {isSelected && (
+//               <div className="highlight-circle selected-circle"></div>
+//             )}
+//             {isToday && !isSelected && (
+//               <div className="highlight-circle today-circle"></div>
+//             )}
 //           </div>
 //           <div className="record-calendar-dots">
 //             {walkRecords[day - 1]?.records?.length > 0 &&
@@ -461,6 +481,11 @@
 //         date.getFullYear() === today.getFullYear() &&
 //         date.getMonth() === today.getMonth() &&
 //         date.getDate() === today.getDate()
+//       const isSelected =
+//         selectedDate &&
+//         selectedDate.year === year &&
+//         selectedDate.month === month &&
+//         selectedDate.day === date.getDate()
 //       const dayClass =
 //         date.getDay() === 0 ? "sunday" : date.getDay() === 6 ? "saturday" : ""
 
@@ -470,9 +495,18 @@
 //           key={date.getDate()}
 //           onClick={() => handleDateClick(date.getDate())}
 //         >
-//           <div className={`record-calendar-date ${isToday ? "today" : ""}`}>
-//             {isToday && <div className="highlight-circle"></div>}
+//           <div
+//             className={`record-calendar-date ${isToday ? "today" : ""} ${
+//               isSelected ? "highlight-circle" : ""
+//             }`}
+//           >
 //             {date.getDate()}
+//             {isSelected && (
+//               <div className="highlight-circle selected-circle"></div>
+//             )}
+//             {isToday && !isSelected && (
+//               <div className="highlight-circle today-circle"></div>
+//             )}
 //           </div>
 //           <div className="record-calendar-dots">
 //             {walkRecords[date.getDate() - 1]?.records?.length > 0 &&
@@ -510,6 +544,7 @@
 //       .toString()
 //       .padStart(2, "0")} (${dayOfWeek})`
 //   }
+
 //   return (
 //     <div>
 //       <div className="record-calendar-container">
@@ -558,10 +593,15 @@
 //           <div className="record-tab" key={index}>
 //             <div className="record-tab-title-wrap">
 //               <h1 className="record-tab-title">{formatSelectedDate()}</h1>
-//               <h1 className="record-tab-title time">14:00</h1>
+//               <h1 className="record-tab-title time">
+//                 {formatHourMinute(record.endTime)}
+//               </h1>
 //             </div>
 //             <div className="record-tab-map">
-//               <RecordKakaoMap record={record} />
+//               <RecordKakaoMap
+//                 record={record}
+//                 mapId={`${selectedDate.day}-${index}-map`}
+//               />
 //             </div>
 //             <div className="record-tab-info">
 //               <RecordWalkInfo records={record} />
@@ -572,7 +612,6 @@
 //     </div>
 //   )
 // }
-
 // export default Record
 
 import React, { useState, useEffect } from "react"
@@ -583,6 +622,7 @@ import { ReactComponent as DotPlus } from "../../assets/routine/DotPlus.svg"
 import { fetchWalkRecord } from "../../api"
 import RecordKakaoMap from "./components/RecordKakaoMap"
 import RecordWalkInfo from "./components/RecordWalkInfo"
+import { formatHourMinute } from "../../utils/timeCasting"
 
 const daysInMonth = (year, month) => new Date(year, month + 1, 0).getDate()
 const dayLabels = ["일", "월", "화", "수", "목", "금", "토"]
@@ -591,7 +631,11 @@ const Record = () => {
   const today = new Date()
   const [year, setYear] = useState(today.getFullYear())
   const [month, setMonth] = useState(today.getMonth())
-  const [selectedDate, setSelectedDate] = useState(null)
+  const [selectedDate, setSelectedDate] = useState({
+    year: today.getFullYear(),
+    month: today.getMonth(),
+    day: today.getDate(),
+  })
   const [selectedRoutineData, setSelectedRoutineData] = useState([])
   const [showFullMonth, setShowFullMonth] = useState(true)
   const [isArrowRotated, setIsArrowRotated] = useState(true)
@@ -665,25 +709,29 @@ const Record = () => {
     }
 
     for (let day = 1; day <= numDays; day++) {
-      const isToday =
-        year === today.getFullYear() &&
-        month === today.getMonth() &&
-        day === today.getDate()
+      const isSelected =
+        selectedDate &&
+        selectedDate.year === year &&
+        selectedDate.month === month &&
+        selectedDate.day === day
       const dayClass =
         (firstDay + day - 1) % 7 === 0
           ? "sunday"
           : (firstDay + day - 1) % 7 === 6
           ? "saturday"
           : ""
+
       days.push(
         <div
           className={`record-calendar-day ${dayClass}`}
           key={day}
           onClick={() => handleDateClick(day)}
         >
-          <div className={`record-calendar-date ${isToday ? "today" : ""}`}>
-            {isToday && <div className="highlight-circle"></div>}
+          <div
+            className={`record-calendar-date ${isSelected ? "selected" : ""}`}
+          >
             {day}
+            {isSelected && <div className="highlight-circle selected-circle" />}
           </div>
           <div className="record-calendar-dots">
             {walkRecords[day - 1]?.records?.length > 0 &&
@@ -724,10 +772,11 @@ const Record = () => {
     for (let i = 0; i < 7; i++) {
       const date = new Date(startOfWeek)
       date.setDate(startOfWeek.getDate() + i)
-      const isToday =
-        date.getFullYear() === today.getFullYear() &&
-        date.getMonth() === today.getMonth() &&
-        date.getDate() === today.getDate()
+      const isSelected =
+        selectedDate &&
+        selectedDate.year === year &&
+        selectedDate.month === month &&
+        selectedDate.day === date.getDate()
       const dayClass =
         date.getDay() === 0 ? "sunday" : date.getDay() === 6 ? "saturday" : ""
 
@@ -737,9 +786,11 @@ const Record = () => {
           key={date.getDate()}
           onClick={() => handleDateClick(date.getDate())}
         >
-          <div className={`record-calendar-date ${isToday ? "today" : ""}`}>
-            {isToday && <div className="highlight-circle"></div>}
+          <div
+            className={`record-calendar-date ${isSelected ? "selected" : ""}`}
+          >
             {date.getDate()}
+            {isSelected && <div className="highlight-circle selected-circle" />}
           </div>
           <div className="record-calendar-dots">
             {walkRecords[date.getDate() - 1]?.records?.length > 0 &&
@@ -826,7 +877,9 @@ const Record = () => {
           <div className="record-tab" key={index}>
             <div className="record-tab-title-wrap">
               <h1 className="record-tab-title">{formatSelectedDate()}</h1>
-              <h1 className="record-tab-title time">14:00</h1>
+              <h1 className="record-tab-title time">
+                {formatHourMinute(record.endTime)}
+              </h1>
             </div>
             <div className="record-tab-map">
               <RecordKakaoMap
@@ -843,4 +896,5 @@ const Record = () => {
     </div>
   )
 }
+
 export default Record
