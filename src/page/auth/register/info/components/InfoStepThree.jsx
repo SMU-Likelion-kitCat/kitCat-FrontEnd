@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react"
-import { ReactComponent as DownArrow } from "../../../../../assets/auth/register/DownArrow.svg"
-import { ReactComponent as CloseIcon } from "../../../../../assets/auth/register/CloseIcon.svg"
-import { registerPet } from "../../../../../api"
-import { useSelector } from "react-redux"
-import { useNavigate } from "react-router-dom"
+import React, { useEffect, useState } from "react";
+import { ReactComponent as DownArrow } from "../../../../../assets/auth/register/DownArrow.svg";
+import { ReactComponent as CloseIcon } from "../../../../../assets/auth/register/CloseIcon.svg";
+import { registerPet } from "../../../../../api";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const InfoStepThree = ({
   petInfoInput,
@@ -15,49 +15,49 @@ const InfoStepThree = ({
   closeModal,
   isModalOpen,
 }) => {
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [selectedFile, setSelectedFile] = useState(null)
-  const auth = useSelector((state) => state.auth)
-  const navigate = useNavigate()
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const auth = useSelector((state) => state.auth);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!auth.accessToken) {
-      alert("auth가 없습니다.")
-      navigate("/auth/register")
+      alert("auth가 없습니다.");
+      navigate("/auth/register");
     }
-  }, [auth, navigate])
+  }, [auth, navigate]);
 
   const isFormValid =
-    petInfoInput.name && petInfoInput.weight && petInfoInput.petState
+    petInfoInput.name && petInfoInput.weight && petInfoInput.petState;
 
   const handleFormSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     if (isFormValid && !isSubmitting) {
-      setIsSubmitting(true)
+      setIsSubmitting(true);
       try {
-        await onSubmitPetInfo(e)
+        await onSubmitPetInfo(e);
 
         const petInfoToRegister = {
           dto: [
             {
               name: petInfoInput.name,
               weight: parseFloat(petInfoInput.weight),
-              // growthStatus: petInfoInput.petState,
+              growthStatus: petInfoInput.petState,
             },
             ...petInfos,
           ],
-        }
+        };
 
-        const formData = new FormData()
+        const formData = new FormData();
         formData.append(
           "dto",
           new Blob([JSON.stringify(petInfoToRegister.dto)], {
             type: "application/json",
           })
-        )
+        );
 
         if (selectedFile) {
-          formData.append("files", selectedFile)
+          formData.append("files", selectedFile);
         }
 
         console.log(
@@ -65,21 +65,21 @@ const InfoStepThree = ({
           formData.get("dto"),
           formData.get("files"),
           formData
-        )
+        );
 
-        const res = await registerPet(formData, auth.accessToken)
-        console.log("반려견 등록 완료", res)
+        const res = await registerPet(formData, auth.accessToken);
+        console.log("반려견 등록 완료", res);
       } catch (e) {
-        console.error(e)
+        console.error(e);
       } finally {
-        setIsSubmitting(false)
+        setIsSubmitting(false);
       }
     }
-  }
+  };
 
   const handleFileChange = (e) => {
-    setSelectedFile(e.target.files[0])
-  }
+    setSelectedFile(e.target.files[0]);
+  };
 
   return (
     <>
@@ -215,7 +215,7 @@ const InfoStepThree = ({
         </div>
       )}
     </>
-  )
-}
+  );
+};
 
-export default InfoStepThree
+export default InfoStepThree;

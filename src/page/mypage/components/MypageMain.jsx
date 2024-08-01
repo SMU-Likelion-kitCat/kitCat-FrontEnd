@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { loginUserInfo } from "../../../api";
+import { loginUserInfo, petInfo } from "../../../api";
 import { ReactComponent as PetChange } from "../../../assets/mypage/PetChange.svg";
 import { ReactComponent as Bell } from "../../../assets/mypage/Bell.svg";
 import { ReactComponent as Notice } from "../../../assets/mypage/Notice.svg";
@@ -8,16 +8,20 @@ import { ReactComponent as More } from "../../../assets/mypage/More.svg";
 import { ReactComponent as Next } from "../../../assets/mypage/Next.svg";
 import { ReactComponent as QuestionMark } from "../../../assets/mypage/QuestionMark.svg";
 import { useNavigate } from "react-router-dom";
-const MyPageMain = ({ nickname }) => {
+const MyPageMain = () => {
   const [userInfo, setUserInfo] = useState({});
+  const [petData, setPetData] = useState({});
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
         const res = await loginUserInfo();
+        const pet = await petInfo();
         console.log("유저 정보", res);
+        console.log("강아지 정보", pet);
         setUserInfo(res);
+        setPetData(pet);
       } catch (error) {
         console.error("Failed to fetch user info:", error);
       }
@@ -59,7 +63,9 @@ const MyPageMain = ({ nickname }) => {
               <PetChange />
             </span>
           </div>
-          <div className="mypage-content-pet-body">여기 들어감</div>
+          <div className="mypage-content-pet-body">
+            {petData.name}여기 들어감
+          </div>
         </div>
       </div>
       <hr />

@@ -2,7 +2,6 @@
   position: relative;
   width: 100%;
   padding: 20px;
-  background-color: #fff;
   .mypage-content-header {
     padding-top: 48px;
     display: flex;
@@ -17,7 +16,7 @@
       justify-content: center;
       border-radius: 8px;
       border: 1px solid var(--material-theme-ref-neutral-neutral90, #e2e2e2);
-      background: #fff;
+
       height: 50px;
       width: 107px;
       @include custom-font-size(600, 14px, m1, 18px, -0.28px);
@@ -84,7 +83,6 @@ hr {
 .mypage-menu-container {
   position: relative;
   width: 100%;
-  background-color: #fff;
   li {
     flex-direction: row;
     display: flex;
@@ -97,6 +95,176 @@ hr {
       display: flex;
       flex-direction: row;
       gap: 12px;
+    }
+  }
+}
+.profile-edit-container {
+  position: relative;
+  width: 100%;
+  padding: 20px;
+  .profile-edit-header {
+    padding-top: 44px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    .profile-edit-title {
+      @include custom-font-size(700, 24px, m4, 28px, -0.48px);
+    }
+    button {
+      display: inline-flex;
+      padding: 8px 12px;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      border-radius: 8px;
+      background: var(--material-theme-ref-primary-primary80, #53e07a);
+      @include custom-font-size(600, 16px, h2, 24px, -0.28px);
+    }
+  }
+  .profile-edit-body {
+    padding-top: 35px;
+    p {
+      color: var(--material-theme-ref-neutral-neutral40, #5d5d5d);
+      margin-bottom: 12px;
+      /* Body/B2-medium */
+      font-family: Roboto;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 18px; /* 128.571% */
+      letter-spacing: -0.28px;
+    }
+    .profile-edit-name-input {
+      display: flex;
+      padding: 20px;
+      width: 100%;
+      height: auto;
+
+      @include custom-font-size(500, 18px, h2, 24px, -0.36px);
+      border-radius: 12px;
+      border: 1px solid var(--material-theme-ref-neutral-neutral90, #e2e2e2);
+      background: var(--wt-bk-white, #fff);
+    }
+    .profile-edit-char-count {
+      color: #b7b7b7;
+    }
+
+    .auth-register-info-body-input-container {
+      @include inline-flexbox(between, center);
+      width: 100%;
+      margin-top: 28px;
+      gap: 14px;
+
+      .auth-register-info-body-input-item {
+        @include column-flexbox(start, start);
+        gap: 8px;
+        .auth-register-info-body-input-item-title {
+          @include custom-font-size(500, 14px, m1, 18px, -0.28px);
+        }
+        .auth-register-info-body-input-item-container {
+          position: relative;
+          flex: 1;
+
+          input {
+            width: 100%;
+            height: auto;
+            padding: 20px;
+            @include custom-font-size(500, 18px, h2, 24px, -0.36px);
+            border: 1px solid
+              var(--material-theme-ref-neutral-neutral90, #e2e2e2);
+            background: var(--wt-bk-white, #fff);
+            border-radius: 12px;
+            outline: none;
+          }
+
+          p {
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            color: #aaaaaa;
+            pointer-events: none;
+          }
+        }
+      }
+    }
+  }
+  .auth-register-info-body-bmi-container {
+    margin-top: 61px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 19px;
+    width: 100%;
+
+    .auth-register-info-body-bmi-text-container {
+      @include inline-flexbox(start, between);
+
+      .auth-register-info-body-bmi-title {
+        @include inline-flexbox(center, center);
+        @include custom-font-size(500, 14px, m1, 18px, -0.28px);
+      }
+      .auth-register-info-body-bmi-state {
+        @include inline-flexbox(center, center);
+        @include custom-font-size(600, 16px, m1, 24px, -0.32px);
+        margin-left: auto;
+        .auth-register-info-body-bmi-state-shame {
+          @include custom-font-size(600, 16px, m1, 24px, -0.32px);
+
+          margin-left: 8px;
+        }
+
+        color: #54ad0d;
+
+        &.underweight {
+          color: #83b6e8;
+        }
+
+        &.normal {
+          color: #54ad0d;
+        }
+
+        &.overweight {
+          color: #fdd505;
+        }
+
+        &.obesity {
+          color: #ff8a02;
+        }
+        &.severe-obesity {
+          color: #fe4d00;
+        }
+      }
+    }
+
+    .auth-register-info-body-bmi-bar {
+      width: 100%;
+      height: 20px;
+      border-radius: 10px;
+      background: linear-gradient(
+        to right,
+        #83b6e8 0%,
+        #83b6e8 20%,
+        #54ad0d 20%,
+        #54ad0d 40%,
+        #fdd505 40%,
+        #fdd505 60%,
+        #ff8a02 60%,
+        #ff8a02 80%,
+        #fe4d00 80%,
+        #fe4d00 100%
+      );
+      position: relative;
+    }
+
+    .auth-register-info-body-bmi-indicator {
+      position: absolute;
+      top: -6px;
+      width: 4px;
+      height: 32px;
+      background-color: #454545;
+      transition: left 1s ease-in-out;
     }
   }
 }

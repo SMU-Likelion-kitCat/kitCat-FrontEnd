@@ -151,57 +151,57 @@
 
 // export default InfoStepTwo
 
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react";
 
 const InfoStepTwo = ({ userInfo, setUserInfo }) => {
-  const [localUserInfo, setLocalUserInfo] = useState(userInfo)
+  const [localUserInfo, setLocalUserInfo] = useState(userInfo);
 
   useEffect(() => {
     if (localUserInfo.height && localUserInfo.weight) {
-      const heightInMeters = localUserInfo.height / 100
+      const heightInMeters = localUserInfo.height / 100;
       const calculatedBmi = (
         localUserInfo.weight /
         (heightInMeters * heightInMeters)
-      ).toFixed(1)
+      ).toFixed(1);
       if (calculatedBmi !== localUserInfo.bmi) {
         setLocalUserInfo((prevState) => ({
           ...prevState,
           bmi: calculatedBmi,
-        }))
+        }));
       }
     }
-  }, [localUserInfo.height, localUserInfo.weight])
+  }, [localUserInfo.height, localUserInfo.weight]);
 
   useEffect(() => {
-    setUserInfo(localUserInfo)
-  }, [localUserInfo])
+    setUserInfo(localUserInfo);
+  }, [localUserInfo]);
 
   const handleHeightChange = (e) => {
-    const { value } = e.target
+    const { value } = e.target;
     if (/^\d*$/.test(value)) {
       setLocalUserInfo((prevState) => ({
         ...prevState,
         height: value,
-      }))
+      }));
     }
-  }
+  };
 
   const handleWeightChange = (e) => {
-    const value = e.target.value
+    const value = e.target.value;
     if (/^\d*$/.test(value)) {
       setLocalUserInfo((prevState) => ({
         ...prevState,
         weight: value,
-      }))
+      }));
     }
-  }
+  };
 
   const calculateIndicatorPosition = () => {
-    if (!localUserInfo.bmi) return "0%"
+    if (!localUserInfo.bmi) return "0%";
 
-    const minBmi = 10
-    const maxBmi = 40
-    const clampedBmi = Math.max(minBmi, Math.min(localUserInfo.bmi, maxBmi))
+    const minBmi = 10;
+    const maxBmi = 40;
+    const clampedBmi = Math.max(minBmi, Math.min(localUserInfo.bmi, maxBmi));
 
     const ranges = [
       { min: 10, max: 18.5, start: 0, end: 20 },
@@ -209,16 +209,18 @@ const InfoStepTwo = ({ userInfo, setUserInfo }) => {
       { min: 24.9, max: 29.9, start: 40, end: 60 },
       { min: 29.9, max: 34.9, start: 60, end: 80 },
       { min: 34.9, max: 40, start: 80, end: 100 },
-    ]
+    ];
 
-    const range = ranges.find((r) => clampedBmi >= r.min && clampedBmi <= r.max)
-    const rangeBmi = clampedBmi - range.min
+    const range = ranges.find(
+      (r) => clampedBmi >= r.min && clampedBmi <= r.max
+    );
+    const rangeBmi = clampedBmi - range.min;
     const rangePercentage =
-      (rangeBmi / (range.max - range.min)) * (range.end - range.start)
-    const position = range.start + rangePercentage
+      (rangeBmi / (range.max - range.min)) * (range.end - range.start);
+    const position = range.start + rangePercentage;
 
-    return `${position}%`
-  }
+    return `${position}%`;
+  };
 
   return (
     <>
@@ -299,7 +301,7 @@ const InfoStepTwo = ({ userInfo, setUserInfo }) => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default InfoStepTwo
+export default InfoStepTwo;

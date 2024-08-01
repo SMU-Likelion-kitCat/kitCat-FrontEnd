@@ -1,5 +1,5 @@
-import React, { useState } from "react"
-import { checkNickname } from "../../../../api"
+import React, { useState } from "react";
+import { checkNickname } from "../../../../api";
 
 const StepThree = ({
   nickname,
@@ -8,45 +8,45 @@ const StepThree = ({
   setIsFocused,
   nextStep,
 }) => {
-  const [isDuplicate, setIsDuplicate] = useState(false)
-  const [isChecking, setIsChecking] = useState(false)
+  const [isDuplicate, setIsDuplicate] = useState(false);
+  const [isChecking, setIsChecking] = useState(false);
 
   const handleNicknameChange = (e) => {
-    const value = e.target.value
+    const value = e.target.value;
     if (value.length <= 12) {
-      setNickname(value)
-      setIsDuplicate(false)
+      setNickname(value);
+      setIsDuplicate(false);
     }
-  }
+  };
 
   const checkDuplicateNickname = async () => {
-    setIsChecking(true)
+    setIsChecking(true);
     if (nickname.length > 0 && nickname.length <= 12) {
       try {
-        const isAvailable = await checkNickname(nickname)
-        setIsDuplicate(!isAvailable)
-        console.log("닉네임 중복 확인 완료")
+        const isAvailable = await checkNickname(nickname);
+        setIsDuplicate(!isAvailable);
+        console.log("닉네임 중복 확인 완료");
         if (isAvailable) {
-          nextStep()
+          nextStep();
         }
       } catch (e) {
         if (e.response && e.response.status === 409) {
-          console.log(e.response.status, "닉네임 중복")
+          console.log(e.response.status, "닉네임 중복");
         } else if (e.response && e.response.status === 404) {
-          console.log(e.response.status, "엔드포인트 오류")
+          console.log(e.response.status, "엔드포인트 오류");
         } else {
-          console.error("닉네임 중복 체크 오류:", e)
+          console.error("닉네임 중복 체크 오류:", e);
         }
       }
     }
-    setIsChecking(false)
-  }
+    setIsChecking(false);
+  };
 
   const onClickNext = async () => {
-    await checkDuplicateNickname()
-  }
+    await checkDuplicateNickname();
+  };
 
-  const isValidNickname = nickname.length > 0 && nickname.length <= 12
+  const isValidNickname = nickname.length > 0 && nickname.length <= 12;
 
   return (
     <div>
@@ -73,7 +73,7 @@ const StepThree = ({
         다음
       </button>
     </div>
-  )
-}
+  );
+};
 
-export default StepThree
+export default StepThree;

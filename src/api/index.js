@@ -209,3 +209,23 @@ export const postCreate = async (formData) => {
     throw e;
   }
 };
+export const petInfo = async () => {
+  try {
+    const res = await apiConfig.post("/pet/info");
+    return res.data;
+  } catch (e) {
+    console.error(e);
+    throw e;
+  }
+};
+
+// 프로필 업데이트 API 호출 함수
+export const updateUserProfile = async (updatedInfo) => {
+  try {
+    const res = await apiConfig.patch("/user/update", updatedInfo);
+    return res.data;
+  } catch (e) {
+    console.error(e);
+    throw e;
+  }
+};
