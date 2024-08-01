@@ -11,6 +11,7 @@ export const loginUserInfo = async () => {
   }
 }
 
+// 로그인
 export const loginUser = async (user) => {
   try {
     const res = await apiConfig.post("/user/login", user)
@@ -21,6 +22,7 @@ export const loginUser = async (user) => {
   }
 }
 
+// 회원가입
 export const registerUser = async (userInfo) => {
   try {
     const res = await apiConfig.post("/user/register", userInfo)
@@ -57,6 +59,7 @@ export const petInfo = async () => {
   }
 }
 
+// 닉네임 체크
 export const checkNickname = async (nickname) => {
   try {
     const res = await apiConfig.get(
@@ -72,6 +75,7 @@ export const checkNickname = async (nickname) => {
   }
 }
 
+// 이메일 체크
 export const checkEmail = async (email) => {
   try {
     const res = await apiConfig.get(
@@ -109,6 +113,7 @@ export const getRoutines = async () => {
   }
 }
 
+// 루틴 디테일 조회
 export const getRoutineDetail = async (routineId) => {
   try {
     const res = await apiConfig.get(`/routine/record/${routineId}`)
@@ -123,6 +128,41 @@ export const getRoutineDetail = async (routineId) => {
 export const createWalkRecord = async (walkRecordData) => {
   try {
     const res = await apiConfig.post("/record/save", walkRecordData)
+    return res.data
+  } catch (e) {
+    console.error(e)
+    throw e
+  }
+}
+
+// 산책 정보 조회
+export const fetchWalkRecord = async (year, month) => {
+  try {
+    const res = await apiConfig.get(`/record/month/${year}/${month}`)
+    return res.data
+  } catch (e) {
+    console.error(e)
+    throw e
+  }
+}
+
+export const createPost = async (formData) => {
+  try {
+    const res = await apiConfig.post("/post/create", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+    return res.data
+  } catch (e) {
+    console.error(e)
+    throw e
+  }
+}
+
+export const fetchPost = async () => {
+  try {
+    const res = await apiConfig.get("/post/show")
     return res.data
   } catch (e) {
     console.error(e)

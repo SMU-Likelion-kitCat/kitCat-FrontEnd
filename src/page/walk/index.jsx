@@ -242,17 +242,19 @@ const Walk = () => {
 
   const handleDogSelection = (dog) => {
     if (
-      location.selectedDogs.some((selectedDog) => selectedDog.id === dog.id)
+      location.selectedDogs.some(
+        (selectedDog) => selectedDog.petId === dog.petId
+      )
     ) {
       dispatch(
         setSelectedDogs(
           location.selectedDogs.filter(
-            (selectedDog) => selectedDog.id !== dog.id
+            (selectedDog) => selectedDog.petId !== dog.petId
           )
         )
       )
     } else {
-      dispatch(setSelectedDogs([...location.selectedDogs, dog]))
+      dispatch(setSelectedDogs([...location.selectedDogs, dog])) // 여러 마리 선택
     }
   }
 
@@ -325,7 +327,7 @@ const Walk = () => {
                 <div
                   className={`walk-dog-selection-item ${
                     location.selectedDogs.some(
-                      (selectedDog) => selectedDog.id === dog.id
+                      (selectedDog) => selectedDog.petId === dog.petId
                     )
                       ? "selected"
                       : ""
@@ -333,7 +335,7 @@ const Walk = () => {
                   onClick={() => handleDogSelection(dog)}
                 >
                   {location.selectedDogs.some(
-                    (selectedDog) => selectedDog.id === dog.id
+                    (selectedDog) => selectedDog.petId === dog.petId
                   ) && (
                     <div className="walk-dog-selection-item-icon-container">
                       <CheckDog />

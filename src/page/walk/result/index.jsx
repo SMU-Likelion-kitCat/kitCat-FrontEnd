@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { useLocation, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import KakaoMap from "../../../components/KakaoMap"
 import WalkInfo from "../components/WalkInfo"
 import { useDispatch, useSelector } from "react-redux"
@@ -7,17 +7,8 @@ import { resetLocationState } from "../../../redux/location"
 import { useFooterVisibility } from "../../../layout"
 
 const Result = () => {
-  // const location = useLocation()
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  // const {
-  //   path,
-  //   distance,
-  //   timer,
-  //   ownerCalories,
-  //   selectedDogs,
-  //   petCalories = [],
-  // } = location.state
 
   const location = useSelector((state) => state.location)
 

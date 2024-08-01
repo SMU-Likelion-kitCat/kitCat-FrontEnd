@@ -45,7 +45,7 @@ const Info = () => {
     }))
   }
 
-  const onSubmitPetInfo = (e) => {
+  const onSubmitPetInfo = (e, file) => {
     e.preventDefault()
     setSignupInfo((prevState) => ({
       ...prevState,
@@ -55,6 +55,7 @@ const Info = () => {
           name: petInfoInput.name,
           weight: petInfoInput.weight,
           petState: petInfoInput.petState,
+          file: file,
         },
       ],
     }))
