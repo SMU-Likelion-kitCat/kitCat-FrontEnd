@@ -18,7 +18,7 @@ const KakaoMap = ({ location, path, readWalkPath = false }) => {
       const container = document.getElementById("map")
       const options = {
         center: new window.kakao.maps.LatLng(
-          location.latitude - 0.002,
+          location.latitude,
           location.longitude
         ), // 지도의 중심을 현재 위치보다 아래로 설정
         level: 3,
@@ -179,7 +179,7 @@ const KakaoMap = ({ location, path, readWalkPath = false }) => {
     }
 
     loadKakaoMaps(readWalkPath ? historyWalkMap : initializeMap)
-  }, [location, path, readWalkPath])
+  }, [location.latitude, location.longitude, readWalkPath])
 
   // 경로 수정 렌더링
   useEffect(() => {
@@ -199,7 +199,7 @@ const KakaoMap = ({ location, path, readWalkPath = false }) => {
         markerRef.current.setPosition(markerPosition)
         mapRef.current.setCenter(
           new window.kakao.maps.LatLng(
-            lastLocation.latitude - 0.002,
+            lastLocation.latitude,
             lastLocation.longitude
           )
         ) // 지도의 중심을 현재 위치보다 아래로 설정

@@ -3,40 +3,33 @@ import WalkDogKcal from "./WalkDogKcal"
 import { useSelector } from "react-redux"
 
 const WalkInfo = ({
-  timer,
-  distance,
   currentDog,
   currentDogCalories,
-  selectedDogs,
   currentDogIndex,
   handleNextDog,
   handlePrevDog,
   resultPage = false,
 }) => {
-  // Redux 상태를 직접 읽어보세요.
-  const ownerCalories = useSelector((state) => state.location.ownerCalories)
-  console.log("ownerCalories", ownerCalories)
+  const location = useSelector((state) => state.location)
 
   // formattedCalories 상태 추가
   const [formattedCalories, setFormattedCalories] = useState("0000")
 
   const formatCalories = (calories) => {
     if (!calories) return "0000"
-    const formattedCalories = Math.round(calories * 100)
-      .toString()
-      .padStart(4, "0")
+    const formattedCalories = Math.round(calories).toString().padStart(4, "0")
     return formattedCalories
   }
 
   // ownerCalories 변경 시 formattedCalories 업데이트
   useEffect(() => {
-    setFormattedCalories(formatCalories(ownerCalories))
-  }, [ownerCalories])
+    setFormattedCalories(formatCalories(location.ownerCalories))
+  }, [location.ownerCalories])
 
   // 상태 변경 감지
   useEffect(() => {
-    console.log("WalkInfo 렌더링 - ownerCalories:", ownerCalories)
-  }, [ownerCalories]) // ownerCalories 상태를 의존성 배열에 추가
+    console.log("WalkInfo 렌더링 - ownerCalories:", location.ownerCalories)
+  }, [location.ownerCalories]) // ownerCalories 상태를 의존성 배열에 추가
 
   return (
     <>
@@ -46,11 +39,11 @@ const WalkInfo = ({
             <div className="walk-result-info-up-container">
               <div>
                 <h2>산책 시간</h2>
-                <p>{timer}</p>
+                <p>{location.timer}</p>
               </div>
               <div>
                 <h2>이동 거리 (km)</h2>
-                <p>{distance.toFixed(2)}</p>
+                <p>{(location.distance / 1000).toFixed(2)}</p>
               </div>
             </div>
             <div className="walk-result-info-down-container">
@@ -64,8 +57,6 @@ const WalkInfo = ({
                 handleNextDog={handleNextDog}
                 handlePrevDog={handlePrevDog}
                 currentDogCalories={currentDogCalories}
-                formatCalories={formattedCalories}
-                selectedDogs={selectedDogs}
                 currentDogIndex={currentDogIndex}
                 resultPage={true}
               />
@@ -77,11 +68,11 @@ const WalkInfo = ({
           <div className="walk-controls-backboard-info-up-container">
             <div className="walk-controls-backboard-walk-time-info">
               <h2>산책 시간</h2>
-              <p>{timer}</p>
+              <p>{location.timer}</p>
             </div>
             <div className="walk-controls-backboard-distance-info">
               <h2>이동 거리 (km)</h2>
-              <p>{distance.toFixed(2)}</p>
+              <p>{(location.distance / 1000).toFixed(2)}</p>
             </div>
           </div>
           <hr className="walk-controls-backboard-info-hr" />
@@ -96,7 +87,6 @@ const WalkInfo = ({
               handlePrevDog={handlePrevDog}
               currentDogCalories={currentDogCalories}
               formatCalories={formattedCalories}
-              selectedDogs={selectedDogs}
               currentDogIndex={currentDogIndex}
             />
           </div>

@@ -13,6 +13,7 @@ const Login = () => {
     password: "",
   })
   const [buttonActive, setButtonActive] = useState(false)
+
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const auth = useSelector((state) => state.auth)
@@ -34,18 +35,23 @@ const Login = () => {
       ...prevState,
       [name]: value,
     }))
-    setButtonActive(!!(loginInput.email && loginInput.password))
   }
 
   const handleLogin = async () => {
     try {
       const accessToken = await loginUser(loginInput)
+
+      setButtonActive(true)
       dispatch(setToken(accessToken))
       navigate("/walk")
       console.log("로그인 성공")
     } catch (e) {
       console.error("로그인 실패", e)
-      setButtonActive(false) // 로그인 실패 시 버튼 비활성화
+      setButtonActive(true)
+
+      setTimeout(() => {
+        setButtonActive(false) // 0.5초 동안 활성화 되었다가 다시 비활성화
+      }, 500)
     }
   }
 
@@ -90,7 +96,6 @@ const Login = () => {
       <button
         className={`auth-login-button ${buttonActive ? "active" : ""}`}
         onClick={handleLogin}
-        // disabled={!buttonActive}
       >
         로그인
       </button>

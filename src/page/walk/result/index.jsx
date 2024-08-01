@@ -2,36 +2,43 @@ import React, { useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
 import KakaoMap from "../../../components/KakaoMap"
 import WalkInfo from "../components/WalkInfo"
+import { useDispatch, useSelector } from "react-redux"
+import { resetLocationState } from "../../../redux/location"
+import { useFooterVisibility } from "../../../layout"
 
 const Result = () => {
-  const location = useLocation()
+  // const location = useLocation()
   const navigate = useNavigate()
-  const {
-    path,
-    distance,
-    timer,
-    ownerCalories,
-    selectedDogs,
-    petCalories = [],
-  } = location.state
+  const dispatch = useDispatch()
+  // const {
+  //   path,
+  //   distance,
+  //   timer,
+  //   ownerCalories,
+  //   selectedDogs,
+  //   petCalories = [],
+  // } = location.state
+
+  const location = useSelector((state) => state.location)
 
   const [currentDogIndex, setCurrentDogIndex] = useState(0)
+  const { setShowFooter } = useFooterVisibility()
 
   const handleNextDog = () => {
     setCurrentDogIndex((prevIndex) =>
-      prevIndex === selectedDogs.length - 1 ? 0 : prevIndex + 1
+      prevIndex === location.selectedDogs.length - 1 ? 0 : prevIndex + 1
     )
   }
 
   const handlePrevDog = () => {
     setCurrentDogIndex((prevIndex) =>
-      prevIndex === 0 ? selectedDogs.length - 1 : prevIndex - 1
+      prevIndex === 0 ? location.selectedDogs.length - 1 : prevIndex - 1
     )
   }
 
-  const currentDog = selectedDogs[currentDogIndex]
+  const currentDog = location.selectedDogs[currentDogIndex]
 
-  const currentDogCalories = petCalories.find(
+  const currentDogCalories = location.petCalories.find(
     (calorie) => calorie.petId === currentDog.id
   )
 
@@ -50,6 +57,12 @@ const Result = () => {
     return `${year}.${month}.${day}(${dayName})`
   }
 
+  const onClickWalkPate = () => {
+    dispatch(resetLocationState())
+    console.log("location 객체 상태 초기화", location)
+    navigate("/walk")
+    setShowFooter(true)
+  }
   return (
     <div className="walk-result-container">
       <div className="walk-result-title-container">
@@ -61,22 +74,26 @@ const Result = () => {
           <p>{formatDate(new Date())}</p>
         </div>
         <div className="walk-result-title-buttom-container">
-          <button>확인</button>
+          <button onClick={onClickWalkPate}>확인</button>
         </div>
       </div>
 
       <div className="walk-result-map">
-        <KakaoMap location={location} path={path} readWalkPath={true} />
+        <KakaoMap
+          location={location}
+          path={location.path}
+          readWalkPath={true}
+        />
       </div>
 
       <WalkInfo
-        timer={timer}
-        distance={distance}
-        ownerCalories={ownerCalories}
+        timer={location.timer}
+        distance={location.distance}
+        ownerCalories={location.ownerCalories}
         currentDog={currentDog}
         currentDogCalories={currentDogCalories}
         formatCalories={formatCalories}
-        selectedDogs={selectedDogs}
+        selectedDogs={location.selectedDogs}
         currentDogIndex={currentDogIndex}
         handleNextDog={handleNextDog}
         handlePrevDog={handlePrevDog}
