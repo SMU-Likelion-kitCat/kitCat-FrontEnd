@@ -82,7 +82,7 @@
 
 // export default recommendRouter
 
-import React, { lazy, Suspense } from "react"
+import React, { Children, lazy, Suspense } from "react"
 import Loading from "../components/Loading"
 
 const OngoingRoutineList = lazy(() =>
@@ -121,7 +121,25 @@ const recommendRouter = [
         <RecommendedRoutineList />
       </Suspense>
     ),
+    children: [
+      {
+        path: ":id",
+        element: (
+          <Suspense fallback={<Loading />}>
+            <RecommendRoutineDetail />
+          </Suspense>
+        ),
+      },
+    ],
   },
+  // {
+  //   path: "recommend/:id",
+  //   element: (
+  //     <Suspense fallback={<Loading />}>
+  //       <RecommendRoutineDetail />
+  //     </Suspense>
+  //   ),
+  // },
   {
     path: "record",
     element: (
@@ -151,14 +169,6 @@ const recommendRouter = [
     element: (
       <Suspense fallback={<Loading />}>
         <RoutineEdit />
-      </Suspense>
-    ),
-  },
-  {
-    path: "recommend/:id",
-    element: (
-      <Suspense fallback={<Loading />}>
-        <RecommendRoutineDetail />
       </Suspense>
     ),
   },

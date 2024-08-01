@@ -104,13 +104,13 @@ import RoutineList_R from "./RoutineList_R"
 import BMIInfo from "./BMIInfo"
 import { useNavigate } from "react-router-dom"
 import { loginUserInfo, getRoutines } from "../../../api"
+import Recommend from "../dummy/Recommend"
 
 const RoutineDashboard = () => {
   const [bmi, setBmi] = useState(18.6)
   const [viewMode, setViewMode] = useState("slide")
   const [userInfo, setUserInfo] = useState({})
   const [ongoingRoutines, setOngoingRoutines] = useState([])
-  const [recommendedRoutines, setRecommendedRoutines] = useState([])
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -130,7 +130,6 @@ const RoutineDashboard = () => {
         const res = await getRoutines()
         console.log("루틴 목록", res)
         setOngoingRoutines(res)
-        setRecommendedRoutines(res.recommended)
       } catch (error) {
         console.error("Failed to fetch routines:", error)
       }
@@ -171,7 +170,7 @@ const RoutineDashboard = () => {
         <h1 className="routine-subtitle">
           {userInfo.nickname}님
           <br />
-          웰독과 함께 건강한 루틴을 만들어보세요!
+          puppyness와 함께 건강한 루틴을 만들어보세요!
         </h1>
         <BMIInfo bmi={bmi} />
       </div>
@@ -197,7 +196,7 @@ const RoutineDashboard = () => {
               더보기
             </button>
           </div>
-          <RoutineList_R routines={recommendedRoutines} viewMode={viewMode} />
+          <RoutineList_R routines={Recommend} viewMode={viewMode} />
         </div>
       </div>
     </div>

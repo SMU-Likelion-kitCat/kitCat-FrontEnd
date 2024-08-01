@@ -14,3 +14,15 @@ export const convertToSeconds = (timeString) => {
   const [hours, minutes, seconds] = timeString.split(":").map(Number)
   return hours * 3600 + minutes * 60 + seconds
 }
+
+export const formatDateAndTime = (dateTimeString) => {
+  if (!dateTimeString) return { date: "N/A", time: "N/A" }
+
+  const [date, time] = dateTimeString.split("T")
+  const [year, month, day] = date.split("-")
+  const formattedDate = `${month}.${day}`
+  const [hour, minute] = time.split(":")
+  const formattedTime = `${hour}:${minute}`
+
+  return { date: formattedDate, time: formattedTime }
+}

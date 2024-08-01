@@ -58,8 +58,8 @@ const RecordKakaoMap = ({ record, mapId }) => {
   const [isInView, setIsInView] = useState(false)
   const mapRef = useRef(null)
 
-  console.log("들어온 산책 전용 읽기 record 객체", record)
-  console.log("들어온 산책 전용 읽기 locations 객체", locations)
+  console.log(`들어온 산책 전용 읽기 record 객체 ${mapId}`, record)
+  console.log(`들어온 산책 전용 읽기 locations 객체 ${mapId}`, locations)
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -92,7 +92,7 @@ const RecordKakaoMap = ({ record, mapId }) => {
     <div ref={mapRef} style={{ height: "400px", width: "100%" }}>
       {isInView && (
         <KakaoMap
-          location={locations[0]}
+          location={null}
           path={locations}
           readWalkPath={true}
           mapId={mapId}

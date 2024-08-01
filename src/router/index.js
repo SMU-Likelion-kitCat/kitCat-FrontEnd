@@ -96,8 +96,8 @@ const router = createBrowserRouter([
         path: "walk",
         element: (
           <Suspense fallback={<Loading />}>
-            {/* <LoginCheck element={<Walk />} /> */}
-            <Walk />
+            <LoginCheck element={<Walk />} />
+            {/* <Walk /> */}
           </Suspense>
         ),
         children: [

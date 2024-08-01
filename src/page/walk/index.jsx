@@ -1,4 +1,4 @@
-import { useCallback, useState, useEffect } from "react"
+import { useState, useEffect } from "react"
 import KakaoMap from "../../components/KakaoMap"
 import { useDispatch, useSelector } from "react-redux"
 import {
@@ -42,9 +42,12 @@ const Walk = () => {
   const navigate = useNavigate()
 
   const { error, requestLocation, clearWatcher } = useGeoLocation({
-    enableHighAccuracy: false,
-    timeout: 1000 * 30,
-    maximumAge: 1000 * 3600 * 24,
+    // enableHighAccuracy: false,
+    enableHighAccuracy: true,
+    timeout: Infinity,
+    // maximumAge: 1000 * 3600 * 24,
+    maximumAge: Infinity,
+    // timeout: 10000,
   })
   const location = useSelector((state) => state.location)
   const auth = useSelector((state) => state.auth)
@@ -278,6 +281,7 @@ const Walk = () => {
                 location={location}
                 path={location.path}
                 distance={location.distance}
+                mapId="map"
               />
             )}
           </div>

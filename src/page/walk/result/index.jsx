@@ -74,6 +74,7 @@ const Result = () => {
           location={location}
           path={location.path}
           readWalkPath={true}
+          mapId="result-map"
         />
       </div>
 

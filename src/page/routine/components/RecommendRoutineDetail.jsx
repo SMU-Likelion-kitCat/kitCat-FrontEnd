@@ -7,6 +7,7 @@ import { ReactComponent as Calendar_G } from "../../../assets/routine/Calendar_g
 import { ReactComponent as Clock } from "../../../assets/routine/Clock.svg"
 import { ReactComponent as Kcal } from "../../../assets/routine/Kcal.svg"
 import { ReactComponent as Ruler } from "../../../assets/routine/Ruler.svg"
+import { useFooterVisibility } from "../../../layout/index"
 
 const getIconForType = (type) => {
   switch (type) {
@@ -25,6 +26,7 @@ const RecommendRoutineDetail = () => {
   const { id } = useParams()
   const routine = Recommend.find((r) => r.id === parseInt(id))
   const [backgroundColor, setBackgroundColor] = useState("")
+  const { setShowFooter } = useFooterVisibility()
 
   const navigate = useNavigate()
 
@@ -47,6 +49,11 @@ const RecommendRoutineDetail = () => {
     ]
     const randomColor = colors[Math.floor(Math.random() * colors.length)]
     setBackgroundColor(randomColor)
+    setShowFooter(false)
+
+    return () => {
+      setShowFooter(true)
+    }
   }, [])
 
   const generateWeeklyGoals = (duration_int, goal, step) => {

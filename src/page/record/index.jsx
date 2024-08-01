@@ -313,7 +313,7 @@
 // import { ReactComponent as DropBoxArrow } from "../../assets/routine/DropBoxArrow.svg"
 // import { ReactComponent as DotPlus } from "../../assets/routine/DotPlus.svg"
 
-// import { fetchWalkRecord } from "../../api" // Adjust the path if necessary
+// import { fetchWalkRecord } from "../../api"
 // import RecordKakaoMap from "./components/RecordKakaoMap"
 // import RecordWalkInfo from "./components/RecordWalkInfo"
 
@@ -328,13 +328,12 @@
 //   const [selectedRoutineData, setSelectedRoutineData] = useState([])
 //   const [showFullMonth, setShowFullMonth] = useState(true)
 //   const [isArrowRotated, setIsArrowRotated] = useState(true)
-//   const [walkRecords, setWalkRecords] = useState([]) // State to store walk records
+//   const [walkRecords, setWalkRecords] = useState([])
 
-//   // Fetch walk records when year or month changes
 //   useEffect(() => {
 //     const fetchRecords = async () => {
 //       try {
-//         const records = await fetchWalkRecord(year, month + 1) // +1 because month is zero-indexed
+//         const records = await fetchWalkRecord(year, month + 1)
 //         setWalkRecords(records)
 //         console.log("Fetched walk records data", records)
 //       } catch (e) {
@@ -347,7 +346,7 @@
 
 //   const handleToggleView = () => {
 //     setShowFullMonth(!showFullMonth)
-//     setIsArrowRotated(!isArrowRotated) // Toggle arrow rotation state
+//     setIsArrowRotated(!isArrowRotated)
 //   }
 
 //   const handlePrevMonth = () => {
@@ -369,7 +368,7 @@
 //   }
 
 //   const handleDateClick = (day) => {
-//     const routineDetails = walkRecords[day - 1]?.records || [] // Adjusted to use fetched walk records
+//     const routineDetails = walkRecords[day - 1]?.records || []
 //     setSelectedDate({ year, month, day })
 //     setSelectedRoutineData(routineDetails)
 //   }
@@ -487,7 +486,7 @@
 //                   ></div>
 //                 ))}
 //             {walkRecords[date.getDate() - 1]?.records?.length > 2 && (
-//               <div className="record-calendar-dot">+</div>
+//               <DotPlus className="record-calendar-dot-plus" />
 //             )}
 //           </div>
 //         </div>
@@ -511,7 +510,6 @@
 //       .toString()
 //       .padStart(2, "0")} (${dayOfWeek})`
 //   }
-
 //   return (
 //     <div>
 //       <div className="record-calendar-container">
@@ -556,18 +554,17 @@
 //         </div>
 //       </div>
 //       <div className="record-calendar-container-sub">
-//         {selectedRoutineData.map((records, index) => (
+//         {selectedRoutineData.map((record, index) => (
 //           <div className="record-tab" key={index}>
 //             <div className="record-tab-title-wrap">
 //               <h1 className="record-tab-title">{formatSelectedDate()}</h1>
 //               <h1 className="record-tab-title time">14:00</h1>
 //             </div>
 //             <div className="record-tab-map">
-//               <RecordKakaoMap records={records} />
-//               {/* <RecordKakaoMap records={[records]} /> */}
+//               <RecordKakaoMap record={record} />
 //             </div>
 //             <div className="record-tab-info">
-//               <RecordWalkInfo records={records} />
+//               <RecordWalkInfo records={record} />
 //             </div>
 //           </div>
 //         ))}
@@ -575,9 +572,10 @@
 //     </div>
 //   )
 // }
+
 // export default Record
 
-import React, { useState, useEffect, useRef } from "react"
+import React, { useState, useEffect } from "react"
 import { ReactComponent as MonthArrow } from "../../assets/routine/MonthArrow.svg"
 import { ReactComponent as DropBoxArrow } from "../../assets/routine/DropBoxArrow.svg"
 import { ReactComponent as DotPlus } from "../../assets/routine/DotPlus.svg"
@@ -779,6 +777,7 @@ const Record = () => {
       .toString()
       .padStart(2, "0")} (${dayOfWeek})`
   }
+
   return (
     <div>
       <div className="record-calendar-container">
@@ -830,7 +829,10 @@ const Record = () => {
               <h1 className="record-tab-title time">14:00</h1>
             </div>
             <div className="record-tab-map">
-              <RecordKakaoMap record={record} />
+              <RecordKakaoMap
+                record={record}
+                mapId={`${selectedDate.day}-${index}-map`}
+              />
             </div>
             <div className="record-tab-info">
               <RecordWalkInfo records={record} />
@@ -841,5 +843,4 @@ const Record = () => {
     </div>
   )
 }
-
 export default Record

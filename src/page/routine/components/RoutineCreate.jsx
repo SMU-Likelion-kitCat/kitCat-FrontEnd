@@ -9,7 +9,7 @@
 // import { useNavigate } from "react-router-dom"
 
 // // 루틴 등록하는 컴포넌트
-// const RoutineForm = () => {
+// const RoutineCreate = () => {
 //   const [isModalOpen, setModalOpen] = useState(false)
 //   const [isUnitDropdownOpen, setUnitDropdownOpen] = useState(false)
 //   const [isAmountDropdownOpen, setAmountDropdownOpen] = useState(false)
@@ -440,7 +440,7 @@
 //   )
 // }
 
-// export default RoutineForm
+// export default RoutineCreate
 
 import React, { useState, useRef, useEffect } from "react"
 import { ReactComponent as BackArrow } from "../../../assets/auth/register/BackArrow.svg"
@@ -454,11 +454,11 @@ import { useNavigate } from "react-router-dom"
 import { createRoutine } from "../../../api" // API 호출 함수 가져오기
 
 // 루틴 등록하는 컴포넌트
-const RoutineForm = () => {
+const RoutineCreate = () => {
   const [isModalOpen, setModalOpen] = useState(false)
   const [isUnitDropdownOpen, setUnitDropdownOpen] = useState(false)
   const [isAmountDropdownOpen, setAmountDropdownOpen] = useState(false)
-  const [selectedUnit, setSelectedUnit] = useState("하루")
+  const [selectedUnit, setSelectedUnit] = useState("일주일")
   const [selectedAmount, setSelectedAmount] = useState("1")
   const [routineName, setRoutineName] = useState("")
   const [finalGoal, setFinalGoal] = useState("")
@@ -742,12 +742,13 @@ const RoutineForm = () => {
                   onClick={toggleUnitDropdown}
                   type="button"
                 >
-                  {selectedUnit}
-                  <DropBoxArrow
+                  {/* {selectedUnit} */}
+                  일주일
+                  {/* <DropBoxArrow
                     className={`up-arrow ${isUnitDropdownOpen ? "open" : ""}`}
-                  />
+                  /> */}
                 </button>
-                {isUnitDropdownOpen && (
+                {/* {isUnitDropdownOpen && (
                   <div className="dropdown-menu">
                     {["하루", "일주일"].map((unit) => (
                       <div
@@ -762,7 +763,7 @@ const RoutineForm = () => {
                       </div>
                     ))}
                   </div>
-                )}
+                )} */}
               </div>
               <span className="text">에</span>
               <div className="dropdown day" ref={amountDropdownRef}>
@@ -833,7 +834,7 @@ const RoutineForm = () => {
                 setRoutineName("")
                 setFinalGoal("")
                 setStepGoalUnit("")
-                setSelectedUnit("하루")
+                setSelectedUnit("일주일")
                 setSelectedAmount("1")
                 setSelectedDuration("1주")
                 setSelectedColor(null)
@@ -891,4 +892,4 @@ const RoutineForm = () => {
   )
 }
 
-export default RoutineForm
+export default RoutineCreate

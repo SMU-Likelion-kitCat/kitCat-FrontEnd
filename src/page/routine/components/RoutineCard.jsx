@@ -7,7 +7,7 @@ const RoutineCard = ({
   description,
   progress,
   color,
-  highlight,
+  routineTerm,
 }) => {
   const getProgressColor = (progress) => {
     if (progress <= 40) return "#858585"
@@ -27,7 +27,9 @@ const RoutineCard = ({
     <div className="routine-card" onClick={handleClick}>
       <div className="highlight-bar" style={{ backgroundColor: color }}></div>
       <div className="card-content">
-        <h2>{title}</h2>
+        <h2>
+          {routineTerm}주 {title}
+        </h2>
         <p>{description}</p>
         {progress !== undefined && (
           <div className="progress-container">
