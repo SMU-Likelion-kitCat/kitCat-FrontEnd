@@ -16,6 +16,9 @@ const Routine = lazy(() => import("../page/routine"))
 const Record = lazy(() => import("../page/record"))
 const Walk = lazy(() => import("../page/walk"))
 const Community = lazy(() => import("../page/community"))
+const PostDetail = lazy(() => import("../page/community/components/PostDetail"))
+const PostCreate = lazy(() => import("../page/community/components/PostCreate"))
+
 const MyPage = lazy(() => import("../page/mypage"))
 const Result = lazy(() => import("../page/walk/result"))
 const Chatbot = lazy(() => import("../page/chatbot"))
@@ -118,6 +121,24 @@ const router = createBrowserRouter([
             <LoginCheck element={<Community />} />
           </Suspense>
         ),
+        children: [
+          {
+            path: "create",
+            element: (
+              <Suspense fallback={<Loading />}>
+                <PostCreate element={<Result />} />
+              </Suspense>
+            ),
+          },
+          {
+            path: "post/:postId",
+            element: (
+              <Suspense fallback={<Loading />}>
+                <PostDetail element={<Result />} />
+              </Suspense>
+            ),
+          },
+        ],
       },
       {
         path: "mypage",

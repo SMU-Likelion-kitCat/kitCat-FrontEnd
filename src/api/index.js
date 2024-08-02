@@ -169,3 +169,73 @@ export const fetchPost = async () => {
     throw e
   }
 }
+
+// 게시글 목록 조회
+export const postShowAll = async (listData) => {
+  try {
+    const res = await apiConfig.get(`/post/show/all`, { params: listData })
+    return res.data
+  } catch (e) {
+    console.error(e)
+    throw e
+  }
+}
+
+// 게시글 상세 조회
+export const postShow = async (postId) => {
+  try {
+    const res = await apiConfig.get(`/post/show/${postId}`)
+    return res.data
+  } catch (e) {
+    console.error(e)
+    throw e
+  }
+}
+
+// 게시글 작성
+export const postCreate = async (formData) => {
+  try {
+    const res = await apiConfig.post(`/post/create`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+    return res.data
+  } catch (e) {
+    console.log(e.response?.data || e.message)
+    throw e
+  }
+}
+
+// 댓글 작성
+export const postComment = async (commentData) => {
+  try {
+    const res = await apiConfig.post("/post/comment", commentData)
+    return res.data
+  } catch (e) {
+    console.error(e)
+    throw e
+  }
+}
+
+// 좋아요 누르기
+export const inHeart = async (postId) => {
+  try {
+    const res = await apiConfig.get(`/post/heart/insert/${postId}`)
+    return res.data
+  } catch (e) {
+    console.error(e)
+    throw e
+  }
+}
+
+// 좋아요 누르기 취소
+export const delHeart = async (postId) => {
+  try {
+    const res = await apiConfig.get(`/post/heart/delete/${postId}`)
+    return res.data
+  } catch (e) {
+    console.error(e)
+    throw e
+  }
+}

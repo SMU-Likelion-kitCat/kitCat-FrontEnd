@@ -1,111 +1,76 @@
-import React, { useState } from "react";
-import { ReactComponent as CommunityAddIcon } from "../../../assets/community/CommunityAddIcon.svg";
-import { ReactComponent as Comment } from "../../../assets/community/Comment.svg";
-import { ReactComponent as Heart } from "../../../assets/community/Heart.svg";
+import React, { useState, useEffect } from "react";
 import { ReactComponent as NewButton } from "../../../assets/community/NewButton.svg";
-import { ReactComponent as FillHeart } from "../../../assets/community/FillHeart.svg";
-import Dum from "../../community/components/Dum";
 import { useNavigate } from "react-router-dom";
+import { postShowAll } from "../../../api";
+import Post from "./Post";
 
 const Main = () => {
   const navigate = useNavigate();
+  const [posts, setPosts] = useState([]);
+  const [postLikes, setPostLikes] = useState({});
 
-  const [postLikes, setPostLikes] = useState(
-    Dum.reduce((likes, post) => {
-      likes[post.postId] = {
-        isLiked: false,
-        likeCount: post.response,
-      };
-      return likes;
-    }, {})
-  );
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const res = await postShowAll();
+        console.log("포스트 목록:", res);
 
-  const handleLikeClick = (postId, e) => {
-    e.stopPropagation();
+        setPosts(res || []);
 
-    setPostLikes((prevPostLikes) => {
-      const post = prevPostLikes[postId];
-      return {
-        ...prevPostLikes,
-        [postId]: {
-          isLiked: !post.isLiked,
-          likeCount: post.isLiked ? post.likeCount - 1 : post.likeCount + 1,
-        },
-      };
-    });
+        const initialLikes = res.reduce((likes, post) => {
+          likes[post.postId] = {
+            heartState: false, // Initial heart state
+            likeCount: post.likeCount,
+          };
+          return likes;
+        }, {});
+        setPostLikes(initialLikes);
+      } catch (error) {
+        console.error("게시글을 가져오는데 실패했습니다.", error);
+      }
+    };
+    fetchPosts();
+  }, []);
+
+  const handleHeartStateChange = (postId, newHeartState) => {
+    setPostLikes((prevPostLikes) => ({
+      ...prevPostLikes,
+      [postId]: {
+        ...prevPostLikes[postId],
+        heartState: newHeartState,
+      },
+    }));
+  };
+
+  const handlePostClick = (postId) => {
+    console.log(postId); // 콘솔에 postId 출력
+    navigate(`/community/post/${postId}`);
   };
 
   return (
-    <>
-      <div className="community-content-container">
-        <div className="community-content-title-wrapper">
-          <h1 className="community-content-title">커뮤니티</h1>
-          <CommunityAddIcon />
-        </div>
-        {Dum.map((post) => (
-          <div
-            key={post.postId}
-            className="community-content-list-wrapper"
-            onClick={() => navigate(`/community/postId/${post.postId}`)}
-          >
-            <div className="community-content-list">
-              <div className="community-content-state">
-                <div className="community-content-list-response">
-                  <div className="community-content-user-info">
-                    <div className="community-content-user-name">
-                      {post.author}
-                    </div>
-                    <div className="community-content-dot">·</div>
-                    <div className="community-content-user-time">
-                      {post.elapsedTime}
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="community-content-list-title">{post.content}</div>
-              <div className="community-content-response-count">
-                <div className="community-content-comment-icon-wrapper">
-                  <div className="community-content-comment-icon">
-                    <Comment />
-                  </div>
-                  <div className="community-content-comment-count">
-                    {post.comments ? post.comments.length : 0}
-                  </div>
-                </div>
-                <div
-                  className="community-content-heart-icon-wrapper"
-                  onClick={(e) => handleLikeClick(post.postId, e)}
-                >
-                  <div className="community-content-heart-icon">
-                    {postLikes[post.postId]?.isLiked ? (
-                      <FillHeart />
-                    ) : (
-                      <Heart />
-                    )}
-                  </div>
-
-                  <div className="community-content-heart-count">
-                    {postLikes[post.postId]?.likeCount || 0}
-                  </div>
-                </div>
-              </div>
-              <hr className="under-hr" />
-            </div>
-          </div>
-        ))}
-        <button className="community-new-button">
-          <div className="community-new-button-wrapper">
-            <NewButton />
-            <div
-              className="community-new-button-text"
-              onClick={() => navigate("/community/new")}
-            >
-              글쓰기
-            </div>
-          </div>
-        </button>
+    <div className="community-content-container">
+      <div className="community-content-head-wrapper">
+        <h1 className="community-content-title">커뮤니티</h1>
+        <NewButton onClick={() => navigate("/community/create")} />
       </div>
-    </>
+      {posts.map((post) => (
+        <div key={post.postId} onClick={() => handlePostClick(post.postId)}>
+          <Post
+            className="community-content-list-wrapper"
+            postId={post.postId}
+            writer={post.writer}
+            createTime={post.createTime}
+            content={post.content}
+            files={post.photoNames || []}
+            likeCount={postLikes[post.postId].likeCount}
+            commentCount={post.commentCount}
+            heartState={[post.postId].heartState} // Pass heartState to Post
+            onHeartStateChange={handleHeartStateChange} // Callback for heart state change
+          />
+          <hr className="line"/>
+        </div>
+      ))}
+    </div>
   );
 };
 

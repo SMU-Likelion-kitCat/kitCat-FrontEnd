@@ -61,6 +61,7 @@ const Layout = () => {
     "/auth/register/info",
     "/routine/ongoing",
     "/routine/recommend",
+    "/community/create",
   ]
   const chatbotVisible =
     showChatbot && !noChatbotPaths.some((path) => location.pathname === path)
