@@ -15,3 +15,21 @@
     height: 100vh;
     overflow-y: auto;
 }
+
+.chatbot-icon-container {
+    position: fixed;
+    bottom: 158px;
+    right: 20px;
+    z-index: 1;
+    .chatbot-icon {
+        @include column-flexbox(center, center);
+        background-color: #fff;
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+
+        filter: drop-shadow(0px 0px 12px rgba(0, 0, 0, 0.2));
+
+        @include custom-font-size(600, 10px, b3-smg, 16px, -0.2px);
+    }
+}

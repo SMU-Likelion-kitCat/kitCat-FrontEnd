@@ -636,9 +636,40 @@
 
 // export default React.memo(KakaoMap)
 
+//   useEffect(() => {
+//     console.log("경로 수정 렌더링")
+//     if (mapRef.current && polylineRef.current && markerRef.current) {
+//       const newLinePath = path.map(
+//         (loc) => new window.kakao.maps.LatLng(loc.latitude, loc.longitude)
+//       )
+//       polylineRef.current.setPath(newLinePath)
+
+//       const lastLocation = path[path.length - 1]
+//       if (lastLocation) {
+//         const markerPosition = new window.kakao.maps.LatLng(
+//           lastLocation.latitude,
+//           lastLocation.longitude
+//         )
+//         markerRef.current.setPosition(markerPosition)
+//         mapRef.current.setCenter(
+//           new window.kakao.maps.LatLng(
+//             lastLocation.latitude,
+//             lastLocation.longitude
+//           )
+//         )
+//       }
+//     }
+//   }, [path])
+
 import React, { useEffect, useRef } from "react"
 
-const KakaoMap = ({ location, path, readWalkPath = false, mapId }) => {
+const KakaoMap = ({
+  location,
+  path,
+  readWalkPath = false,
+  mapId,
+  recordWalkPath = false,
+}) => {
   const mapRef = useRef(null)
   const polylineRef = useRef(null)
   const markerRef = useRef(null)
@@ -813,37 +844,12 @@ const KakaoMap = ({ location, path, readWalkPath = false, mapId }) => {
     loadKakaoMaps(readWalkPath ? historyWalkMap : initializeMap)
   }, [location, path, readWalkPath, mapId])
 
-  //   useEffect(() => {
-  //     console.log("경로 수정 렌더링")
-  //     if (mapRef.current && polylineRef.current && markerRef.current) {
-  //       const newLinePath = path.map(
-  //         (loc) => new window.kakao.maps.LatLng(loc.latitude, loc.longitude)
-  //       )
-  //       polylineRef.current.setPath(newLinePath)
-
-  //       const lastLocation = path[path.length - 1]
-  //       if (lastLocation) {
-  //         const markerPosition = new window.kakao.maps.LatLng(
-  //           lastLocation.latitude,
-  //           lastLocation.longitude
-  //         )
-  //         markerRef.current.setPosition(markerPosition)
-  //         mapRef.current.setCenter(
-  //           new window.kakao.maps.LatLng(
-  //             lastLocation.latitude,
-  //             lastLocation.longitude
-  //           )
-  //         )
-  //       }
-  //     }
-  //   }, [path])
-
   return (
     <div
       id={mapId}
       style={{
         width: "100%",
-        height: readWalkPath ? "230px" : "100%",
+        height: readWalkPath ? (recordWalkPath ? "144px" : "230px") : "100%",
       }}
     />
   )

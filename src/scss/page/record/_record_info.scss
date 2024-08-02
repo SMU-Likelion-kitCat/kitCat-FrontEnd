@@ -1,0 +1,75 @@
+.record-walk-info-container {
+    position: relative;
+    width: 100%;
+    height: 148px;
+    @include column-flexbox(start, center);
+    gap: 20px;
+
+    .record-walk-info-up-container {
+        @include inline-flexbox(between, start);
+        width: 100%;
+        div {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 160px;
+            gap: 8px;
+            h2 {
+                @include custom-font-size(400, 12px, b3-md, 16px, -0.24px);
+            }
+            p {
+                @include custom-font-size(500, 32px, h2, 36px, -0.64px);
+            }
+        }
+    }
+
+    .record-walk-info-down-container {
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        div {
+            @include column-flexbox(start, center);
+            width: 160px;
+            gap: 8px;
+            h2 {
+                @include custom-font-size(400, 12px, b3-md, 16px, -0.24px);
+            }
+            p {
+                @include custom-font-size(500, 32px, h2, 36px, -0.64px);
+            }
+        }
+    }
+    .record-walk-info-selection-container {
+        position: absolute;
+        right: 20px;
+        bottom: 0;
+        @include column-flexbox(start, center);
+        gap: 8px;
+        h2 {
+            @include custom-font-size(400, 12px, b3-md, 16px, -0.24px);
+        }
+        .record-walk-info-selection-content-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            width: 120px;
+            @include inline-flexbox(between, center);
+
+            .record-walk-info-selection-dog-container {
+                @include inline-flexbox(between, center);
+                gap: 6px;
+
+                .record-walk-info-selection-dog-selection-profile {
+                    width: 28px;
+                    height: 28px;
+                    border-radius: 50%;
+                    border: 2px solid #ccc; // 선택된 이미지에 테두리 추가
+                }
+                p {
+                    @include custom-font-size(500, 32px, h2, 36px, -0.64px);
+                }
+            }
+        }
+    }
+}
