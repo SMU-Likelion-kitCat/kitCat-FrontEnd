@@ -23,6 +23,7 @@ const Layout = () => {
     "/auth/login",
     "/auth/register",
     "/auth/register/info",
+    "/walk/result",
     "/routine/ongoing",
     "/routine/ongoing:id",
     "/routine/create",
@@ -35,11 +36,12 @@ const Layout = () => {
   // showFooter true이고 noFooterPaths에 정의되지 않았을 때, footer가 표시
   const footerPathsWithNoFooterLayout = [
     "/",
-    "/walk",
     "/auth",
     "/auth/login",
     "/auth/register",
     "/auth/register/info",
+    "/walk",
+    "/walk/result",
     "/routine/create",
     "/chatbot",
   ]

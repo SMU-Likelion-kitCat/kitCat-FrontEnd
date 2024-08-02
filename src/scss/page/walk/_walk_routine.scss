@@ -65,6 +65,43 @@
             }
         }
 
+        // .walk-routine-item-achieve-percentage-container {
+        //     @include inline-flexbox(between, center);
+        //     width: 100%;
+
+        //     .walk-routine-item-achieve-progress-bar {
+        //         width: 70%;
+        //         height: 6px;
+        //         background-color: #e0e0e0;
+        //         border-radius: 3px;
+
+        //         .progress {
+        //             height: 100%;
+        //             border-radius: 3px;
+        //         }
+        //     }
+
+        //     .progress-text-container {
+        //         display: flex;
+        //         align-items: center;
+        //         color: var(--material-theme-ref-neutral-neutral50, #757575);
+        //         overflow: hidden;
+
+        //         .progress-text-one {
+        //             font-family: Roboto;
+        //             font-size: 14px;
+        //             font-style: normal;
+        //             font-weight: 600;
+        //             line-height: 18px;
+        //             letter-spacing: -0.28px;
+        //         }
+
+        //         .progress-text-two {
+        //             @include custom-font-size(600, 14px, b2-md, 18px, -0.28px);
+        //         }
+        //     }
+        // }
+
         .walk-routine-item-achieve-percentage-container {
             @include inline-flexbox(between, center);
             width: 100%;
@@ -85,6 +122,7 @@
                 display: flex;
                 align-items: center;
                 color: var(--material-theme-ref-neutral-neutral50, #757575);
+                overflow: hidden;
 
                 .progress-text-one {
                     font-family: Roboto;

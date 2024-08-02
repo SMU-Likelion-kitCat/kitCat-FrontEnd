@@ -1,4 +1,5 @@
 import React, { useEffect } from "react"
+import { getColorByProgress } from "../../../utils/colorCalculate"
 
 const WalkRoutine = ({
   routines = [],
@@ -60,15 +61,19 @@ const WalkRoutine = ({
                 <div
                   className="progress"
                   style={{
-                    width: `${routine.progress}%`,
-                    backgroundColor: `${routine.colorCode}`,
+                    width: `${
+                      routine.progress > 100 ? 100 : routine.progress
+                    }%`,
+                    backgroundColor: getColorByProgress(routine.progress),
                   }}
                 />
               </div>
               <div className="progress-text-container">
                 <span
                   className="progress-text-one"
-                  style={{ color: `${routine.colorCode}` }}
+                  style={{
+                    color: getColorByProgress(routine.progress),
+                  }}
                 >
                   {routine.progress}
                 </span>

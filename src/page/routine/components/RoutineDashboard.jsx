@@ -72,7 +72,7 @@ const RoutineDashboard = () => {
         <h1 className="routine-subtitle">
           {userInfo.nickname}님
           <br />
-          puppyness와 함께 건강한 루틴을 만들어보세요!
+          퍼피니스와 건강한 산책해요!
         </h1>
         <BMIInfo bmi={bmi} />
       </div>
