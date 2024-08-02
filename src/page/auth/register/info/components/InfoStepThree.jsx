@@ -639,6 +639,144 @@
 
 // export default InfoStepThree
 
+// import React, { useEffect, useRef, useState } from "react"
+// import { ReactComponent as CloseIcon } from "../../../../../assets/auth/register/CloseIcon.svg"
+// import { ReactComponent as DogDefaultIcon } from "../../../../../assets/auth/register/DogDefaultIcon.svg"
+// import { ReactComponent as DogImageIcon } from "../../../../../assets/auth/register/DogImageIcon.svg"
+// import { useSelector } from "react-redux"
+// import { useNavigate } from "react-router-dom"
+
+// const InfoStepThree = ({
+//   petInfoInput,
+//   petInfos,
+//   onChangePetInfoInput,
+//   onSubmitPetInfo,
+//   removePet,
+//   handleFileChange,
+// }) => {
+//   const [previewImage, setPreviewImage] = useState(null)
+//   const auth = useSelector((state) => state.auth)
+//   const navigate = useNavigate()
+//   const fileInputRef = useRef(null)
+
+//   useEffect(() => {
+//     if (!auth.accessToken) {
+//       alert("auth가 없습니다.")
+//       navigate("/auth/register")
+//     }
+//   }, [auth, navigate])
+
+//   const isFormValid = petInfoInput.name && petInfoInput.weight
+
+//   const handleIconClick = () => {
+//     if (fileInputRef.current) {
+//       fileInputRef.current.click()
+//     }
+//   }
+
+//   const handleFileChangeWithPreview = (e) => {
+//     handleFileChange(e)
+//     const file = e.target.files[0]
+//     if (file) {
+//       const reader = new FileReader()
+//       reader.onloadend = () => {
+//         setPreviewImage(reader.result)
+//       }
+//       reader.readAsDataURL(file)
+//     }
+//   }
+
+//   const handleSave = (e) => {
+//     onSubmitPetInfo(e)
+//     setPreviewImage(null)
+//   }
+
+//   const handleRemovePet = (index) => {
+//     removePet(index)
+//     setPreviewImage(null)
+//   }
+
+//   return (
+//     <>
+//       <div className="auth-register-info-pet-title">
+//         <div className="auth-register-info-pet-content">
+//           <span className="auth-register-info-pet-name">반려견</span>의
+//           <br />
+//           정보를 알려주세요
+//         </div>
+//         <div className="auth-register-info-pet-image-container">
+//           {previewImage ? (
+//             <img src={previewImage} alt="Selected" className="preview-image" />
+//           ) : (
+//             <DogDefaultIcon />
+//           )}
+//           <div onClick={handleIconClick} style={{ cursor: "pointer" }}>
+//             <DogImageIcon />
+//           </div>
+//           <form style={{ display: "none" }}>
+//             <input
+//               type="file"
+//               ref={fileInputRef}
+//               accept="image/png, image/jpeg, image/jpg"
+//               onChange={handleFileChangeWithPreview}
+//             />
+//           </form>
+//         </div>
+//       </div>
+
+//       <div className="auth-register-info-pet-list-container">
+//         {petInfos.map((pet, index) => (
+//           <div className="auth-register-info-pet-list-item" key={index}>
+//             {pet.name}
+//             <CloseIcon onClick={() => handleRemovePet(index)} />
+//           </div>
+//         ))}
+//       </div>
+
+//       <form className="auth-register-info-pet-container" onSubmit={handleSave}>
+//         <div className="auth-register-info-pet-input-container">
+//           <div className="auth-register-info-pet-input-title">반려견 이름</div>
+//           <div className="auth-register-info-pet-input">
+//             <input
+//               type="text"
+//               name="name"
+//               placeholder="반려견 이름 입력"
+//               value={petInfoInput.name}
+//               onChange={onChangePetInfoInput}
+//             />
+//           </div>
+//         </div>
+//         <div className="auth-register-info-pet-input-container">
+//           <div className="auth-register-info-pet-input-title">몸무게 (kg)</div>
+//           <div className="auth-register-info-pet-input">
+//             <input
+//               type="text"
+//               name="weight"
+//               placeholder="몸무게 (kg) 입력"
+//               value={petInfoInput.weight}
+//               onChange={onChangePetInfoInput}
+//             />
+//           </div>
+//         </div>
+
+//         <div className="auth-register-info-pet-save-button-container">
+//           <button
+//             type="submit"
+//             className={`auth-register-info-pet-save-button ${
+//               isFormValid ? "active" : ""
+//             }`}
+//             disabled={!isFormValid}
+//           >
+//             저장
+//           </button>
+//         </div>
+//       </form>
+//     </>
+//   )
+// }
+
+// export default InfoStepThree
+
 import React, { useEffect, useRef, useState } from "react"
 import { ReactComponent as CloseIcon } from "../../../../../assets/auth/register/CloseIcon.svg"
 import { ReactComponent as DogDefaultIcon } from "../../../../../assets/auth/register/DogDefaultIcon.svg"
@@ -652,9 +790,13 @@ const InfoStepThree = ({
   onChangePetInfoInput,
   onSubmitPetInfo,
   removePet,
-  handleFileChange, // 파일 변경 핸들러 추가
+  handleFileChange,
 }) => {
   const [previewImage, setPreviewImage] = useState(null)
+  const [isFocused, setIsFocused] = useState({
+    name: false,
+    weight: false,
+  })
   const auth = useSelector((state) => state.auth)
   const navigate = useNavigate()
   const fileInputRef = useRef(null)
@@ -736,25 +878,41 @@ const InfoStepThree = ({
       <form className="auth-register-info-pet-container" onSubmit={handleSave}>
         <div className="auth-register-info-pet-input-container">
           <div className="auth-register-info-pet-input-title">반려견 이름</div>
-          <div className="auth-register-info-pet-input">
+          <div
+            className={`auth-register-info-pet-input ${
+              isFocused.name ? "focused" : ""
+            }`}
+          >
             <input
               type="text"
               name="name"
               placeholder="반려견 이름 입력"
               value={petInfoInput.name}
               onChange={onChangePetInfoInput}
+              onFocus={() => setIsFocused((prev) => ({ ...prev, name: true }))}
+              onBlur={() => setIsFocused((prev) => ({ ...prev, name: false }))}
             />
           </div>
         </div>
         <div className="auth-register-info-pet-input-container">
           <div className="auth-register-info-pet-input-title">몸무게 (kg)</div>
-          <div className="auth-register-info-pet-input">
+          <div
+            className={`auth-register-info-pet-input ${
+              isFocused.weight ? "focused" : ""
+            }`}
+          >
             <input
               type="text"
               name="weight"
               placeholder="몸무게 (kg) 입력"
               value={petInfoInput.weight}
               onChange={onChangePetInfoInput}
+              onFocus={() =>
+                setIsFocused((prev) => ({ ...prev, weight: true }))
+              }
+              onBlur={() =>
+                setIsFocused((prev) => ({ ...prev, weight: false }))
+              }
             />
           </div>
         </div>

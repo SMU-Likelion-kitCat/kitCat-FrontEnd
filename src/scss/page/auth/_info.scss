@@ -358,12 +358,51 @@
 
                 gap: 14px;
 
+                // .auth-register-info-body-input-item {
+                //     @include column-flexbox(start, start);
+                //     gap: 8px;
+
+                //     &.focused {
+                //       color: #181d18;
+                //       border-color: #00af50;
+                //     }
+                //     .auth-register-info-body-input-item-title {
+                //         @include custom-font-size(500, 14px, m1, 18px, -0.28px);
+                //     }
+                //     .auth-register-info-body-input-item-container {
+                //         position: relative;
+                //         flex: 1;
+
+                //         input {
+                //             width: 100%;
+                //             height: 80px;
+                //             padding: 20px;
+                //             @include custom-font-size(700, 28px, h2, 36px, -0.56px);
+                //             border: 1px solid var(--material-theme-ref-neutral-neutral90, #e2e2e2);
+                //             background: var(--wt-bk-white, #fff);
+                //             border-radius: 12px;
+                //             outline: none;
+                //         }
+
+                //         p {
+                //             position: absolute;
+                //             top: 50%;
+                //             right: 20px;
+                //             transform: translateY(-50%);
+                //             color: #aaaaaa;
+                //             pointer-events: none;
+                //             @include custom-font-size(500, 18px, t3-ph, 24px, -0.36px);
+                //         }
+                //     }
+                // }
                 .auth-register-info-body-input-item {
                     @include column-flexbox(start, start);
                     gap: 8px;
+
                     .auth-register-info-body-input-item-title {
                         @include custom-font-size(500, 14px, m1, 18px, -0.28px);
                     }
+
                     .auth-register-info-body-input-item-container {
                         position: relative;
                         flex: 1;
@@ -373,13 +412,19 @@
                             height: 80px;
                             padding: 20px;
                             @include custom-font-size(700, 28px, h2, 36px, -0.56px);
-                            border: 1px solid var(--material-theme-ref-neutral-neutral90, #e2e2e2);
-                            background: var(--wt-bk-white, #fff);
                             border-radius: 12px;
                             outline: none;
+
+                            border: 1px solid var(--material-theme-ref-neutral-neutral90, #e2e2e2); /* 기본 테두리 색상 */
+
+                            &.focused {
+                                color: #181d18;
+                                border-color: #00af50; /* 포커스 상태 테두리 색상 */
+                            }
                         }
 
                         p {
+                            padding-top: 15px;
                             position: absolute;
                             top: 50%;
                             right: 20px;
@@ -540,6 +585,22 @@
                     margin-top: 32px;
                     margin-bottom: 12px;
                 }
+                // .auth-register-info-pet-input {
+                //     display: flex;
+                //     padding: 20px;
+                //     width: 100%;
+                //     height: auto;
+                //     gap: 26px;
+                //     @include custom-font-size(400, 18px, t3-ph, 24px, -0.36px);
+                //     border-radius: 12px;
+                //     border: 1px solid var(--material-theme-ref-neutral-neutral90, #e2e2e2);
+                //     background: var(--wt-bk-white, #fff);
+
+                //     & .focused {
+                //         border-color: #00af50;
+                //     }
+                // }
+
                 .auth-register-info-pet-input {
                     display: flex;
                     padding: 20px;
@@ -550,6 +611,15 @@
                     border-radius: 12px;
                     border: 1px solid var(--material-theme-ref-neutral-neutral90, #e2e2e2);
                     background: var(--wt-bk-white, #fff);
+                    transition: border-color 0.3s ease;
+
+                    &.focused {
+                        border-color: #00af50;
+                    }
+
+                    input:focus {
+                        outline: none;
+                    }
                 }
             }
 

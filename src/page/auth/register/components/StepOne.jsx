@@ -77,12 +77,12 @@
 
 import React, { useState } from "react"
 import { ReactComponent as Resetbutton } from "../../../../assets/auth/Reset.svg"
-import { checkEmail } from "../../../../api" // Import the API function
+import { checkEmail } from "../../../../api"
 
 const StepOne = ({ email, setEmail, nextStep, isFocused, setIsFocused }) => {
   const [isEmailValid, setIsEmailValid] = useState(true)
   const [isChecking, setIsChecking] = useState(false)
-  const [showError, setShowError] = useState(false) // New state for controlling error visibility
+  const [showError, setShowError] = useState(false)
 
   const isValidEmail =
     email.includes("@") && (email.includes(".com") || email.includes(".net"))
@@ -103,11 +103,10 @@ const StepOne = ({ email, setEmail, nextStep, isFocused, setIsFocused }) => {
       //   console.log(e.response.status, "엔드포인트 오류")
       // }
       setIsEmailValid(false)
-      setShowError(true) // Show the error message
-      // Hide error message after 3 seconds
+      setShowError(true)
       setTimeout(() => {
-        setShowError(false) // Trigger the transition
-        setTimeout(() => setIsEmailValid(true), 500) // After transition ends, reset the state
+        setShowError(false)
+        setTimeout(() => setIsEmailValid(true), 500)
       }, 1000)
     }
     setIsChecking(false)

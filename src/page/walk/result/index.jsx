@@ -53,8 +53,10 @@ const Result = () => {
       }
     }
 
-    fetchRoutineDetail()
-    fetchRoutineList()
+    if (selectedRoutineId) {
+      fetchRoutineDetail()
+      fetchRoutineList()
+    }
 
     return () => setShowFooter(true)
   }, [selectedRoutineId])

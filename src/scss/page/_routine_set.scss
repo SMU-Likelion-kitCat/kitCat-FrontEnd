@@ -49,7 +49,7 @@
         }
         .exclam-text {
           color: var(--material-theme-ref-neutral-neutral60, #8f8f8f);
-    
+
           /* Body/B3-medium */
           font-family: Roboto;
           font-size: 12px;
@@ -74,6 +74,10 @@
         border: 1px solid var(--material-theme-ref-neutral-neutral90, #e2e2e2);
         background: var(--wt-bk-white, #fff);
 
+        &.focused {
+          border-color: #00af50;
+        }
+
         .date {
           color: var(--material-theme-sys-light-on-surface, #181d18);
 
@@ -96,8 +100,8 @@
           line-height: 24px; /* 133.333% */
           letter-spacing: -0.36px;
         }
-        .set-font::placeholder{
-          color: var(--material-theme-ref-neutral-neutral70, #AAA);
+        .set-font::placeholder {
+          color: var(--material-theme-ref-neutral-neutral70, #aaa);
         }
       }
       .setroutine-set-button {
@@ -117,26 +121,17 @@
         font-weight: 500;
         line-height: 24px; /* 133.333% */
         letter-spacing: -0.36px;
-        color: var(
-          --material-theme-ref-neutral-neutral70,
-          #aaa
-        ); /* Default color when no routine type is selected */
+        color: var(--material-theme-ref-neutral-neutral70, #aaa); /* Default color when no routine type is selected */
         text-align: center; /* Center text horizontally */
       }
 
       .setroutine-set-button.selected {
-        color: var(
-          --material-theme-ref-primary,
-          #000
-        ); /* Change color when routine type is selected */
+        color: var(--material-theme-ref-primary, #000); /* Change color when routine type is selected */
       }
 
       /* Add styles for when the button is in its default state */
       .setroutine-set-button:not(.selected) {
-        color: var(
-          --material-theme-ref-neutral-neutral70,
-          #aaa
-        ); /* Color when routine type is not selected */
+        color: var(--material-theme-ref-neutral-neutral70, #aaa); /* Color when routine type is not selected */
       }
 
       .setroutine-set-duration {
@@ -310,7 +305,7 @@
       }
     }
   }
-  
+
   .setroutine-button-wrap {
     position: fixed;
     bottom: 0;

@@ -555,48 +555,6 @@ const Walk = () => {
     startMovement(dispatch, location, location.selectedDogs, auth)
   }
 
-  // const onClickStopTracking = async () => {
-  //   const currentTime = new Date().getTime()
-  //   // 중간에 멈췄던 시간을 제외한 총합시간
-  //   const totalElapseTime = elapsedTime + (currentTime - startTime)
-  //   setElapsedTime(totalElapseTime)
-  //   stopMovement()
-  //   dispatch(setTrackingState({ tracking: false, trackingState: "stop" }))
-  //   clearWatcher()
-
-  //   // 산책 기록 저장
-  //   const walkRecordData = {
-  //     routineId: selectedRoutineId,
-  //     calorie: parseInt(location.ownerCalories), // 소수점 없앰 성공
-  //     distance: parseInt(location.distance), // 성공
-  //     walkTime: parseInt(convertToSeconds(location.timer)),
-  //     path: location.path.map((loc) => ({
-  //       // 성공
-  //       latitude: loc.latitude,
-  //       longitude: loc.longitude,
-  //     })),
-  //     petRecords: location.selectedDogs.map((dog) => {
-  //       const dogCalories = location.petCalories.find(
-  //         (calorie) => calorie.petId === dog.petId // petId 사용
-  //       )
-  //       return {
-  //         petId: dog.petId, // petId 사용
-  //         calorie: dogCalories ? parseInt(dogCalories.calories) : 0,
-  //       }
-  //     }),
-  //   }
-  //   console.log("walkRecordData 객체 확인", walkRecordData)
-  //   try {
-  //     const response = await createWalkRecord(walkRecordData)
-  //     console.log("산책 기록 저장 완료", response)
-  //   } catch (e) {
-  //     console.error("산책 기록 저장 실패", e)
-  //   }
-
-  //   navigate("/walk/result")
-  //   console.log("location 객체 확인", location)
-  // }
-
   const onClickStopTracking = async () => {
     const currentTime = new Date().getTime()
     const totalElapseTime = elapsedTime + (currentTime - startTime)
@@ -616,11 +574,18 @@ const Walk = () => {
       })),
       petRecords: location.selectedDogs.map((dog) => {
         const dogCalories = location.petCalories.find(
-          (calorie) => calorie.petId === dog.petId
+          (calorie) => calorie.id === dog.petId // 수정된 부분
         )
+        location.petCalories.find((calorie) =>
+          console.log("리덕스 설정 강아지 디버깅", calorie)
+        )
+        console.log("selectedDogs들 확인", dog)
+        console.log("dogCalories 객체 확인", dogCalories)
         return {
           petId: dog.petId,
-          calorie: dogCalories ? parseInt(dogCalories.calories) : 0,
+          calorie: dogCalories
+            ? Math.ceil(parseFloat(dogCalories.calories))
+            : 0,
         }
       }),
     }
@@ -649,10 +614,12 @@ const Walk = () => {
   }
 
   const currentDog = location.selectedDogs[currentDogIndex]
+  console.log("currentDog 객체 확인", currentDog)
 
   const currentDogCalories = location.petCalories.find(
     (calorie) => calorie.petId === currentDog?.id
   )
+  console.log("currentDogCalories 객체 확인", currentDogCalories)
 
   const handleDogSelection = (dog) => {
     if (

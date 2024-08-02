@@ -58,6 +58,24 @@
                 transform: translate(-50%);
             }
 
+            .walk-controls-backboard-gif-one {
+                position: absolute;
+                top: 80px;
+                left: 15px;
+                z-index: 2;
+                width: 102px;
+                height: 34px;
+            }
+
+            .walk-controls-backboard-gif-two {
+                position: absolute;
+                top: 80px;
+                right: 15px;
+                z-index: 2;
+                width: 102px;
+                height: 34px;
+            }
+
             .walk-controls-backboard-info-up-container {
                 position: absolute;
                 width: 100%;
@@ -127,6 +145,7 @@
         transform: translateX(-50%);
         z-index: 2;
         width: 100%;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #fff 100%);
 
         .walk-controls-board-container {
             width: 100%;

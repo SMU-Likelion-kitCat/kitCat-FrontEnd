@@ -4,6 +4,7 @@ import { ReactComponent as ClickControlBackBoard } from "../../../assets/walk/Cl
 import { ReactComponent as PauseIcon } from "../../../assets/walk/PauseIcon.svg"
 import { ReactComponent as ReStartIcon } from "../../../assets/walk/StartIcon.svg"
 import { ReactComponent as StopIcon } from "../../../assets/walk/StopIcon.svg"
+import ConrtolBoardGif from "../../../assets/walk/ConrtolBoardGif.gif"
 import WalkInfo from "./WalkInfo"
 
 const StopWalk = ({
@@ -46,6 +47,12 @@ const StopWalk = ({
                 onClick={onClickPauseTracking}
                 className="walk-controls-backboard-pause-icon"
               />
+              <div className="walk-controls-backboard-gif-one">
+                <img src={ConrtolBoardGif} alt="Control Board" />
+              </div>
+              <div className="walk-controls-backboard-gif-two">
+                <img src={ConrtolBoardGif} alt="Control Board" />
+              </div>
             </>
           )}
 

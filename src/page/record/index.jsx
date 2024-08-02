@@ -257,25 +257,33 @@ const Record = () => {
           </div>
         </div>
       </div>
-      <div className="record-calendar-container-sub">
-        {selectedRoutineData.map((record, index) => (
-          <div className="record-tab" key={index}>
-            <div className="record-tab-title-wrap">
-              <h1 className="record-tab-title">{formatSelectedDate()}</h1>
-              <h1 className="record-tab-title time">
-                {formatHourMinute(record.endTime)}
-              </h1>
+
+      {selectedRoutineData.length > 0 ? (
+        <div className="record-calendar-container-sub">
+          {selectedRoutineData.map((record, index) => (
+            <div className="record-tab" key={index}>
+              <div className="record-tab-title-wrap">
+                <h1 className="record-tab-title">{formatSelectedDate()}</h1>
+                <h1 className="record-tab-title time">
+                  {formatHourMinute(record.endTime)}
+                </h1>
+              </div>
+              <div className="record-tab-map">
+                <RecordKakaoMap
+                  record={record}
+                  mapId={`${selectedDate.day}-${index}-map`}
+                />
+              </div>
+              <RecordWalkInfo records={record} />
             </div>
-            <div className="record-tab-map">
-              <RecordKakaoMap
-                record={record}
-                mapId={`${selectedDate.day}-${index}-map`}
-              />
-            </div>
-            <RecordWalkInfo records={record} />
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      ) : (
+        <div className="no-records-container">
+          <NoRecordIcon />
+          <p>산책 기록이 없어요</p>
+        </div>
+      )}
     </div>
   )
 }
