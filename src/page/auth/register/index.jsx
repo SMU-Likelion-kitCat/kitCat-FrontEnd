@@ -44,7 +44,7 @@ const Register = () => {
     if (signupInfo.step > 1) {
       setSignupInfo({ ...signupInfo, step: signupInfo.step - 1 })
     } else if (signupInfo.step === 1) {
-      navigate(-1)
+      navigate("/auth/login")
     }
   }
 

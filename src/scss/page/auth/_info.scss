@@ -487,16 +487,27 @@
                 }
             }
 
-            .intro-circle {
+            .auth-register-info-pet-image-container {
+                position: relative;
                 width: 88px;
                 height: 88px;
                 border-radius: 50%;
                 background-color: #d9d9d9;
-                input {
+                img {
+                    width: 88px;
+                    height: 88px;
+                    border-radius: 50%;
+                }
+                div {
+                    position: absolute;
+                    right: 0;
+                    bottom: 0;
                     width: 28px;
                     height: 28px;
+                    background-color: var(--wt-bk-white, #fff);
                     border-radius: 50%;
-                    border-color: var(--material-theme-ref-neutral-neutral90, #e2e2e2);
+                    @include inline-flexbox(center, center);
+                    border: 1px solid var(--material-theme-ref-neutral-neutral90, #e2e2e2);
                 }
             }
         }

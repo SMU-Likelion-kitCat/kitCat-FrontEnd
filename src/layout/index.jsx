@@ -21,6 +21,7 @@ const Layout = () => {
     "/routine/ongoing",
     "/routine/ongoing:id",
     "/routine/create",
+    "/chatbot",
   ]
 
   // showFooter true이고 noFooterPaths에 정의되지 않았을 때, footer가 표시
@@ -36,6 +37,7 @@ const Layout = () => {
     "/auth/register",
     "/auth/register/info",
     "/routine/create",
+    "/chatbot",
   ]
   const useNofooterLayout = footerPathsWithNoFooterLayout.some(
     (path) => location.pathname === path
