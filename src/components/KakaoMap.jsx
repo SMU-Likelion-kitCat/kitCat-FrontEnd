@@ -7,14 +7,7 @@
 
 // const KakaoMap = forwardRef(
 //   (
-//     {
-//       location,
-//       path,
-//       readWalkPath = false,
-//       mapId,
-//       recordWalkPath = false,
-//       onLoad,
-//     }, // onLoad prop 추가
+//     { location, path, readWalkPath = false, mapId, recordWalkPath = false },
 //     ref
 //   ) => {
 //     const mapRef = useRef(null)
@@ -110,10 +103,6 @@
 //           startFlag.setMap(map)
 //           startFlagRef.current = startFlag
 //         }
-
-//         if (onLoad) {
-//           onLoad() // 맵 로딩 완료 시 onLoad 콜백 호출
-//         }
 //       }
 
 //       const historyWalkMap = () => {
@@ -193,10 +182,6 @@
 //         })
 //         marker.setMap(map)
 //         markerRef.current = marker
-
-//         if (onLoad) {
-//           onLoad() // 맵 로딩 완료 시 onLoad 콜백 호출
-//         }
 //       }
 
 //       const loadKakaoMaps = (callback) => {
@@ -215,7 +200,7 @@
 //       }
 
 //       loadKakaoMaps(readWalkPath ? historyWalkMap : initializeMap)
-//     }, [location, path, readWalkPath, mapId, onLoad])
+//     }, [location, path, readWalkPath, mapId])
 
 //     return (
 //       <div
@@ -240,7 +225,14 @@ import React, {
 
 const KakaoMap = forwardRef(
   (
-    { location, path, readWalkPath = false, mapId, recordWalkPath = false },
+    {
+      location,
+      path,
+      readWalkPath = false,
+      mapId,
+      recordWalkPath = false,
+      onLoad,
+    }, // onLoad prop 추가
     ref
   ) => {
     const mapRef = useRef(null)
@@ -319,7 +311,8 @@ const KakaoMap = forwardRef(
         polyline.setMap(map)
         polylineRef.current = polyline
 
-        if (path.length > 0) {
+        // 플래그를 한 번만 찍도록 조건 추가
+        if (path.length > 0 && !startFlagRef.current) {
           const startFlagMarkerImage = new window.kakao.maps.MarkerImage(
             startFlagImageSrc,
             userPingImageSize,
