@@ -1,4 +1,5 @@
 // import React from "react"
+
 // import "./scss/style.scss"
 // import { RouterProvider } from "react-router-dom"
 // import router from "./router"
@@ -25,25 +26,25 @@
 
 // export default App
 
-import React, { useEffect } from "react"
-import "./scss/style.scss"
-import { RouterProvider } from "react-router-dom"
-import router from "./router"
-import { Provider, useDispatch } from "react-redux"
-import { PersistGate } from "redux-persist/integration/react"
+import React, { useEffect } from "react";
+import "./scss/style.scss";
+import { RouterProvider } from "react-router-dom";
+import router from "./router";
+import { Provider, useDispatch } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
 
-import { startTokenCheckInterval } from "./components/LoginCheck"
-import { store, persistor } from "./redux/store"
+import { startTokenCheckInterval } from "./components/LoginCheck";
+import { store, persistor } from "./redux/store";
 
 const AppContent = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    startTokenCheckInterval(dispatch)
-  }, [dispatch])
+    startTokenCheckInterval(dispatch);
+  }, [dispatch]);
 
-  return <RouterProvider router={router} />
-}
+  return <RouterProvider router={router} />;
+};
 
 const App = () => {
   return (
@@ -52,7 +53,7 @@ const App = () => {
         <AppContent />
       </PersistGate>
     </Provider>
-  )
-}
+  );
+};
 
-export default App
+export default App;
