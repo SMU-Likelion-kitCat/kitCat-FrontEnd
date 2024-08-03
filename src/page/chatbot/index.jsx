@@ -88,7 +88,9 @@ const Chatbot = () => {
           <div className="chat-loading-content">
             <img className="chat-loading-dot" src={Loading}></img>
             <div className="chat-loading-message">
-              열심히 대답을 적고 있어요 조금만 기다려 주세요
+              열심히 대답을 적고 있어요
+              <br />
+              조금만 기다려 주세요
             </div>
           </div>
         </div>
