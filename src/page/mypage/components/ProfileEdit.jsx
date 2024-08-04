@@ -73,11 +73,11 @@ const ProfileEdit = () => {
       nickname: nickname,
       weight: Number(weight),
       height: Number(height),
-      bmi: Number(bmi)
+      bmi: Number(bmi),
     };
-  
+
     console.log("Updated User Info:", updatedUser); // Log the user input details
-  
+
     try {
       const res = await modifyUser(updatedUser);
       console.log("업데이트 성공", res);
@@ -195,22 +195,6 @@ const ProfileEdit = () => {
                 style={{ left: calculateIndicatorPosition() }}
               />
             </div>
-          </div>
-          <div className="profile-edit-pets-container">
-            <h2 className="profile-edit-pets-title">내 펫 정보</h2>
-            {pets.length > 0 ? (
-              pets.map((pet) => (
-                <div key={pet.petId} className="profile-edit-pet">
-                  <img src={pet.image} alt={pet.name} className="profile-edit-pet-image" />
-                  <div className="profile-edit-pet-info">
-                    <h3>{pet.name}</h3>
-                    <p>{`Weight: ${pet.weight} kg`}</p>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <p>펫 정보를 불러오는 중...</p>
-            )}
           </div>
         </div>
       </div>

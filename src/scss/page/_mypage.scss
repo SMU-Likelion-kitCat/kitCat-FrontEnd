@@ -57,7 +57,11 @@
       --material-theme-ref-neutral-variant-neutral-variant99,
       #f7f7f7
     );
-
+    img {
+      width: 43.167px;
+      height: 42px;
+      border-radius: 50%;
+    }
     .mypage-content-pet-header {
       display: flex;
       flex-direction: row;
@@ -97,10 +101,9 @@
         .mypage-content-pet-image {
           width: 43.167px;
           height: 42px;
-          border-radius: 113px;
+          border-radius: 50%;
 
           border: 1px solid var(--material-theme-ref-neutral-neutral80, #c5c5c5);
-          // background: url(<path-to-image>) lightgray 50% / cover no-repeat;
         }
         .mypage-content-pet-text {
           display: flex;
@@ -337,8 +340,7 @@ hr {
     display: flex;
     justify-content: flex-end;
     margin-top: 20px; /* Adjust as needed */
-    
-    
+
     .pet-edit-button {
       display: flex;
       padding: 8px 12px;
@@ -353,10 +355,16 @@ hr {
   .intro-circle {
     position: relative;
     border-radius: 50%;
+    img {
+      width: 88px;
+      height: 88px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
     .pet-profile-add-icon-wrapper {
       position: absolute;
       bottom: 0;
-      border: 1px solid black;
+
       width: 28px;
       margin-left: 60px;
 

@@ -14,6 +14,11 @@ const MyPageMain = () => {
   const [petInfos, setPetInfos] = useState([]);
   const navigate = useNavigate();
 
+  //  const [previewImage, setPreviewImage] = useState(null);
+  // const handleFileLoadWithPreivew = (e) => {
+  //   han
+  // }
+
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
@@ -71,7 +76,9 @@ const MyPageMain = () => {
               우리 아이<span>{petInfos.length}</span>
             </div>
             <span>
-              <PetChange onClick={() => navigate("/mypage/pet", { state: { petInfos } })} />
+              <PetChange
+                onClick={() => navigate("/mypage/pet", { state: { petInfos } })}
+              />
             </span>
           </div>
 
@@ -80,7 +87,12 @@ const MyPageMain = () => {
               petInfos.map((pet, index) => (
                 <div key={index} className="mypage-content-pet-body">
                   <div className="mypage-content-pet-image">
-                    <img src={pet.image} alt={pet.name} />
+                    {console.log("Image URL:", pet.image)}
+
+                    <img
+                      src={`https://seumu-s3-bucket.s3.ap-northeast-2.amazonaws.com/${pet.image}`}
+                      alt={pet.name}
+                    />
                   </div>
                   <div className="mypage-content-pet-text">
                     <p className="mypage-content-pet-name">{pet.name}</p>

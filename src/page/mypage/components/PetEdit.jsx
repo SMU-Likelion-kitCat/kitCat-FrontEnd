@@ -41,10 +41,7 @@ const PetEdit = () => {
     <div className="pet-edit-container">
       {/* Wrapper for the buttons */}
       <div className="pet-edit-button-wrapper">
-        <button
-          className="pet-edit-button"
-          onClick={handleComplete}
-        >
+        <button className="pet-edit-button" onClick={handleComplete}>
           완료
         </button>
       </div>
@@ -52,11 +49,16 @@ const PetEdit = () => {
       {petInfos.map((pet) => (
         <React.Fragment key={pet.petId}>
           <div className="intro-circle">
-            <PetProfile />
+            <img
+              src={`https://seumu-s3-bucket.s3.ap-northeast-2.amazonaws.com/${pet.image}`}
+              alt={pet.name}
+            />
             <form>
               <div
                 className="pet-profile-add-icon-wrapper"
-                onClick={() => document.getElementById(`file-upload-${pet.petId}`).click()}
+                onClick={() =>
+                  document.getElementById(`file-upload-${pet.petId}`).click()
+                }
               >
                 <PetProfileAdd className="pet-profile-add-icon" />
               </div>
@@ -72,6 +74,7 @@ const PetEdit = () => {
           <form className="pet-edit-form-container">
             <div className="pet-edit-input-container">
               <div className="pet-edit-input-title">반려견 이름</div>
+
               <div className="pet-edit-input">
                 <input
                   type="text"
@@ -93,7 +96,15 @@ const PetEdit = () => {
               </div>
             </div>
           </form>
-          <hr style={{ marginBottom: '20px', marginTop: '20px', width: '351px', height: '1px', background: '#F0F0F0' }} />
+          <hr
+            style={{
+              marginBottom: "20px",
+              marginTop: "20px",
+              width: "351px",
+              height: "1px",
+              background: "#F0F0F0",
+            }}
+          />
         </React.Fragment>
       ))}
 
@@ -104,7 +115,9 @@ const PetEdit = () => {
             <form>
               <div
                 className="pet-profile-add-icon-wrapper"
-                onClick={() => document.getElementById('new-file-upload').click()}
+                onClick={() =>
+                  document.getElementById("new-file-upload").click()
+                }
               >
                 <PetProfileAdd className="pet-profile-add-icon" />
               </div>
@@ -142,12 +155,12 @@ const PetEdit = () => {
           <button
             type="submit"
             style={{
-              marginTop: '20px',
-              border: '1px solid black',
-              padding: '5px 10px',
-              backgroundColor: '#f0f0f0',
-              borderRadius: '4px',
-              cursor: 'pointer'
+              marginTop: "20px",
+              border: "1px solid black",
+              padding: "5px 10px",
+              backgroundColor: "#f0f0f0",
+              borderRadius: "4px",
+              cursor: "pointer",
             }}
           >
             저장

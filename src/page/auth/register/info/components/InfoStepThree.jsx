@@ -777,12 +777,12 @@
 
 // export default InfoStepThree
 
-import React, { useEffect, useRef, useState } from "react"
-import { ReactComponent as CloseIcon } from "../../../../../assets/auth/register/CloseIcon.svg"
-import { ReactComponent as DogDefaultIcon } from "../../../../../assets/auth/register/DogDefaultIcon.svg"
-import { ReactComponent as DogImageIcon } from "../../../../../assets/auth/register/DogImageIcon.svg"
-import { useSelector } from "react-redux"
-import { useNavigate } from "react-router-dom"
+import React, { useEffect, useRef, useState } from "react";
+import { ReactComponent as CloseIcon } from "../../../../../assets/auth/register/CloseIcon.svg";
+import { ReactComponent as DogDefaultIcon } from "../../../../../assets/auth/register/DogDefaultIcon.svg";
+import { ReactComponent as DogImageIcon } from "../../../../../assets/auth/register/DogImageIcon.svg";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const InfoStepThree = ({
   petInfoInput,
@@ -792,51 +792,52 @@ const InfoStepThree = ({
   removePet,
   handleFileChange,
 }) => {
-  const [previewImage, setPreviewImage] = useState(null)
+  const [previewImage, setPreviewImage] = useState(null);
   const [isFocused, setIsFocused] = useState({
     name: false,
     weight: false,
-  })
-  const auth = useSelector((state) => state.auth)
-  const navigate = useNavigate()
-  const fileInputRef = useRef(null)
+  });
+
+  const auth = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+  const fileInputRef = useRef(null);
 
   useEffect(() => {
     if (!auth.accessToken) {
-      alert("auth가 없습니다.")
-      navigate("/auth/register")
+      alert("auth가 없습니다.");
+      navigate("/auth/register");
     }
-  }, [auth, navigate])
+  }, [auth, navigate]);
 
-  const isFormValid = petInfoInput.name && petInfoInput.weight
+  const isFormValid = petInfoInput.name && petInfoInput.weight;
 
   const handleIconClick = () => {
     if (fileInputRef.current) {
-      fileInputRef.current.click()
+      fileInputRef.current.click();
     }
-  }
+  };
 
   const handleFileChangeWithPreview = (e) => {
-    handleFileChange(e)
-    const file = e.target.files[0]
+    handleFileChange(e);
+    const file = e.target.files[0];
     if (file) {
-      const reader = new FileReader()
+      const reader = new FileReader();
       reader.onloadend = () => {
-        setPreviewImage(reader.result)
-      }
-      reader.readAsDataURL(file)
+        setPreviewImage(reader.result);
+      };
+      reader.readAsDataURL(file);
     }
-  }
+  };
 
   const handleSave = (e) => {
-    onSubmitPetInfo(e)
-    setPreviewImage(null)
-  }
+    onSubmitPetInfo(e);
+    setPreviewImage(null);
+  };
 
   const handleRemovePet = (index) => {
-    removePet(index)
-    setPreviewImage(null)
-  }
+    removePet(index);
+    setPreviewImage(null);
+  };
 
   return (
     <>
@@ -930,7 +931,7 @@ const InfoStepThree = ({
         </div>
       </form>
     </>
-  )
-}
+  );
+};
 
-export default InfoStepThree
+export default InfoStepThree;
