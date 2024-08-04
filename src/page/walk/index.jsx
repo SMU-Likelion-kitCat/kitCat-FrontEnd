@@ -39,43 +39,40 @@ const Walk = () => {
 
   const [startTime, setStartTime] = useState(null) // 시작 시간 상태 17224 2009 8263 형식
   const [elapsedTime, setElapsedTime] = useState(0)
+  const [loading, setLoading] = useState(true)
   const mapRef = useRef()
 
   const navigate = useNavigate()
 
   const { error, requestLocation, clearWatcher } = useGeoLocation({
-    // enableHighAccuracy: false,
-    enableHighAccuracy: true,
-    timeout: Infinity,
-    // maximumAge: 1000 * 3600 * 24,
+    enableHighAccuracy: false,
     maximumAge: Infinity,
-    // timeout: 10000,
+    timeout: Infinity,
   })
   const location = useSelector((state) => state.location)
   const auth = useSelector((state) => state.auth)
   const dispatch = useDispatch()
   const { setShowFooter } = useFooterVisibility()
+  const s3url = process.env.S3_URL
 
   // 처음 맵 로딩 시 현재 위치를 가져옴
   useEffect(() => {
-    requestLocation()
-  }, [])
+    // 이미 경도 위도가 있으면
+    if (location?.latitude && location?.longitude) {
+      setLoading(false)
+    } else {
+      requestLocation()
+    }
+  }, [location?.latitude, location?.longitude])
 
   useEffect(() => {
     let interval
 
     // 멈춘상태가 아니고 시작시간이 있다면
     if (!isPaused && startTime) {
-      console.log("시작 시간", startTime) // 시작한 시간 형식 17224 2009 8263
       interval = setInterval(() => {
-        const currentTime = new Date().getTime() // 17224 2009 8263
-        console.log("currentTime", currentTime)
-        console.log("elapsedTime", elapsedTime) // 0000 일시 정지 시 저장 시간
-
+        const currentTime = new Date().getTime()
         const totalElapsed = elapsedTime + (currentTime - startTime)
-        // 현재시간에서 시작시간을 빼면 1000 형식
-        console.log("totalElapsed", totalElapsed)
-        // dispatch(setTrackingTime(totalElapsed))
         dispatch(setTimer(formatTime(totalElapsed)))
       }, 1000)
     }
@@ -87,7 +84,6 @@ const Walk = () => {
     const fetchUserInfo = async () => {
       try {
         const userRes = await loginUserInfo()
-        console.log("받아온 userRes 객체", userRes)
         dispatch(
           setUserInfo({
             nickname: userRes.nickname,
@@ -104,7 +100,6 @@ const Walk = () => {
     const fetchPetInfo = async () => {
       try {
         const petRes = await petInfo()
-        console.log("받아온 petRes 배열", petRes)
         dispatch(setPetInfos(petRes))
       } catch (e) {
         console.error("fetchPetInfo error", e)
@@ -114,7 +109,6 @@ const Walk = () => {
     const fetchRoutines = async () => {
       try {
         const routinesRes = await getRoutines()
-        console.log("받아온 routinesRes 배열", routinesRes)
         setViewRoutines(routinesRes)
       } catch (e) {
         console.error("fetchRoutines error", e)
@@ -136,18 +130,18 @@ const Walk = () => {
 
   // 로딩 화면 관련 설정
   useEffect(() => {
-    if (location.loading && loadingCount > 0) {
+    if (location?.loading && loadingCount > 0) {
       const countdown = setTimeout(() => {
         setLoadingCount((prevCount) => prevCount - 1)
       }, 1000)
       return () => clearTimeout(countdown)
-    } else if (location.loading && loadingCount === 0) {
+    } else if (location?.loading && loadingCount === 0) {
       dispatch(setLoadingState(false))
     }
-  }, [location.loading, loadingCount])
+  }, [location?.loading, loadingCount])
 
   const onClickStartTracking = () => {
-    if (location.selectedDogs.length === 0 && auth.petInfos.length > 0) {
+    if (location?.selectedDogs.length === 0 && auth.petInfos.length > 0) {
       dispatch(setSelectedDogs([auth.petInfos[0]]))
     }
     setIsPaused(false)
@@ -156,7 +150,6 @@ const Walk = () => {
     dispatch(setLoadingState(true))
     requestLocation()
     dispatch(setTrackingState({ tracking: true, trackingState: "start" }))
-
     setShowFooter(false)
 
     // 상태를 업데이트 한 후 startMovement 호출
@@ -182,7 +175,7 @@ const Walk = () => {
     setIsPaused(false)
     setStartTime(new Date().getTime())
     dispatch(setTrackingState({ tracking: true, trackingState: "restart" }))
-    startMovement(dispatch, location, location.selectedDogs, auth)
+    startMovement(dispatch, location, location?.selectedDogs, auth)
   }
 
   const onClickStopTracking = async () => {
@@ -195,22 +188,17 @@ const Walk = () => {
 
     const walkRecordData = {
       routineId: selectedRoutineId,
-      calorie: parseInt(location.ownerCalories),
-      distance: parseInt(location.distance),
-      walkTime: parseInt(convertToSeconds(location.timer)),
-      path: location.path.map((loc) => ({
+      calorie: parseInt(location?.ownerCalories),
+      distance: parseInt(location?.distance),
+      walkTime: parseInt(convertToSeconds(location?.timer)),
+      path: location?.path.map((loc) => ({
         latitude: loc.latitude,
         longitude: loc.longitude,
       })),
-      petRecords: location.selectedDogs.map((dog) => {
-        const dogCalories = location.petCalories.find(
+      petRecords: location?.selectedDogs.map((dog) => {
+        const dogCalories = location?.petCalories.find(
           (calorie) => calorie.id === dog.petId // 수정된 부분
         )
-        location.petCalories.find((calorie) =>
-          console.log("리덕스 설정 강아지 디버깅", calorie)
-        )
-        console.log("selectedDogs들 확인", dog)
-        console.log("dogCalories 객체 확인", dogCalories)
         return {
           petId: dog.petId,
           calorie: dogCalories
@@ -219,7 +207,6 @@ const Walk = () => {
         }
       }),
     }
-    console.log("walkRecordData 객체 확인", walkRecordData)
     try {
       const response = await createWalkRecord(walkRecordData)
       console.log("산책 기록 저장 완료", response)
@@ -233,39 +220,36 @@ const Walk = () => {
 
   const handleNextDog = () => {
     setCurrentDogIndex((prevIndex) =>
-      prevIndex === location.selectedDogs.length - 1 ? 0 : prevIndex + 1
+      prevIndex === location?.selectedDogs.length - 1 ? 0 : prevIndex + 1
     )
   }
 
   const handlePrevDog = () => {
     setCurrentDogIndex((prevIndex) =>
-      prevIndex === 0 ? location.selectedDogs.length - 1 : prevIndex - 1
+      prevIndex === 0 ? location?.selectedDogs.length - 1 : prevIndex - 1
     )
   }
 
-  const currentDog = location.selectedDogs[currentDogIndex]
-  console.log("currentDog 객체 확인", currentDog)
-
-  const currentDogCalories = location.petCalories.find(
+  const currentDog = location?.selectedDogs[currentDogIndex]
+  const currentDogCalories = location?.petCalories.find(
     (calorie) => calorie.petId === currentDog?.id
   )
-  console.log("currentDogCalories 객체 확인", currentDogCalories)
 
   const handleDogSelection = (dog) => {
     if (
-      location.selectedDogs.some(
+      location?.selectedDogs.some(
         (selectedDog) => selectedDog.petId === dog.petId
       )
     ) {
       dispatch(
         setSelectedDogs(
-          location.selectedDogs.filter(
+          location?.selectedDogs.filter(
             (selectedDog) => selectedDog.petId !== dog.petId
           )
         )
       )
     } else {
-      dispatch(setSelectedDogs([...location.selectedDogs, dog])) // 여러 마리 선택
+      dispatch(setSelectedDogs([...location?.selectedDogs, dog])) // 여러 마리 선택
     }
   }
 
@@ -277,33 +261,39 @@ const Walk = () => {
 
   if (error) return <div>{error}</div>
 
-  if (location.trackingState === "stop") {
+  if (location?.trackingState === "stop") {
     return <Outlet />
   }
 
   return (
     <>
-      {location.loading ? (
+      {location?.loading ? (
         <div className="walk-start-loading-container">
           <div>{loadingCount}</div>
         </div>
       ) : (
-        <div className={`walk-container ${location.tracking ? "active" : ""}`}>
-          <div className="walk-map">
-            {location.latitude && location.longitude && (
+        <div className={`walk-container ${location?.tracking ? "active" : ""}`}>
+          {location?.latitude && location?.longitude && loading === false ? (
+            <div className="walk-map">
               <KakaoMap
                 location={location}
-                path={location.path}
-                distance={location.distance}
+                path={location?.path}
+                distance={location?.distance}
                 mapId="map"
-                ref={mapRef} // ref 전달
+                ref={mapRef} // forwardRef를 통해 ref 전달
+                setLoading={setLoading}
               />
-            )}
-          </div>
+            </div>
+          ) : (
+            <div className="walk-loading-image-container">
+              <img src={Loading} alt="맵 로딩 중" />
+              <span>현재 위치를 불러오고 있어요</span>
+            </div>
+          )}
 
-          {location.latitude && location.longitude && (
+          {location?.latitude && location?.longitude && (
             <>
-              {location.tracking ? (
+              {location?.tracking ? (
                 <StopWalk
                   onClickStopTracking={onClickStopTracking}
                   onClickPauseTracking={onClickPauseTracking}
@@ -332,7 +322,7 @@ const Walk = () => {
                   <StartWalk
                     onClickStartTracking={onClickStartTracking}
                     onShowDogSelection={() => setShowDogSelection(true)}
-                    selectedDogs={location.selectedDogs}
+                    selectedDogs={location?.selectedDogs}
                   />
                 </>
               )}
@@ -348,7 +338,7 @@ const Walk = () => {
               <div key={dog.id} className="walk-dog-selection-item-container">
                 <div
                   className={`walk-dog-selection-item ${
-                    location.selectedDogs.some(
+                    location?.selectedDogs.some(
                       (selectedDog) => selectedDog.petId === dog.petId
                     )
                       ? "selected"
@@ -356,7 +346,7 @@ const Walk = () => {
                   }`}
                   onClick={() => handleDogSelection(dog)}
                 >
-                  {location.selectedDogs.some(
+                  {location?.selectedDogs.some(
                     (selectedDog) => selectedDog.petId === dog.petId
                   ) && (
                     <div className="walk-dog-selection-item-icon-container">
@@ -365,7 +355,7 @@ const Walk = () => {
                   )}
 
                   <img
-                    src={`https://seumu-s3-bucket.s3.ap-northeast-2.amazonaws.com/${dog.image}`}
+                    src={`${process.env.REACT_APP_S3_URL}/${dog.image}`}
                     alt={dog.name}
                   />
                 </div>
@@ -384,5 +374,4 @@ const Walk = () => {
     </>
   )
 }
-
 export default Walk

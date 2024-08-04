@@ -31,12 +31,7 @@
     justify-content: space-between;
     border-radius: 12px;
     padding: 20px;
-    background: linear-gradient(
-        0deg,
-        rgba(84, 173, 13, 0.1) 0%,
-        rgba(84, 173, 13, 0.1) 100%
-      ),
-      #fff;
+    background: linear-gradient(0deg, rgba(84, 173, 13, 0.1) 0%, rgba(84, 173, 13, 0.1) 100%), #fff;
     @include custom-font-size(500, 14px, m1, 18px, -0.28px);
     .mypage-content-bmi-text {
       @include custom-font-size(600, 16px, m7, 24px, -0.32px);
@@ -53,10 +48,7 @@
     flex-direction: column;
     border-radius: 12px;
     margin-top: 20px;
-    background: var(
-      --material-theme-ref-neutral-variant-neutral-variant99,
-      #f7f7f7
-    );
+    background: var(--material-theme-ref-neutral-variant-neutral-variant99, #f7f7f7);
 
     .mypage-content-pet-header {
       display: flex;
@@ -94,13 +86,18 @@
         align-items: center;
         margin-top: 17px;
         margin-right: 12px;
-        .mypage-content-pet-image {
-          width: 43.167px;
-          height: 42px;
-          border-radius: 113px;
 
+        .mypage-content-pet-image {
+          width: 42px;
+          height: 42px;
+          border-radius: 50%;
           border: 1px solid var(--material-theme-ref-neutral-neutral80, #c5c5c5);
-          // background: url(<path-to-image>) lightgray 50% / cover no-repeat;
+
+          img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+          }
         }
         .mypage-content-pet-text {
           display: flex;
@@ -231,8 +228,7 @@ hr {
             height: auto;
             padding: 20px;
             @include custom-font-size(500, 18px, h2, 24px, -0.36px);
-            border: 1px solid
-              var(--material-theme-ref-neutral-neutral90, #e2e2e2);
+            border: 1px solid var(--material-theme-ref-neutral-neutral90, #e2e2e2);
             background: var(--wt-bk-white, #fff);
             border-radius: 12px;
             outline: none;
@@ -337,8 +333,7 @@ hr {
     display: flex;
     justify-content: flex-end;
     margin-top: 20px; /* Adjust as needed */
-    
-    
+
     .pet-edit-button {
       display: flex;
       padding: 8px 12px;

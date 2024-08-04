@@ -1,45 +1,45 @@
-import React, { useState, useEffect } from "react";
-import { loginUserInfo, petInfo } from "../../../api";
-import { ReactComponent as PetChange } from "../../../assets/mypage/PetChange.svg";
-import { ReactComponent as Bell } from "../../../assets/mypage/Bell.svg";
-import { ReactComponent as Notice } from "../../../assets/mypage/Notice.svg";
-import { ReactComponent as Person } from "../../../assets/mypage/Person.svg";
-import { ReactComponent as More } from "../../../assets/mypage/More.svg";
-import { ReactComponent as Next } from "../../../assets/mypage/Next.svg";
-import { ReactComponent as QuestionMark } from "../../../assets/mypage/QuestionMark.svg";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react"
+import { loginUserInfo, petInfo } from "../../../api"
+import { ReactComponent as PetChange } from "../../../assets/mypage/PetChange.svg"
+import { ReactComponent as Bell } from "../../../assets/mypage/Bell.svg"
+import { ReactComponent as Notice } from "../../../assets/mypage/Notice.svg"
+import { ReactComponent as Person } from "../../../assets/mypage/Person.svg"
+import { ReactComponent as More } from "../../../assets/mypage/More.svg"
+import { ReactComponent as Next } from "../../../assets/mypage/Next.svg"
+import { ReactComponent as QuestionMark } from "../../../assets/mypage/QuestionMark.svg"
+import { useNavigate } from "react-router-dom"
 
 const MyPageMain = () => {
-  const [userInfo, setUserInfo] = useState({});
-  const [petInfos, setPetInfos] = useState([]);
-  const navigate = useNavigate();
+  const [userInfo, setUserInfo] = useState({})
+  const [petInfos, setPetInfos] = useState([])
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
         // 유저 정보 가져오기
-        const userRes = await loginUserInfo();
-        console.log("유저 정보", userRes);
-        setUserInfo(userRes);
+        const userRes = await loginUserInfo()
+        console.log("유저 정보", userRes)
+        setUserInfo(userRes)
       } catch (error) {
-        console.error("유저 정보를 가져오는 데 실패했습니다.", error);
+        console.error("유저 정보를 가져오는 데 실패했습니다.", error)
       }
-    };
+    }
 
     const fetchPetInfo = async () => {
       try {
         // 펫 정보 가져오기
-        const petRes = await petInfo();
-        console.log("펫 정보", petRes);
-        setPetInfos(petRes);
+        const petRes = await petInfo()
+        console.log("펫 정보", petRes)
+        setPetInfos(petRes)
       } catch (error) {
-        console.error("펫 정보를 가져오는 데 실패했습니다.", error);
+        console.error("펫 정보를 가져오는 데 실패했습니다.", error)
       }
-    };
+    }
 
-    fetchUserInfo();
-    fetchPetInfo();
-  }, []);
+    fetchUserInfo()
+    fetchPetInfo()
+  }, [])
 
   return (
     <>
@@ -71,7 +71,9 @@ const MyPageMain = () => {
               우리 아이<span>{petInfos.length}</span>
             </div>
             <span>
-              <PetChange onClick={() => navigate("/mypage/pet", { state: { petInfos } })} />
+              <PetChange
+                onClick={() => navigate("/mypage/pet", { state: { petInfos } })}
+              />
             </span>
           </div>
 
@@ -80,7 +82,10 @@ const MyPageMain = () => {
               petInfos.map((pet, index) => (
                 <div key={index} className="mypage-content-pet-body">
                   <div className="mypage-content-pet-image">
-                    <img src={pet.image} alt={pet.name} />
+                    <img
+                      src={`${process.env.REACT_APP_S3_URL}/${pet.image}`}
+                      alt={pet.name}
+                    />
                   </div>
                   <div className="mypage-content-pet-text">
                     <p className="mypage-content-pet-name">{pet.name}</p>
@@ -134,7 +139,7 @@ const MyPageMain = () => {
         </li>
       </ul>
     </>
-  );
-};
+  )
+}
 
-export default MyPageMain;
+export default MyPageMain

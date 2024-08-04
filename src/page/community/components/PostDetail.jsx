@@ -71,12 +71,13 @@
 
 import React, { useState, useEffect } from "react"
 import { useNavigate, useParams } from "react-router-dom"
-import { postShow } from "../../../api" // Ensure this function is defined in your api.js
+import { postShow } from "../../../api"
 import { ReactComponent as BackArrow } from "../../../assets/auth/register/BackArrow.svg"
 import Post from "./Post"
-import Comments from "./Comments" // Ensure Comments component is correctly exported
+import Comments from "./Comments"
 import { useSelector } from "react-redux"
 import { useFooterVisibility } from "../../../layout/index"
+import Loading from "../../../assets/walk/Loading.gif"
 
 const PostDetail = () => {
   const navigate = useNavigate()

@@ -1,34 +1,22 @@
-// import { configureStore } from "@reduxjs/toolkit"
-// import authReducer from "./auth"
-// import locationReducer from "./location"
-
-// const store = configureStore({
-//   reducer: {
-//     auth: authReducer,
-//     location: locationReducer,
-//   },
-// })
-
-// export default store
-
 import { configureStore } from "@reduxjs/toolkit"
 import { persistStore, persistReducer } from "redux-persist"
-import storage from "redux-persist/lib/storage" // defaults to localStorage for web
+import storageSession from "redux-persist/lib/storage/session"
 import authReducer from "./auth"
 import locationReducer from "./location"
 
 const persistConfig = {
   key: "root",
-  storage,
+  storage: storageSession, // 리덕스 세션 스토리지 사용
 }
 
 const persistedAuthReducer = persistReducer(persistConfig, authReducer)
-const persistedLocationReducer = persistReducer(persistConfig, locationReducer)
+// const persistedLocationReducer = persistReducer(persistConfig, locationReducer)
 
 const store = configureStore({
   reducer: {
     auth: persistedAuthReducer,
-    location: persistedLocationReducer,
+    // location: persistedLocationReducer,
+    location: locationReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

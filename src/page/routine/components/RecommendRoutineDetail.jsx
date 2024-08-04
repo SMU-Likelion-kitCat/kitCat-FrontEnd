@@ -209,18 +209,18 @@ const RecommendRoutineDetail = () => {
 
   const onClickAddRoutine = async () => {
     try {
-      console.log("Routine data:", routine) // 로그 추가
+      console.log("Routine data:", routine)
       const newRoutine = {
         name: routine.title,
         target: routine.goal,
         step: routine.step,
         colorCode: backgroundColor,
         routineType: routine.type,
-        routineTerm: routine.duration_int,
+        routineTerm: `${routine.duration_int}주`,
         routineBase: routine.unit,
         count: routine.amount,
       }
-      console.log("New routine data:", newRoutine) // 로그 추가
+      console.log("새로 추가된 추천 루틴", newRoutine)
       const res = await createRoutine(newRoutine)
       console.log("루틴이 성공적으로 추가됨", res)
       navigate("/routine/ongoing")

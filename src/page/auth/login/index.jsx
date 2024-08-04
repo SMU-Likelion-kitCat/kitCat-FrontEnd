@@ -20,14 +20,14 @@ const Login = () => {
   const location = useSelector((state) => state.location)
 
   useEffect(() => {
-    if (auth.nickname !== "" || location.longitude !== null) {
+    if (auth.nickname !== "" || location?.longitude !== null) {
       dispatch(logout())
       dispatch(resetAuthState())
       dispatch(resetLocationState())
       dispatch({ type: "RESET_ALL_STATE" }) // 전체 상태 초기화
       console.log("상태 초기화 완료", auth, location)
     }
-  }, [dispatch, auth.nickname, location.longitude])
+  }, [dispatch, auth.nickname, location?.longitude])
 
   const onChangeInput = (e) => {
     const { name, value } = e.target
