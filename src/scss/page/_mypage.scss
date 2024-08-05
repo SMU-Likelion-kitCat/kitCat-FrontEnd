@@ -347,22 +347,22 @@ hr {
 
   .intro-circle {
     position: relative;
+    width: 88px;
+    height: 88px;
     border-radius: 50%;
+    img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+    }
     .pet-profile-add-icon-wrapper {
       position: absolute;
       bottom: 0;
-      border: 1px solid black;
       width: 28px;
-      margin-left: 60px;
-
       height: 28px;
       border-radius: 50%;
-      input {
-        // width: 28px;
-        // height: 28px;
-        // border-radius: 50%;
-        // border-color: var(--material-theme-ref-neutral-neutral90, #e2e2e2);
-      }
+      margin-left: 60px;
+
       .pet-profile-add-icon {
         position: absolute;
       }
@@ -391,6 +391,22 @@ hr {
       border: 1px solid var(--material-theme-ref-neutral-neutral90, #e2e2e2);
       background: var(--wt-bk-white, #fff);
     }
+  }
+}
+
+.auth-register-info-pet-save-button {
+  margin-top: 32px;
+  @include inline-flexbox(center, center);
+  width: 156px;
+  height: 60px;
+  gap: 8px;
+  border-radius: 12px;
+  background: var(--material-theme-ref-neutral-neutral98, #f6f6f6);
+  @include custom-font-size(600, 18px, t3-sm, 24px, -0.36px);
+
+  &.active {
+    background: var(--material-theme-ref-primary-primary80, #53e07a);
+    @include custom-font-size(600, 18px, t3, 24px, -0.36px);
   }
 }
 .pet-edit-add-wrapper {

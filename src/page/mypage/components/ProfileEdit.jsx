@@ -1,101 +1,101 @@
-import React, { useState, useEffect } from "react";
-import { loginUserInfo, modifyUser, petInfo } from "../../../api";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react"
+import { loginUserInfo, modifyUser, petInfo } from "../../../api"
+import { useNavigate } from "react-router-dom"
 
 const ProfileEdit = () => {
-  const [userInfo, setUserInfo] = useState({});
-  const [nickname, setNickname] = useState("");
-  const [weight, setWeight] = useState("");
-  const [height, setHeight] = useState("");
-  const [bmi, setBmi] = useState("");
-  const [pets, setPets] = useState([]);
-  const navigate = useNavigate();
+  const [userInfo, setUserInfo] = useState({})
+  const [nickname, setNickname] = useState("")
+  const [weight, setWeight] = useState("")
+  const [height, setHeight] = useState("")
+  const [bmi, setBmi] = useState("")
+  const [pets, setPets] = useState([])
+  const navigate = useNavigate()
 
   const calculateBMI = (height, weight) => {
     if (height && weight) {
-      const heightInMeters = height / 100;
+      const heightInMeters = height / 100
       const calculatedBmi = (
         weight /
         (heightInMeters * heightInMeters)
-      ).toFixed(1);
-      return calculatedBmi;
+      ).toFixed(1)
+      return calculatedBmi
     }
-    return "";
-  };
+    return ""
+  }
 
   useEffect(() => {
-    setBmi(calculateBMI(height, weight));
-  }, [height, weight]);
+    setBmi(calculateBMI(height, weight))
+  }, [height, weight])
 
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
-        const res = await loginUserInfo();
-        console.log("유저 정보", res);
-        setUserInfo(res);
-        setNickname(res.nickname || "");
-        setWeight(res.weight || "");
-        setHeight(res.height || "");
-        setBmi(calculateBMI(res.height, res.weight));
+        const res = await loginUserInfo()
+        console.log("유저 정보", res)
+        setUserInfo(res)
+        setNickname(res.nickname || "")
+        setWeight(res.weight || "")
+        setHeight(res.height || "")
+        setBmi(calculateBMI(res.height, res.weight))
       } catch (error) {
-        console.error("실패", error);
+        console.error("실패", error)
       }
-    };
+    }
 
     const fetchPetInfo = async () => {
       try {
-        const res = await petInfo();
-        console.log("펫 정보", res);
-        setPets(res);
+        const res = await petInfo()
+        console.log("펫 정보", res)
+        setPets(res)
       } catch (error) {
-        console.error("펫 정보 조회 실패", error);
+        console.error("펫 정보 조회 실패", error)
       }
-    };
+    }
 
-    fetchUserInfo();
-    fetchPetInfo();
-  }, []);
+    fetchUserInfo()
+    fetchPetInfo()
+  }, [])
 
   const handleNicknameChange = (e) => {
-    setNickname(e.target.value);
-  };
+    setNickname(e.target.value)
+  }
 
   const handleWeightChange = (e) => {
-    setWeight(e.target.value);
-  };
+    setWeight(e.target.value)
+  }
 
   const handleHeightChange = (e) => {
-    setHeight(e.target.value);
-  };
+    setHeight(e.target.value)
+  }
 
   const handleSave = async () => {
     const updatedUser = {
       nickname: nickname,
       weight: Number(weight),
       height: Number(height),
-      bmi: Number(bmi)
-    };
-  
-    console.log("Updated User Info:", updatedUser); // Log the user input details
-  
+      bmi: Number(bmi),
+    }
+
+    console.log("Updated User Info:", updatedUser) // Log the user input details
+
     try {
-      const res = await modifyUser(updatedUser);
-      console.log("업데이트 성공", res);
-      navigate("/mypage");
+      const res = await modifyUser(updatedUser)
+      console.log("업데이트 성공", res)
+      navigate("/mypage")
     } catch (error) {
-      console.error("업데이트 실패", error);
+      console.error("업데이트 실패", error)
       if (error.response) {
-        console.error("Server responded with:", error.response.data);
+        console.error("Server responded with:", error.response.data)
       }
     }
-  };
+  }
 
   const calculateIndicatorPosition = () => {
-    if (!bmi) return "0%";
+    if (!bmi) return "0%"
 
-    const minBmi = 10;
-    const maxBmi = 40;
-    const clampedBmi = Math.max(minBmi, Math.min(bmi, maxBmi));
+    const minBmi = 10
+    const maxBmi = 40
+    const clampedBmi = Math.max(minBmi, Math.min(bmi, maxBmi))
 
     const ranges = [
       { min: 10, max: 18.5, start: 0, end: 20 },
@@ -103,18 +103,16 @@ const ProfileEdit = () => {
       { min: 24.9, max: 29.9, start: 40, end: 60 },
       { min: 29.9, max: 34.9, start: 60, end: 80 },
       { min: 34.9, max: 40, start: 80, end: 100 },
-    ];
+    ]
 
-    const range = ranges.find(
-      (r) => clampedBmi >= r.min && clampedBmi <= r.max
-    );
-    const rangeBmi = clampedBmi - range.min;
+    const range = ranges.find((r) => clampedBmi >= r.min && clampedBmi <= r.max)
+    const rangeBmi = clampedBmi - range.min
     const rangePercentage =
-      (rangeBmi / (range.max - range.min)) * (range.end - range.start);
-    const position = range.start + rangePercentage;
+      (rangeBmi / (range.max - range.min)) * (range.end - range.start)
+    const position = range.start + rangePercentage
 
-    return `${position}%`;
-  };
+    return `${position}%`
+  }
 
   return (
     <>
@@ -196,7 +194,7 @@ const ProfileEdit = () => {
               />
             </div>
           </div>
-          <div className="profile-edit-pets-container">
+          {/* <div className="profile-edit-pets-container">
             <h2 className="profile-edit-pets-title">내 펫 정보</h2>
             {pets.length > 0 ? (
               pets.map((pet) => (
@@ -211,11 +209,11 @@ const ProfileEdit = () => {
             ) : (
               <p>펫 정보를 불러오는 중...</p>
             )}
-          </div>
+          </div> */}
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default ProfileEdit;
+export default ProfileEdit

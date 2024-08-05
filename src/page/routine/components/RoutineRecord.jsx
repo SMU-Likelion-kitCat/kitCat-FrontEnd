@@ -54,7 +54,7 @@ const RoutineRecord = () => {
     return data
   }
 
-  const getRoutineDetailsForDate = (day) => {
+  const getRoutineWeekDetailsForDate = (day) => {
     const details = []
     Ongoing.forEach((routine) => {
       routine.records.forEach((record) => {
@@ -99,7 +99,7 @@ const RoutineRecord = () => {
   }
 
   const handleDateClick = (day) => {
-    const routineDetails = getRoutineDetailsForDate(day)
+    const routineDetails = getRoutineWeekDetailsForDate(day)
     setSelectedDate(day)
     setSelectedRoutineData(routineDetails)
   }

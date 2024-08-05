@@ -4,7 +4,7 @@ import KakaoMap from "../../../components/KakaoMap"
 import WalkInfo from "../components/WalkInfo"
 import { useDispatch, useSelector } from "react-redux"
 import { resetLocationState } from "../../../redux/location"
-import { getRoutineDetail, getRoutines } from "../../../api"
+import { getRoutineWeekDetail, getRoutines } from "../../../api"
 import { getColorByProgress } from "../../../utils/colorCalculate"
 import { ReactComponent as RoutineSuccess } from "../../../assets/walk/RoutineSuccess.svg"
 import { useFooterVisibility } from "../../../layout/index"
@@ -26,7 +26,7 @@ const Result = () => {
   useEffect(() => {
     const fetchRoutineDetail = async () => {
       try {
-        const res = await getRoutineDetail(selectedRoutineId)
+        const res = await getRoutineWeekDetail(selectedRoutineId)
         console.log(res)
         // 가장 최근의 기록이 성공인지 확인합니다.
         const latestRecord = res.weekRecords[0]?.records?.slice(-1)[0]

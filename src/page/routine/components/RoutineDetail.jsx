@@ -261,7 +261,11 @@
 
 import React, { useState, useEffect } from "react"
 import { useParams, useNavigate } from "react-router-dom"
-import { getRoutineDetail, getRoutines, fetchWalkRecord } from "../../../api"
+import {
+  getRoutineWeekDetail,
+  getRoutines,
+  fetchWalkRecord,
+} from "../../../api"
 import { ReactComponent as BackArrow } from "../../../assets/auth/register/BackArrow.svg"
 import { ReactComponent as Edit } from "../../../assets/routine/Edit.svg"
 import { ReactComponent as Trash } from "../../../assets/routine/Trash.svg"
@@ -314,7 +318,7 @@ const RoutineDetail = () => {
         )
 
         if (selectedRoutine) {
-          const routineDetail = await getRoutineDetail(
+          const routineDetail = await getRoutineWeekDetail(
             selectedRoutine.routineId
           )
           const walkRecords = await fetchWalkRecord(
