@@ -265,6 +265,7 @@ import {
   getRoutineWeekDetail,
   getRoutines,
   fetchWalkRecord,
+  getRoutineWalkDetail,
 } from "../../../api"
 import { ReactComponent as BackArrow } from "../../../assets/auth/register/BackArrow.svg"
 import { ReactComponent as Edit } from "../../../assets/routine/Edit.svg"
@@ -318,7 +319,7 @@ const RoutineDetail = () => {
         )
 
         if (selectedRoutine) {
-          const routineDetail = await getRoutineWeekDetail(
+          const routineDetail = await getRoutineWalkDetail(
             selectedRoutine.routineId
           )
           const walkRecords = await fetchWalkRecord(

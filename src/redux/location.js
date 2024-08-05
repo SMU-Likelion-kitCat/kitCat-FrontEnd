@@ -55,10 +55,13 @@
 //       if (petIndex !== -1) {
 //         state.petCalories[petIndex].calories = calories
 //       } else {
+//         // 초기설정이면
 //         state.petCalories.push({ id: petId, calories })
 //       }
 //     },
-//     resetLocationState: () => initialLocationState,
+//     resetLocationState: (state) => {
+//       Object.assign(state, initialLocationState)
+//     },
 //   },
 // })
 
@@ -139,7 +142,7 @@ const locationSlice = createSlice({
       }
     },
     resetLocationState: (state) => {
-      Object.assign(state, initialLocationState)
+      return initialLocationState
     },
   },
 })

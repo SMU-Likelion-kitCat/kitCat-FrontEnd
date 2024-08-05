@@ -10,12 +10,10 @@ const persistConfig = {
 }
 
 const persistedAuthReducer = persistReducer(persistConfig, authReducer)
-// const persistedLocationReducer = persistReducer(persistConfig, locationReducer)
 
 const store = configureStore({
   reducer: {
     auth: persistedAuthReducer,
-    // location: persistedLocationReducer,
     location: locationReducer,
   },
   middleware: (getDefaultMiddleware) =>
