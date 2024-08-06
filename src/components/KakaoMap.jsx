@@ -40,6 +40,7 @@ const KakaoMap = forwardRef(
 
     useEffect(() => {
       const initializeMap = () => {
+        console.log("카카오맵 렌더링")
         const container = document.getElementById(mapId)
         const options = {
           center: new window.kakao.maps.LatLng(
@@ -213,7 +214,14 @@ const KakaoMap = forwardRef(
       }
 
       loadKakaoMaps(readWalkPath ? historyWalkMap : initializeMap)
-    }, [location, path, readWalkPath, mapId, setLoading])
+    }, [
+      location.latitude,
+      location.longitude,
+      path,
+      readWalkPath,
+      mapId,
+      setLoading,
+    ])
 
     useEffect(() => {
       if (startFlagRef.current && path.length > 0) {
