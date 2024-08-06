@@ -1,24 +1,53 @@
-import React, { useEffect, useState } from "react"
-import { ReactComponent as BackArrow } from "../../../assets/auth/register/BackArrow.svg"
-import { ReactComponent as MonthArrow } from "../../../assets/routine/MonthArrow.svg"
-import { useNavigate } from "react-router-dom"
-import Ongoing from "../dummy/Ongoing"
+import React, { useEffect, useState } from "react";
+import { ReactComponent as BackArrow } from "../../../assets/auth/register/BackArrow.svg";
+import { ReactComponent as MonthArrow } from "../../../assets/routine/MonthArrow.svg";
+import { ReactComponent as DotPlus } from "../../../assets/routine/DotPlus.svg";
+import { useNavigate } from "react-router-dom";
+import { getRoutineWeekDetail } from "../../../api"; // 수정된 API 경로에 맞게 가져오기
 
-const daysInMonth = (year, month) => new Date(year, month + 1, 0).getDate()
-const dayLabels = ["일", "월", "화", "수", "목", "금", "토"]
+const daysInMonth = (year, month) => new Date(year, month + 1, 0).getDate();
+const dayLabels = ["일", "월", "화", "수", "목", "금", "토"];
 
 const RoutineRecord = () => {
-  const navigate = useNavigate()
-  const [year, setYear] = useState(2024)
-  const [month, setMonth] = useState(2) // March (0-based index)
-  const [selectedDate, setSelectedDate] = useState(null)
-  const [selectedRoutineData, setSelectedRoutineData] = useState([])
+  const navigate = useNavigate();
+  const today = new Date();
+  const [year, setYear] = useState(today.getFullYear());
+  const [month, setMonth] = useState(today.getMonth()); // 0-based index
+  const [selectedDate, setSelectedDate] = useState(today.getDate());
+  const [selectedRoutineData, setSelectedRoutineData] = useState([]);
+  const [routineData, setRoutineData] = useState({});
 
-  // useEffect(() =>{
+  useEffect(() => {
+    const fetchRoutineRecord = async () => {
+      try {
+        const res = await getRoutineWeekDetail(year, month + 1); // 1-based month
+        console.log("루틴 기록 정보", res);
 
-  // }
+        const data = {};
+        res.forEach((routine, index) => {
+          routine.routines.forEach((record) => {
+            const date = index + 1;
+            if (!data[date]) {
+              data[date] = [];
+            }
+            data[date].push({
+              colorCode: record.colorCode,
+              routineName: record.name,
+              progress: record.progress,
+              type: record.routineType,
+              recordgoal: record.target,
+            });
+          });
+        });
 
-  // ,[])
+        setRoutineData(data);
+      } catch (error) {
+        console.error("루틴 기록 정보 가져오기 실패", error);
+      }
+    };
+
+    fetchRoutineRecord();
+  }, [year, month]);
 
   const highlightToDotColor = {
     "#F8DEDE": "#EA9393",
@@ -27,140 +56,105 @@ const RoutineRecord = () => {
     "#E1F0FB": "#B9D4E8",
     "#F1EBF9": "#D2C2E8",
     "#FFEAF4": "#EEB4D0",
-  }
-
-  const getRoutineData = () => {
-    const data = {}
-    Ongoing.forEach((routine) => {
-      routine.records.forEach((record) => {
-        const highlightsSet = new Set()
-        record.entries.forEach((entry) => {
-          const [m, d] = entry.date.split(".").map(Number)
-          if (m === month + 1) {
-            if (!data[d]) {
-              data[d] = new Set()
-            }
-            data[d].add(routine.highlight)
-          }
-        })
-      })
-    })
-
-    // Convert Sets to Arrays
-    Object.keys(data).forEach((day) => {
-      data[day] = Array.from(data[day])
-    })
-
-    return data
-  }
+  };
 
   const getRoutineWeekDetailsForDate = (day) => {
-    const details = []
-    Ongoing.forEach((routine) => {
-      routine.records.forEach((record) => {
-        record.entries.forEach((entry) => {
-          const [m, d] = entry.date.split(".").map(Number)
-          if (m === month + 1 && d === day) {
-            details.push({
-              routineName: routine.title,
-              highlight: routine.highlight,
-              type: routine.type,
-              entry,
-            })
-          }
-        })
-      })
-    })
-    return details
-  }
-
-  const routineData = getRoutineData()
+    return routineData[day] || [];
+  };
 
   const handleMoreClick_Back = () => {
-    navigate("../../routine")
-  }
+    navigate("../../routine");
+  };
 
   const handlePrevMonth = () => {
     if (month === 0) {
-      setMonth(11)
-      setYear(year - 1)
+      setMonth(11);
+      setYear(year - 1);
     } else {
-      setMonth(month - 1)
+      setMonth(month - 1);
     }
-  }
+    setSelectedDate(null); // 월을 변경할 때 선택된 날짜 초기화
+  };
 
   const handleNextMonth = () => {
     if (month === 11) {
-      setMonth(0)
-      setYear(year + 1)
+      setMonth(0);
+      setYear(year + 1);
     } else {
-      setMonth(month + 1)
+      setMonth(month + 1);
     }
-  }
+    setSelectedDate(null); // 월을 변경할 때 선택된 날짜 초기화
+  };
 
   const handleDateClick = (day) => {
-    const routineDetails = getRoutineWeekDetailsForDate(day)
-    setSelectedDate(day)
-    setSelectedRoutineData(routineDetails)
-  }
+    const routineDetails = getRoutineWeekDetailsForDate(day);
+    setSelectedDate(day);
+    setSelectedRoutineData(routineDetails);
+  };
 
   const formatRecordGoal = (type, goal) => {
     switch (type) {
       case "시간 목표":
-        return `${goal} 분`
+        return `${goal} 분`;
       case "칼로리 목표":
-        return `${goal} kcal`
+        return `${goal} kcal`;
       case "산책 거리 목표":
-        return `${(goal / 1000).toFixed(1)} km`
+        return `${(goal / 1000).toFixed(1)} km`;
       default:
-        return goal
+        return goal;
     }
-  }
+  };
 
   const renderCalendar = () => {
-    const days = []
-    const numDays = daysInMonth(year, month)
-    const firstDay = new Date(year, month, 1).getDay()
+    const days = [];
+    const numDays = daysInMonth(year, month);
+    const firstDay = new Date(year, month, 1).getDay();
 
     for (let i = 0; i < firstDay; i++) {
-      days.push(
-        <div className="routine-calendar-day empty" key={`empty-${i}`}></div>
-      )
+      days.push(<div className="routine-calendar-day empty" key={`empty-${i}`}></div>);
     }
 
     for (let day = 1; day <= numDays; day++) {
+      const isToday =
+        year === today.getFullYear() &&
+        month === today.getMonth() &&
+        day === today.getDate();
       const dayClass =
         (firstDay + day - 1) % 7 === 0
           ? "sunday"
           : (firstDay + day - 1) % 7 === 6
           ? "saturday"
-          : ""
+          : "";
+
       days.push(
         <div
-          className={`routine-calendar-day ${dayClass}`}
+          className={`routine-calendar-day ${dayClass} ${isToday ? "today" : ""}`}
           key={day}
           onClick={() => handleDateClick(day)}
         >
           <div className="routine-calendar-date">{day}</div>
           <div className="routine-calendar-dots">
             {routineData[day] &&
-              routineData[day].map((highlight, index) => (
+              routineData[day].slice(0, 2).map((routine, index) => (
                 <div
                   key={index}
                   className="routine-calendar-dot"
                   style={{
                     backgroundColor:
-                      highlightToDotColor[highlight] || highlight,
+                      highlightToDotColor[routine.colorCode] || routine.colorCode,
                   }}
                 ></div>
               ))}
+            {routineData[day] && routineData[day].length > 2 && (
+              <DotPlus className="routine-calendar-dot-plus" />
+            )}
           </div>
         </div>
-      )
+      );
     }
 
-    return days
-  }
+    return days;
+  };
 
   return (
     <div>
@@ -210,20 +204,16 @@ const RoutineRecord = () => {
             <div
               key={index}
               className="routine-detail-item"
-              style={{ borderLeft: `12px solid ${detail.highlight}` }}
+              style={{ borderLeft: `12px solid ${detail.colorCode}` }}
             >
               <h3>{detail.routineName}</h3>
-              <p>종료 시간: {detail.entry.endtime}</p>
-              <p>
-                목표 기록:{" "}
-                {formatRecordGoal(detail.type, detail.entry.recordgoal)}
-              </p>
+              <p>루틴 진행도 : {detail.progress}%</p>
             </div>
           ))}
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default RoutineRecord
+export default RoutineRecord;

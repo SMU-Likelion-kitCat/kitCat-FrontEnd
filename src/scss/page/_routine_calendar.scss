@@ -137,12 +137,20 @@
 
         .routine-calendar-dots {
           display: flex;
-          gap: 4px;
+          gap: 2px;
+          padding-top: 10px;
+          align-items: center;
+          justify-content: center;
+          height: 12px;
 
           .routine-calendar-dot {
             width: 6px;
             height: 6px;
             border-radius: 50%;
+          }
+          .routine-calendar-dot-plus {
+            width: 10px;
+            height: 10px;
           }
         }
       }
@@ -181,7 +189,7 @@
   .routine-detail-item {
     background: #ffffff;
     border-radius: 8px;
-    border: 1px solid var(--material-theme-ref-neutral-neutral90, #E2E2E2);
+    border: 1px solid var(--material-theme-ref-neutral-neutral90, #e2e2e2);
     padding: 10px;
     margin-bottom: 10px;
     font-family: Roboto;
