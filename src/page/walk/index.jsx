@@ -46,14 +46,13 @@ const Walk = () => {
 
   const { error, requestLocation, clearWatcher } = useGeoLocation({
     enableHighAccuracy: false,
-    maximumAge: Infinity,
-    timeout: Infinity,
+    maximumAge: 60 * 1000 * 5,
+    timeout: 60 * 1000 * 3,
   })
   const location = useSelector((state) => state.location)
   const auth = useSelector((state) => state.auth)
   const dispatch = useDispatch()
   const { setShowFooter } = useFooterVisibility()
-  const s3url = process.env.S3_URL
 
   // 처음 맵 로딩 시 현재 위치를 가져옴
   useEffect(() => {
