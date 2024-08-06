@@ -57,10 +57,12 @@ const Walk = () => {
   // 처음 맵 로딩 시 현재 위치를 가져옴
   useEffect(() => {
     // 이미 경도 위도가 있으면
-    if (location?.latitude && location?.longitude) {
+    console.log("산책페이지 초기 location 객체", location)
+    if (location?.latitude !== null && location?.longitude !== null) {
       setLoading(false)
     } else {
       requestLocation()
+      console.log("산책페이지 초기 위치 받아오기 후 location 객체", location)
     }
   }, [location?.latitude, location?.longitude])
 
