@@ -11,7 +11,9 @@ const PostCreate = ({ onPostSubmit }) => {
   const [content, setContent] = useState("");
 
   const handleFileChange = (e) => {
-    setImage(e.target.files ? [...image, ...Array.from(e.target.files)] : image);
+    setImage(
+      e.target.files ? [...image, ...Array.from(e.target.files)] : image
+    );
   };
 
   const handlePostSubmit = async () => {
@@ -51,7 +53,10 @@ const PostCreate = ({ onPostSubmit }) => {
     <div className="community-content-container">
       <div className="community-content-head-wrapper">
         <BackArrow onClick={() => navigate(-1)} />
-        <button onClick={handlePostSubmit} className="community-new-edit-button">
+        <button
+          onClick={handlePostSubmit}
+          className="community-new-edit-button"
+        >
           확인
         </button>
       </div>
@@ -82,12 +87,23 @@ const PostCreate = ({ onPostSubmit }) => {
         />
         <div className="community-new-image-preview-container">
           <div className="community-new-image-preview">
-            {image && image.length > 0 && image.map((img, index) => (
-              <div key={index} className="community-new-image-thumbnail">
-                <img src={URL.createObjectURL(img)} alt={`Preview ${index + 1}`} />
-                <button onClick={() => setImage(image.filter((_, i) => i !== index))}>X</button>
-              </div>
-            ))}
+            {image &&
+              image.length > 0 &&
+              image.map((img, index) => (
+                <div key={index} className="community-new-image-thumbnail">
+                  <img
+                    src={URL.createObjectURL(img)}
+                    alt={`Preview ${index + 1}`}
+                  />
+                  <button
+                    onClick={() =>
+                      setImage(image.filter((_, i) => i !== index))
+                    }
+                  >
+                    X
+                  </button>
+                </div>
+              ))}
           </div>
         </div>
       </div>

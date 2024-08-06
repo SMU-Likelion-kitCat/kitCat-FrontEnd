@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import { ReactComponent as Heart } from "../../../assets/community/Heart.svg";
 import { ReactComponent as FillHeart } from "../../../assets/community/FillHeart.svg";
 import { ReactComponent as Comment } from "../../../assets/community/Comment.svg";
-import { inHeart } from '../../../api'; // Adjust import path as needed
+import { inHeart } from "../../../api"; // Adjust import path as needed
 
 const formatDate = (dateString) => {
   const date = new Date(dateString);
@@ -12,15 +12,25 @@ const formatDate = (dateString) => {
   const minutes = date.getMinutes();
 
   // Format month, day, hours, and minutes
-  const formattedMonth = month.toString().padStart(2, '0');
-  const formattedDay = day.toString().padStart(2, '0');
-  const formattedHours = hours.toString().padStart(2, '0');
-  const formattedMinutes = minutes.toString().padStart(2, '0');
+  const formattedMonth = month.toString().padStart(2, "0");
+  const formattedDay = day.toString().padStart(2, "0");
+  const formattedHours = hours.toString().padStart(2, "0");
+  const formattedMinutes = minutes.toString().padStart(2, "0");
 
   return `${formattedMonth}.${formattedDay} ${formattedHours}:${formattedMinutes}`;
 };
 
-const Post = ({ postId, writer, createTime, content, files = [], likeCount, commentCount, showComments = true, heartState }) => {
+const Post = ({
+  postId,
+  writer,
+  createTime,
+  content,
+  files = [],
+  likeCount,
+  commentCount,
+  showComments = true,
+  heartState,
+}) => {
   const formattedCreateTime = formatDate(createTime);
 
   // Set initial state based on heartState prop
@@ -36,7 +46,7 @@ const Post = ({ postId, writer, createTime, content, files = [], likeCount, comm
       try {
         await inHeart(postId);
         console.log("Liked", postId); // Debug statement
-        setCurrentLikeCount(prevCount => prevCount + 1);
+        setCurrentLikeCount((prevCount) => prevCount + 1);
         setIsLiked(true);
       } catch (error) {
         console.error("Error liking post:", error);
@@ -52,10 +62,14 @@ const Post = ({ postId, writer, createTime, content, files = [], likeCount, comm
     setIsLiked(heartState);
   }, [heartState]);
 
+  console.log(heartState);
+
   return (
     <div className="post">
       <div className="post-header">
-        <div className="post-time">{writer} · {formattedCreateTime}</div>
+        <div className="post-time">
+          {writer} · {formattedCreateTime}
+        </div>
       </div>
       <div className="post-content">
         <p>{content}</p>
@@ -67,16 +81,18 @@ const Post = ({ postId, writer, createTime, content, files = [], likeCount, comm
       </div>
       <div className="post-footer">
         {showComments && (
-          <div className='comment-section'>
+          <div className="comment-section">
             <Comment className="post-comment-icon" />
             <div className="post-comments">{commentCount}</div>
           </div>
         )}
-        <div className='like-section' onClick={handleLikeToggle}>
+        <div className="like-section" onClick={handleLikeToggle}>
           {loading ? (
             <div>Loading...</div> // Optionally show a loading indicator
+          ) : isLiked ? (
+            <FillHeart className="post-like-icon" />
           ) : (
-            isLiked ? <FillHeart className="post-like-icon" /> : <Heart className="post-like-icon" />
+            <Heart className="post-like-icon" />
           )}
           <div className="post-likes">{currentLikeCount}</div>
         </div>

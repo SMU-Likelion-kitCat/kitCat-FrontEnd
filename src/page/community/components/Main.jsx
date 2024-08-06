@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { ReactComponent as NewButton } from "../../../assets/community/NewButton.svg";
 import { useNavigate } from "react-router-dom";
-import { postShowAll } from "../../../api";
+import { postShowAll, inHeart } from "../../../api";
+import { ReactComponent as Heart } from "../../../assets/community/Heart.svg";
+import { ReactComponent as FillHeart } from "../../../assets/community/FillHeart.svg";
 import Post from "./Post";
 
 const Main = () => {
@@ -32,16 +34,6 @@ const Main = () => {
     fetchPosts();
   }, []);
 
-  const handleHeartStateChange = (postId, newHeartState) => {
-    setPostLikes((prevPostLikes) => ({
-      ...prevPostLikes,
-      [postId]: {
-        ...prevPostLikes[postId],
-        heartState: newHeartState,
-      },
-    }));
-  };
-
   const handlePostClick = (postId) => {
     console.log(postId); // 콘솔에 postId 출력
     navigate(`/community/post/${postId}`);
@@ -64,10 +56,9 @@ const Main = () => {
             files={post.photoNames || []}
             likeCount={postLikes[post.postId].likeCount}
             commentCount={post.commentCount}
-            heartState={[post.postId].heartState} // Pass heartState to Post
-            onHeartStateChange={handleHeartStateChange} // Callback for heart state change
+            heartState={post.heartStatus}
           />
-          <hr className="line"/>
+          <hr className="line" />
         </div>
       ))}
     </div>

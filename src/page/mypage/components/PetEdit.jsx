@@ -474,7 +474,7 @@ const PetEdit = () => {
             <div
               className="pet-profile-add-icon-wrapper"
               onClick={() => document.getElementById("new-file-upload").click()}
-            >
+            >b
               <PetProfileAdd className="pet-profile-add-icon" />
             </div>
             <input
