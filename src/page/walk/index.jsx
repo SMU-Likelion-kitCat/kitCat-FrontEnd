@@ -46,23 +46,22 @@ const Walk = () => {
 
   const { error, requestLocation, clearWatcher } = useGeoLocation({
     enableHighAccuracy: false,
-    maximumAge: 60 * 1000 * 5,
-    timeout: 60 * 1000 * 3,
+    maximumAge: Infinity,
+    timeout: Infinity,
   })
   const location = useSelector((state) => state.location)
   const auth = useSelector((state) => state.auth)
   const dispatch = useDispatch()
   const { setShowFooter } = useFooterVisibility()
+  const s3url = process.env.S3_URL
 
   // 처음 맵 로딩 시 현재 위치를 가져옴
   useEffect(() => {
     // 이미 경도 위도가 있으면
-    console.log("산책페이지 초기 location 객체", location)
-    if (location?.latitude !== null && location?.longitude !== null) {
+    if (location?.latitude && location?.longitude) {
       setLoading(false)
     } else {
       requestLocation()
-      console.log("산책페이지 초기 위치 받아오기 후 location 객체", location)
     }
   }, [location?.latitude, location?.longitude])
 

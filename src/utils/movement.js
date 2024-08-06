@@ -28,8 +28,8 @@ export const startMovement = (dispatch, location, auth) => {
       let lng = currentLocationLongitude
 
       // 테스트 이동 코드
-      // lat += 0.0001
-      // lng += 0.0001
+      lat += 0.0001
+      lng += 0.0001
       const newLocation = { latitude: lat, longitude: lng }
 
       // 새로운 위치의 위경도와 현재 위경도가 같지 않을 때에만 업데이트
