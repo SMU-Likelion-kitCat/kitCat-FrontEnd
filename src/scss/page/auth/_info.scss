@@ -1,15 +1,12 @@
-// 다음 버튼 css
 .auth-register-info-next-button {
-    position: absolute;
-    bottom: 86px;
-
-    background-color: #f6f6f6;
-    text-align: center;
-    @include custom-font-size(600, 18px, t3-sm, 24px, -0.36px);
+    @include inline-flexbox(center, center);
+    width: 100%;
+    height: 80px;
     border-radius: 12px;
-    height: 60px;
-    width: 90%;
-    gap: 8px;
+    margin-top: 32px;
+    margin-bottom: 66px;
+    background-color: #f6f6f6;
+    @include custom-font-size(600, 18px, t3-sm, 24px, -0.36px);
     transition: background-color 0.3s;
     &.active {
         @include custom-font-size(600, 18px, t3, 24px, -0.36px);
@@ -20,257 +17,640 @@
 .auth-register-info-container {
     width: 100%;
     height: 100vh;
+    overflow-y: hidden;
+    @include column-flexbox(between, center);
 
-    .auth-register-info-back-button {
-        @include inline-flexbox(start, center);
-    }
+    .auth-register-info-main-content-container {
+        width: 100%;
+        height: 100%;
+        overflow-y: auto;
+        .auth-register-info-back-button {
+            margin-top: 64px;
+            @include inline-flexbox(start, center);
+        }
 
-    .auth-register-info-content-container {
-        @include column-flexbox(center, center);
-        .auth-register-info-content-title {
+        .auth-register-info-content-container {
+            @include column-flexbox(center, center);
+            .auth-register-info-content-title {
+                @include custom-font-size(600, 24px, h2, 34px, -0.56px);
+                padding-top: 20px;
+                text-align: center;
+            }
+
+            .auth-register-info-content-logo {
+                @include inline-flexbox(center, center);
+                width: 322px;
+                height: 195px;
+                margin-top: 96px;
+            }
+        }
+
+        .auth-register-info-body-title {
             @include custom-font-size(600, 24px, h2, 34px, -0.56px);
-            padding-top: 20px;
-            text-align: center;
-        }
-
-        .auth-register-info-content-logo {
-            width: 232px;
-            height: 232px;
-            margin-top: 78px;
-            border-radius: 50%;
-            background-color: #ccc;
-        }
-    }
-
-    .auth-register-info-body-title {
-        @include custom-font-size(600, 24px, h2, 34px, -0.56px);
-        margin-top: 20px;
-        text-align: left;
-        width: 100%;
-
-        .auth-register-info-body-title-name {
-            color: #00af50;
-        }
-    }
-
-    .auth-register-info-body-form-container {
-        display: flex;
-        padding: 0;
-        flex-direction: column;
-        margin-top: 36px;
-        width: 100%;
-
-        .auth-register-info-body-input-container {
-            @include inline-flexbox(between, center);
-            width: 100%;
-
-            gap: 14px;
-
-            .auth-register-info-body-input-item {
-                @include column-flexbox(start, start);
-                gap: 8px;
-                .auth-register-info-body-input-item-title {
-                    @include custom-font-size(500, 14px, m1, 18px, -0.28px);
-                }
-                .auth-register-info-body-input-item-container {
-                    position: relative;
-                    flex: 1;
-
-                    input {
-                        width: 100%;
-                        height: 80px;
-                        padding: 20px;
-                        @include custom-font-size(700, 28px, h2, 36px, -0.56px);
-                        border: 1px solid var(--material-theme-ref-neutral-neutral90, #e2e2e2);
-                        background: var(--wt-bk-white, #fff);
-                        border-radius: 12px;
-                        outline: none;
-                    }
-
-                    p {
-                        position: absolute;
-                        top: 50%;
-                        right: 20px;
-                        transform: translateY(-50%);
-                        color: #aaaaaa;
-                        pointer-events: none;
-                        @include custom-font-size(500, 18px, t3-ph, 24px, -0.36px);
-                    }
-                }
-            }
-        }
-    }
-
-    .auth-register-info-body-bmi-container {
-        margin-top: 61px;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        gap: 19px;
-        width: 100%;
-
-        .auth-register-info-body-bmi-text-container {
-            @include inline-flexbox(start, between);
-
-            .auth-register-info-body-bmi-title {
-                @include inline-flexbox(center, center);
-                @include custom-font-size(500, 14px, m1, 18px, -0.28px);
-            }
-            .auth-register-info-body-bmi-state {
-                @include inline-flexbox(center, center);
-                @include custom-font-size(600, 16px, m1, 24px, -0.32px);
-                margin-left: auto;
-                .auth-register-info-body-bmi-state-shame {
-                    @include custom-font-size(600, 16px, m1, 24px, -0.32px);
-
-                    margin-left: 8px;
-                }
-
-                color: #54ad0d;
-
-                &.underweight {
-                    color: #83b6e8;
-                }
-
-                &.normal {
-                    color: #54ad0d;
-                }
-
-                &.overweight {
-                    color: #fdd505;
-                }
-
-                &.obesity {
-                    color: #ff8a02;
-                }
-                &.severe-obesity {
-                    color: #fe4d00;
-                }
-            }
-        }
-
-        .auth-register-info-body-bmi-bar {
-            width: 100%;
-            height: 20px;
-            border-radius: 10px;
-            background: linear-gradient(
-                to right,
-                #83b6e8 0%,
-                #83b6e8 20%,
-                #54ad0d 20%,
-                #54ad0d 40%,
-                #fdd505 40%,
-                #fdd505 60%,
-                #ff8a02 60%,
-                #ff8a02 80%,
-                #fe4d00 80%,
-                #fe4d00 100%
-            );
-            position: relative;
-        }
-
-        .auth-register-info-body-bmi-indicator {
-            position: absolute;
-            top: -6px;
-            width: 4px;
-            height: 32px;
-            background-color: #454545;
-            transition: left 1s ease-in-out;
-        }
-    }
-
-    .auth-register-info-pet-title {
-        @include custom-font-size(600, 24px, h2, 34px, -0.48px);
-        display: flex;
-        justify-content: space-between;
-        flex-direction: row;
-        width: 100%;
-        gap: 83px;
-        .auth-register-info-pet-content {
-            height: 68px;
-            width: 179px;
             margin-top: 20px;
-            .auth-register-info-pet-name {
+            text-align: left;
+            width: 100%;
+
+            .auth-register-info-body-title-name {
                 color: #00af50;
             }
         }
 
-        .intro-circle {
-            width: 88px;
-            height: 88px;
-            border-radius: 50%;
-            background-color: #d9d9d9;
-        }
-    }
+        .auth-register-info-body-form-container {
+            display: flex;
+            padding: 0;
+            flex-direction: column;
+            margin-top: 36px;
+            width: 100%;
 
-    .auth-register-info-pet-list-container {
-        @include inline-flexbox(start, center);
-        width: 100%;
-        margin-top: 20px;
-        gap: 6px;
-        .auth-register-info-pet-list-item {
-            // padding: 14px 14px 14px 20px;
-            @include inline-flexbox(center, center);
-            gap: 6px;
-            min-width: 94px;
-            width: auto;
-            height: 52px;
-            border-radius: 12px;
-            background: var(--material-theme-ref-neutral-neutral98, #f6f6f6);
-        }
-    }
-
-    .auth-register-info-pet-container {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        margin-left: 0px;
-        margin-right: 0px;
-        .auth-register-info-pet-input-container {
-            .auth-register-info-pet-input-title {
-                @include custom-font-size(400, 14px, m1, 18px, -0.28px);
-                margin-top: 32px;
-                margin-bottom: 12px;
-            }
-            .auth-register-info-pet-input {
-                display: flex;
-                padding: 20px;
+            .auth-register-info-body-input-container {
+                @include inline-flexbox(between, center);
                 width: 100%;
-                height: auto;
-                gap: 26px;
-                @include custom-font-size(400, 18px, t3-ph, 24px, -0.36px);
+
+                gap: 14px;
+
+                .auth-register-info-body-input-item {
+                    @include column-flexbox(start, start);
+                    gap: 8px;
+                    .auth-register-info-body-input-item-title {
+                        @include custom-font-size(500, 14px, m1, 18px, -0.28px);
+                    }
+                    .auth-register-info-body-input-item-container {
+                        position: relative;
+                        flex: 1;
+
+                        input {
+                            width: 100%;
+                            height: 80px;
+                            padding: 20px;
+                            @include custom-font-size(700, 28px, h2, 36px, -0.56px);
+                            border: 1px solid var(--material-theme-ref-neutral-neutral90, #e2e2e2);
+                            background: var(--wt-bk-white, #fff);
+                            border-radius: 12px;
+                            outline: none;
+                        }
+
+                        p {
+                            position: absolute;
+                            top: 50%;
+                            right: 20px;
+                            transform: translateY(-50%);
+                            color: #aaaaaa;
+                            pointer-events: none;
+                            @include custom-font-size(500, 18px, t3-ph, 24px, -0.36px);
+                        }
+                    }
+                }
+            }
+        }
+
+        .auth-register-info-body-bmi-container {
+            margin-top: 61px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            gap: 19px;
+            width: 100%;
+
+            .auth-register-info-body-bmi-text-container {
+                @include inline-flexbox(start, between);
+
+                .auth-register-info-body-bmi-title {
+                    @include inline-flexbox(center, center);
+                    @include custom-font-size(500, 14px, m1, 18px, -0.28px);
+                }
+                .auth-register-info-body-bmi-state {
+                    @include inline-flexbox(center, center);
+                    @include custom-font-size(600, 16px, m1, 24px, -0.32px);
+                    margin-left: auto;
+                    .auth-register-info-body-bmi-state-shame {
+                        @include custom-font-size(600, 16px, m1, 24px, -0.32px);
+
+                        margin-left: 8px;
+                    }
+
+                    color: #54ad0d;
+
+                    &.underweight {
+                        color: #83b6e8;
+                    }
+
+                    &.normal {
+                        color: #54ad0d;
+                    }
+
+                    &.overweight {
+                        color: #fdd505;
+                    }
+
+                    &.obesity {
+                        color: #ff8a02;
+                    }
+                    &.severe-obesity {
+                        color: #fe4d00;
+                    }
+                }
+            }
+
+            .auth-register-info-body-bmi-bar {
+                width: 100%;
+                height: 20px;
+                border-radius: 10px;
+                background: linear-gradient(
+                    to right,
+                    #83b6e8 0%,
+                    #83b6e8 20%,
+                    #54ad0d 20%,
+                    #54ad0d 40%,
+                    #fdd505 40%,
+                    #fdd505 60%,
+                    #ff8a02 60%,
+                    #ff8a02 80%,
+                    #fe4d00 80%,
+                    #fe4d00 100%
+                );
+                position: relative;
+            }
+
+            .auth-register-info-body-bmi-indicator {
+                position: absolute;
+                top: -6px;
+                width: 4px;
+                height: 32px;
+                background-color: #454545;
+                transition: left 1s ease-in-out;
+            }
+        }
+
+        .auth-register-info-pet-title {
+            @include custom-font-size(600, 24px, h2, 34px, -0.48px);
+            display: flex;
+            justify-content: space-between;
+            flex-direction: row;
+            width: 100%;
+            gap: 83px;
+            .auth-register-info-pet-content {
+                height: 68px;
+                width: 179px;
+                margin-top: 20px;
+                .auth-register-info-pet-name {
+                    color: #00af50;
+                }
+            }
+
+            .intro-circle {
+                width: 88px;
+                height: 88px;
+                border-radius: 50%;
+                background-color: #d9d9d9;
+                input {
+                    width: 28px;
+                    height: 28px;
+                    border-radius: 50%;
+                    border-color: var(--material-theme-ref-neutral-neutral90, #e2e2e2);
+                }
+            }
+        }
+
+        .auth-register-info-pet-list-container {
+            @include inline-flexbox(start, center);
+            width: 100%;
+            margin-top: 20px;
+            gap: 6px;
+            .auth-register-info-pet-list-item {
+                @include inline-flexbox(center, center);
+                gap: 6px;
+                min-width: 94px;
+                width: auto;
+                height: 52px;
                 border-radius: 12px;
+                background: var(--material-theme-ref-neutral-neutral98, #f6f6f6);
+            }
+        }
+
+        .auth-register-info-pet-container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            margin-left: 0px;
+            margin-right: 0px;
+            .auth-register-info-pet-input-container {
+                .auth-register-info-pet-input-title {
+                    @include custom-font-size(400, 14px, m1, 18px, -0.28px);
+                    margin-top: 32px;
+                    margin-bottom: 12px;
+                }
+                .auth-register-info-pet-input {
+                    display: flex;
+                    padding: 20px;
+                    width: 100%;
+                    height: auto;
+                    gap: 26px;
+                    @include custom-font-size(400, 18px, t3-ph, 24px, -0.36px);
+                    border-radius: 12px;
+                    border: 1px solid var(--material-theme-ref-neutral-neutral90, #e2e2e2);
+                    background: var(--wt-bk-white, #fff);
+                }
+            }
+
+            .auth-register-info-pet-modal {
+                @include inline-flexbox(between, center);
+                padding: 20px;
+                margin-top: 12px;
+                width: 100%;
+                gap: 26px;
+                border-radius: 12px;
+                @include custom-font-size(400, 18px, t3-ph, 24px, -0.36px);
                 border: 1px solid var(--material-theme-ref-neutral-neutral90, #e2e2e2);
                 background: var(--wt-bk-white, #fff);
             }
+
+            .auth-register-info-pet-save-button-container {
+                @include inline-flexbox(end, center);
+                .auth-register-info-pet-save-button {
+                    margin-top: 32px;
+                    @include inline-flexbox(center, center);
+                    width: 156px;
+                    height: 60px;
+                    gap: 8px;
+                    border-radius: 12px;
+                    background: var(--material-theme-ref-neutral-neutral98, #f6f6f6);
+                    @include custom-font-size(600, 18px, t3-sm, 24px, -0.36px);
+
+                    &.active {
+                        background: var(--material-theme-ref-primary-primary80, #53e07a);
+                        @include custom-font-size(600, 18px, t3, 24px, -0.36px);
+                    }
+                }
+            }
+        }
+    }
+}
+// 다음 버튼 css
+.auth-register-info-next-button {
+    @include inline-flexbox(center, center);
+    width: 100%;
+    height: 80px;
+    border-radius: 12px;
+    margin-top: 32px;
+    margin-bottom: 66px;
+    background-color: #f6f6f6;
+    @include custom-font-size(600, 18px, t3-sm, 24px, -0.36px);
+    transition: background-color 0.3s;
+    &.active {
+        @include custom-font-size(600, 18px, t3, 24px, -0.36px);
+        background-color: #53e07a;
+    }
+}
+
+.auth-register-info-container {
+    width: 100%;
+    height: 100vh;
+    overflow-y: hidden;
+    @include column-flexbox(between, center);
+
+    .auth-register-info-main-content-container {
+        width: 100%;
+        height: 100%;
+        overflow-y: auto;
+        .auth-register-info-back-button {
+            margin-top: 64px;
+            @include inline-flexbox(start, center);
         }
 
-        .auth-register-info-pet-modal {
-            @include inline-flexbox(between, center);
-            padding: 20px;
-            margin-top: 12px;
-            width: 100%;
-            gap: 26px;
-            border-radius: 12px;
-            @include custom-font-size(400, 18px, t3-ph, 24px, -0.36px);
-            border: 1px solid var(--material-theme-ref-neutral-neutral90, #e2e2e2);
-            background: var(--wt-bk-white, #fff);
-        }
+        .auth-register-info-content-container {
+            @include column-flexbox(center, center);
+            .auth-register-info-content-title {
+                @include custom-font-size(600, 24px, h2, 34px, -0.56px);
+                padding-top: 20px;
+                text-align: center;
+            }
 
-        .auth-register-info-pet-save-button-container {
-            @include inline-flexbox(end, center);
-            .auth-register-info-pet-save-button {
-                margin-top: 32px;
+            .auth-register-info-content-logo {
                 @include inline-flexbox(center, center);
-                width: 156px;
-                height: 60px;
-                gap: 8px;
+                width: 322px;
+                height: 195px;
+                margin-top: 96px;
+            }
+        }
+
+        .auth-register-info-body-title {
+            @include custom-font-size(600, 24px, h2, 34px, -0.56px);
+            margin-top: 20px;
+            text-align: left;
+            width: 100%;
+
+            .auth-register-info-body-title-name {
+                color: #00af50;
+            }
+        }
+
+        .auth-register-info-body-form-container {
+            display: flex;
+            padding: 0;
+            flex-direction: column;
+            margin-top: 36px;
+            width: 100%;
+
+            .auth-register-info-body-input-container {
+                @include inline-flexbox(between, center);
+                width: 100%;
+
+                gap: 14px;
+
+                // .auth-register-info-body-input-item {
+                //     @include column-flexbox(start, start);
+                //     gap: 8px;
+
+                //     &.focused {
+                //       color: #181d18;
+                //       border-color: #00af50;
+                //     }
+                //     .auth-register-info-body-input-item-title {
+                //         @include custom-font-size(500, 14px, m1, 18px, -0.28px);
+                //     }
+                //     .auth-register-info-body-input-item-container {
+                //         position: relative;
+                //         flex: 1;
+
+                //         input {
+                //             width: 100%;
+                //             height: 80px;
+                //             padding: 20px;
+                //             @include custom-font-size(700, 28px, h2, 36px, -0.56px);
+                //             border: 1px solid var(--material-theme-ref-neutral-neutral90, #e2e2e2);
+                //             background: var(--wt-bk-white, #fff);
+                //             border-radius: 12px;
+                //             outline: none;
+                //         }
+
+                //         p {
+                //             position: absolute;
+                //             top: 50%;
+                //             right: 20px;
+                //             transform: translateY(-50%);
+                //             color: #aaaaaa;
+                //             pointer-events: none;
+                //             @include custom-font-size(500, 18px, t3-ph, 24px, -0.36px);
+                //         }
+                //     }
+                // }
+                .auth-register-info-body-input-item {
+                    @include column-flexbox(start, start);
+                    gap: 8px;
+
+                    .auth-register-info-body-input-item-title {
+                        @include custom-font-size(500, 14px, m1, 18px, -0.28px);
+                    }
+
+                    .auth-register-info-body-input-item-container {
+                        position: relative;
+                        flex: 1;
+
+                        input {
+                            width: 100%;
+                            height: 80px;
+                            padding: 20px;
+                            @include custom-font-size(700, 28px, h2, 36px, -0.56px);
+                            border-radius: 12px;
+                            outline: none;
+
+                            border: 1px solid var(--material-theme-ref-neutral-neutral90, #e2e2e2); /* 기본 테두리 색상 */
+
+                            &.focused {
+                                color: #181d18;
+                                border-color: #00af50; /* 포커스 상태 테두리 색상 */
+                            }
+                        }
+
+                        p {
+                            padding-top: 15px;
+                            position: absolute;
+                            top: 50%;
+                            right: 20px;
+                            transform: translateY(-50%);
+                            color: #aaaaaa;
+                            pointer-events: none;
+                            @include custom-font-size(500, 18px, t3-ph, 24px, -0.36px);
+                        }
+                    }
+                }
+            }
+        }
+
+        .auth-register-info-body-bmi-container {
+            margin-top: 61px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            gap: 19px;
+            width: 100%;
+
+            .auth-register-info-body-bmi-text-container {
+                @include inline-flexbox(start, between);
+
+                .auth-register-info-body-bmi-title {
+                    @include inline-flexbox(center, center);
+                    @include custom-font-size(500, 14px, m1, 18px, -0.28px);
+                }
+                .auth-register-info-body-bmi-state {
+                    @include inline-flexbox(center, center);
+                    @include custom-font-size(600, 16px, m1, 24px, -0.32px);
+                    margin-left: auto;
+                    .auth-register-info-body-bmi-state-shame {
+                        @include custom-font-size(600, 16px, m1, 24px, -0.32px);
+
+                        margin-left: 8px;
+                    }
+
+                    color: #54ad0d;
+
+                    &.underweight {
+                        color: #83b6e8;
+                    }
+
+                    &.normal {
+                        color: #54ad0d;
+                    }
+
+                    &.overweight {
+                        color: #fdd505;
+                    }
+
+                    &.obesity {
+                        color: #ff8a02;
+                    }
+                    &.severe-obesity {
+                        color: #fe4d00;
+                    }
+                }
+            }
+
+            .auth-register-info-body-bmi-bar {
+                width: 100%;
+                height: 20px;
+                border-radius: 10px;
+                background: linear-gradient(
+                    to right,
+                    #83b6e8 0%,
+                    #83b6e8 20%,
+                    #54ad0d 20%,
+                    #54ad0d 40%,
+                    #fdd505 40%,
+                    #fdd505 60%,
+                    #ff8a02 60%,
+                    #ff8a02 80%,
+                    #fe4d00 80%,
+                    #fe4d00 100%
+                );
+                position: relative;
+            }
+
+            .auth-register-info-body-bmi-indicator {
+                position: absolute;
+                top: -6px;
+                width: 4px;
+                height: 32px;
+                background-color: #454545;
+                transition: left 1s ease-in-out;
+            }
+        }
+
+        .auth-register-info-pet-title {
+            @include custom-font-size(600, 24px, h2, 34px, -0.48px);
+            display: flex;
+            justify-content: space-between;
+            flex-direction: row;
+            width: 100%;
+            gap: 83px;
+            .auth-register-info-pet-content {
+                height: 68px;
+                width: 179px;
+                margin-top: 20px;
+                .auth-register-info-pet-name {
+                    color: #00af50;
+                }
+            }
+
+            .auth-register-info-pet-image-container {
+                position: relative;
+                width: 88px;
+                height: 88px;
+                border-radius: 50%;
+                background-color: #d9d9d9;
+                img {
+                    width: 88px;
+                    height: 88px;
+                    border-radius: 50%;
+                }
+                div {
+                    position: absolute;
+                    right: 0;
+                    bottom: 0;
+                    width: 28px;
+                    height: 28px;
+                    background-color: var(--wt-bk-white, #fff);
+                    border-radius: 50%;
+                    @include inline-flexbox(center, center);
+                    border: 1px solid var(--material-theme-ref-neutral-neutral90, #e2e2e2);
+                }
+            }
+        }
+
+        .auth-register-info-pet-list-container {
+            @include inline-flexbox(start, center);
+            width: 100%;
+            margin-top: 20px;
+            gap: 6px;
+            .auth-register-info-pet-list-item {
+                @include inline-flexbox(center, center);
+                gap: 6px;
+                min-width: 94px;
+                width: auto;
+                height: 52px;
                 border-radius: 12px;
                 background: var(--material-theme-ref-neutral-neutral98, #f6f6f6);
-                @include custom-font-size(600, 18px, t3-sm, 24px, -0.36px);
+            }
+        }
 
-                &.active {
-                    background: var(--material-theme-ref-primary-primary80, #53e07a);
+        .auth-register-info-pet-container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            margin-left: 0px;
+            margin-right: 0px;
+            .auth-register-info-pet-input-container {
+                .auth-register-info-pet-input-title {
+                    @include custom-font-size(400, 14px, m1, 18px, -0.28px);
+                    margin-top: 32px;
+                    margin-bottom: 12px;
+                }
+                // .auth-register-info-pet-input {
+                //     display: flex;
+                //     padding: 20px;
+                //     width: 100%;
+                //     height: auto;
+                //     gap: 26px;
+                //     @include custom-font-size(400, 18px, t3-ph, 24px, -0.36px);
+                //     border-radius: 12px;
+                //     border: 1px solid var(--material-theme-ref-neutral-neutral90, #e2e2e2);
+                //     background: var(--wt-bk-white, #fff);
+
+                //     & .focused {
+                //         border-color: #00af50;
+                //     }
+                // }
+
+                .auth-register-info-pet-input {
+                    display: flex;
+                    padding: 20px;
+                    width: 100%;
+                    height: auto;
+                    gap: 26px;
+                    @include custom-font-size(400, 18px, t3-ph, 24px, -0.36px);
+                    border-radius: 12px;
+                    border: 1px solid var(--material-theme-ref-neutral-neutral90, #e2e2e2);
+                    background: var(--wt-bk-white, #fff);
+                    transition: border-color 0.3s ease;
+
+                    &.focused {
+                        border-color: #00af50;
+                    }
+
+                    input:focus {
+                        outline: none;
+                    }
+                }
+            }
+
+            .auth-register-info-pet-modal {
+                @include inline-flexbox(between, center);
+                padding: 20px;
+                margin-top: 12px;
+                width: 100%;
+                gap: 26px;
+                border-radius: 12px;
+                @include custom-font-size(400, 18px, t3-ph, 24px, -0.36px);
+                border: 1px solid var(--material-theme-ref-neutral-neutral90, #e2e2e2);
+                background: var(--wt-bk-white, #fff);
+            }
+
+            .auth-register-info-pet-save-button-container {
+                @include inline-flexbox(end, center);
+                .auth-register-info-pet-save-button {
+                    margin-top: 32px;
+                    @include inline-flexbox(center, center);
+                    width: 156px;
+                    height: 60px;
+                    gap: 8px;
+                    border-radius: 12px;
+                    background: var(--material-theme-ref-neutral-neutral98, #f6f6f6);
+                    @include custom-font-size(600, 18px, t3-sm, 24px, -0.36px);
+
+                    &.active {
+                        background: var(--material-theme-ref-primary-primary80, #53e07a);
+                        @include custom-font-size(600, 18px, t3, 24px, -0.36px);
+                    }
                 }
             }
         }

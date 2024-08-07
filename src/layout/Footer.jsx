@@ -8,7 +8,7 @@ import { ReactComponent as WalkLogo } from "../assets/footer/WalkLogo.svg"
 import { ReactComponent as WalkLogoActive } from "../assets/footer/WalkLogoActive.svg"
 
 import { ReactComponent as RecordLogo } from "../assets/footer/RecordLogo.svg"
-// import { ReactComponent as RecordLogoActive } from "../assets/footer/RecordLogo.svg"
+import { ReactComponent as RecordLogoActive } from "../assets/footer/RecordLogoActive.svg"
 
 import { ReactComponent as MyPage } from "../assets/footer/MyPage.svg"
 import { ReactComponent as MyPageActive } from "../assets/footer/MyPageActive.svg"
@@ -47,7 +47,7 @@ const Footer = () => {
         </div>
       </div>
       <div className="footer-item" onClick={() => navigate("/record")}>
-        {isActive("/record") ? <RecordLogo /> : <RecordLogo />}
+        {isActive("/record") ? <RecordLogoActive /> : <RecordLogo />}
 
         <div
           className={

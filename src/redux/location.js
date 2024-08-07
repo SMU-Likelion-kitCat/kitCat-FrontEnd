@@ -1,17 +1,106 @@
+// import { createSlice } from "@reduxjs/toolkit"
+
+// const initialLocationState = {
+//   latitude: null,
+//   longitude: null,
+//   path: [],
+//   distance: 0,
+//   tracking: false,
+//   trackingState: "init",
+//   loading: false,
+//   ownerCalories: 0,
+//   trackingTime: null, // 00000000 초 형식 시간
+//   petCalories: [], // 펫 칼로리 배열
+//   selectedDogs: [], // 선택된 강아지 배열
+//   timer: "00:00:00", // "00:00:00" 형식 시간
+// }
+
+// const locationSlice = createSlice({
+//   name: "location",
+//   initialState: initialLocationState,
+//   reducers: {
+//     setLocation: (state, action) => {
+//       const { latitude, longitude } = action.payload
+//       state.latitude = latitude
+//       state.longitude = longitude
+//       if (state.tracking) {
+//         state.path.push({ latitude, longitude })
+//       }
+//     },
+//     updateDistance: (state, action) => {
+//       state.distance = action.payload.distance
+//     },
+//     setTrackingState: (state, action) => {
+//       state.tracking = action.payload.tracking
+//       state.trackingState = action.payload.trackingState
+//     },
+//     setTrackingTime: (state, action) => {
+//       state.trackingTime = action.payload
+//     },
+//     setTimer: (state, action) => {
+//       state.timer = action.payload
+//     },
+//     setLoadingState: (state, action) => {
+//       state.loading = action.payload
+//     },
+//     updateOwnerCalories: (state, action) => {
+//       state.ownerCalories = action.payload
+//     },
+//     setSelectedDogs: (state, action) => {
+//       state.selectedDogs = action.payload
+//     },
+//     updatePetCalories: (state, action) => {
+//       const { petId, calories } = action.payload
+//       const petIndex = state.petCalories.findIndex((p) => p.id === petId)
+//       if (petIndex !== -1) {
+//         state.petCalories[petIndex].calories = calories
+//       } else {
+//         // 초기설정이면
+//         state.petCalories.push({ id: petId, calories })
+//       }
+//     },
+//     resetLocationState: (state) => {
+//       Object.assign(state, initialLocationState)
+//     },
+//   },
+// })
+
+// export const {
+//   setLocation,
+//   updateDistance,
+//   setTrackingState,
+//   setTrackingTime,
+//   setLoadingState,
+//   updateOwnerCalories,
+//   updatePetCalories,
+//   setTimer,
+//   setSelectedDogs,
+//   resetLocationState,
+// } = locationSlice.actions
+
+// export default locationSlice.reducer
+
 import { createSlice } from "@reduxjs/toolkit"
+
+const initialLocationState = {
+  latitude: null,
+  longitude: null,
+  path: [],
+  distance: 0,
+  tracking: false,
+  trackingState: "init",
+  loading: false,
+  ownerCalories: 0,
+  trackingTime: null, // 00000000 초 형식 시간
+  petCalories: [], // 펫 칼로리 배열
+  selectedDogs: [], // 선택된 강아지 배열
+  timer: "00:00:00", // "00:00:00" 형식 시간
+}
 
 const locationSlice = createSlice({
   name: "location",
-  initialState: {
-    latitude: null, // 현재 경도 저장
-    longitude: null, // 현재 위도 저장
-    path: [], // 폴리곤을 저장하기 위한 path
-    distance: 0, // 산책 거리 저장
-    steps: 0, // 산책 걸음 수 저장
-    tracking: false, // 산책을 하고 있는지 확인 boolean
-  },
+  initialState: initialLocationState,
   reducers: {
-    // 현재 위치 업데이트
     setLocation: (state, action) => {
       const { latitude, longitude } = action.payload
       state.latitude = latitude
@@ -20,27 +109,55 @@ const locationSlice = createSlice({
         state.path.push({ latitude, longitude })
       }
     },
-    // 현재 위치(경도, 위도) 초기화
-    resetLocation: (state) => {
-      state.latitude = null
-      state.longitude = null
+    updateDistance: (state, action) => {
+      state.distance = action.payload.distance
     },
-    // 거리와 걸음걸이를 누적합
-    updateDistanceAndSteps: (state, action) => {
-      state.distance += action.payload.distance
-      state.steps += action.payload.steps
-    },
-    // 산책 상태를 업데이트
     setTrackingState: (state, action) => {
-      state.tracking = action.payload
+      state.tracking = action.payload.tracking
+      state.trackingState = action.payload.trackingState
+    },
+    setTrackingTime: (state, action) => {
+      state.trackingTime = action.payload
+    },
+    setTimer: (state, action) => {
+      state.timer = action.payload
+    },
+    setLoadingState: (state, action) => {
+      state.loading = action.payload
+    },
+    updateOwnerCalories: (state, action) => {
+      state.ownerCalories = action.payload
+    },
+    setSelectedDogs: (state, action) => {
+      state.selectedDogs = action.payload
+    },
+    updatePetCalories: (state, action) => {
+      const { petId, calories } = action.payload
+      const petIndex = state.petCalories.findIndex((p) => p.id === petId)
+      if (petIndex !== -1) {
+        state.petCalories[petIndex].calories = calories
+      } else {
+        // 초기설정이면
+        state.petCalories.push({ id: petId, calories })
+      }
+    },
+    resetLocationState: (state) => {
+      return initialLocationState
     },
   },
 })
 
 export const {
   setLocation,
-  resetLocation,
-  updateDistanceAndSteps,
+  updateDistance,
   setTrackingState,
+  setTrackingTime,
+  setLoadingState,
+  updateOwnerCalories,
+  updatePetCalories,
+  setTimer,
+  setSelectedDogs,
+  resetLocationState,
 } = locationSlice.actions
+
 export default locationSlice.reducer

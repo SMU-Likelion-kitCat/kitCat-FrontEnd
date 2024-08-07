@@ -1,0 +1,150 @@
+.walk-routine-container {
+    position: absolute;
+    top: 64px;
+    width: 100%;
+    height: 128px;
+    z-index: 1;
+    overflow-x: auto;
+    white-space: nowrap; // line break되는 것을 방지
+
+    .walk-routine-item-container {
+        display: inline-flex; // 인라인 수평 스크롤을 보장
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 0 20px;
+        min-width: 300px;
+        height: 128px;
+        padding: 20px;
+        border-radius: 12px;
+        background-color: #fff;
+        box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.2);
+
+        .walk-routine-info-container {
+            @include inline-flexbox(between, center);
+            width: 100%;
+
+            div {
+                @include column-flexbox(start, start);
+
+                h2 {
+                    @include custom-font-size(500, 12px, b3-md, 16px, -0.24px);
+                    margin-bottom: 6px;
+                }
+
+                h3 {
+                    @include custom-font-size(600, 16px, h2, 24px, -0.32px);
+                    margin-bottom: 2px;
+                }
+
+                p {
+                    @include custom-font-size(500, 12px, b3-mdg, 16px, -0.24px);
+                }
+            }
+
+            .walk-routine-item-start-button-container {
+                margin: 4px 0;
+
+                .walk-routine-item-start-button {
+                    width: 56px;
+                    height: 56px;
+                    border-radius: 50%;
+                    background-color: var(--material-theme-ref-secondary-secondary95, #d8f9d8);
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    &.active {
+                        background-color: var(--material-theme-ref-secondary-secondary95, #ffe799);
+                    }
+
+                    p {
+                        @include custom-font-size(600, 14px, b2-sm, 18px, -0.28px);
+                    }
+                }
+            }
+        }
+
+        // .walk-routine-item-achieve-percentage-container {
+        //     @include inline-flexbox(between, center);
+        //     width: 100%;
+
+        //     .walk-routine-item-achieve-progress-bar {
+        //         width: 70%;
+        //         height: 6px;
+        //         background-color: #e0e0e0;
+        //         border-radius: 3px;
+
+        //         .progress {
+        //             height: 100%;
+        //             border-radius: 3px;
+        //         }
+        //     }
+
+        //     .progress-text-container {
+        //         display: flex;
+        //         align-items: center;
+        //         color: var(--material-theme-ref-neutral-neutral50, #757575);
+        //         overflow: hidden;
+
+        //         .progress-text-one {
+        //             font-family: Roboto;
+        //             font-size: 14px;
+        //             font-style: normal;
+        //             font-weight: 600;
+        //             line-height: 18px;
+        //             letter-spacing: -0.28px;
+        //         }
+
+        //         .progress-text-two {
+        //             @include custom-font-size(600, 14px, b2-md, 18px, -0.28px);
+        //         }
+        //     }
+        // }
+
+        .walk-routine-item-achieve-percentage-container {
+            @include inline-flexbox(between, center);
+            width: 100%;
+
+            .walk-routine-item-achieve-progress-bar {
+                width: 70%;
+                height: 6px;
+                background-color: #e0e0e0;
+                border-radius: 3px;
+
+                .progress {
+                    height: 100%;
+                    border-radius: 3px;
+                }
+            }
+
+            .progress-text-container {
+                display: flex;
+                align-items: center;
+                color: var(--material-theme-ref-neutral-neutral50, #757575);
+                overflow: hidden;
+
+                .progress-text-one {
+                    font-family: Roboto;
+                    font-size: 14px;
+                    font-style: normal;
+                    font-weight: 600;
+                    line-height: 18px;
+                    letter-spacing: -0.28px;
+                }
+
+                .progress-text-two {
+                    @include custom-font-size(600, 14px, b2-md, 18px, -0.28px);
+                }
+            }
+        }
+    }
+}
+
+.walk-controls-current-position-icon {
+    z-index: 1;
+    position: absolute;
+    top: 208px;
+    right: 4px;
+    @include inline-flexbox(center, center);
+}

@@ -7,7 +7,9 @@
     border-radius: 12px 12px 0px 0px;
     border-top: 1px solid var(--material-theme-ref-neutral-neutral95, #f0f0f0);
     box-sizing: border-box;
-    background: var(--wt-bk-white, #fff);
+    background-color: var(--wt-bk-white, #fff);
+    box-shadow: 0px -2px 8px 0px rgba(0, 0, 0, 0.1);
+    z-index: 2;
 
     .footer-item {
         box-sizing: border-box;

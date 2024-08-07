@@ -1,11 +1,32 @@
 @font-face {
     font-family: "Roboto";
     src: url("../../assets/Roboto-Thin.ttf") format("opentype");
-    unicode-range: U+1100-11FF, U+3130-318F, U+A960-A97F, U+AC00-D7A3, U+D7B0-D7FF;
+    unicode-range: U+0020-007F, U+1100-11FF, U+3130-318F, U+A960-A97F, U+AC00-D7A3, U+D7B0-D7FF;
+}
+
+@font-face {
+    font-family: "Roboto";
+    font-weight: 400;
+    src: url("../../assets/Roboto-Regular.ttf") format("truetype");
+    unicode-range: U+0020-007F, U+1100-11FF, U+3130-318F, U+A960-A97F, U+AC00-D7A3, U+D7B0-D7FF;
+}
+
+@font-face {
+    font-family: "Roboto";
+    font-weight: 500;
+    src: url("../../assets/Roboto-Medium.ttf") format("truetype");
+    unicode-range: U+0020-007F, U+1100-11FF, U+3130-318F, U+A960-A97F, U+AC00-D7A3, U+D7B0-D7FF;
+}
+
+@font-face {
+    font-family: "Roboto";
+    font-weight: 700;
+    src: url("../../assets/Roboto-Bold.ttf") format("truetype");
+    unicode-range: U+0020-007F, U+1100-11FF, U+3130-318F, U+A960-A97F, U+AC00-D7A3, U+D7B0-D7FF;
 }
 
 * {
-    font-family: "Pretendard";
+    font-family: "Roboto";
 }
 
 @media (min-width: 375px) {

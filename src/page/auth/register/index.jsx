@@ -3,7 +3,7 @@ import { ReactComponent as BackArrow } from "../../../assets/auth/register/BackA
 import StepOne from "./components/StepOne"
 import StepTwo from "./components/StepTwo"
 import StepThree from "./components/StepThree"
-import { Outlet, useNavigate } from "react-router-dom"
+import { Outlet, useNavigate, useLocation } from "react-router-dom"
 
 const ProgressBar = ({ step }) => {
   const progress = (step / 3) * 100
@@ -15,49 +15,58 @@ const ProgressBar = ({ step }) => {
 }
 
 const Register = () => {
-  const [step, setStep] = useState(1)
-  const [signupInfo, setSignupInfo] = useState({
-    email: "",
-    passWord: "",
-    confirmPassword: "",
-    nickname: "",
-  })
-  const [isFocused, setIsFocused] = useState(false)
-  const [nicknames] = useState(["김은진", "박준형"]) // Example existing nicknames
+  const location = useLocation()
   const navigate = useNavigate()
+  const [signupInfo, setSignupInfo] = useState(
+    location.state?.signupInfo || {
+      email: "",
+      password: "",
+      confirmPassword: "",
+      nickname: "",
+      height: 0,
+      weight: 0,
+      bmi: 0,
+      petInfos: [],
+      step: 1,
+    }
+  )
+  const [isFocused, setIsFocused] = useState(false)
 
   useEffect(() => {
-    if (
-      step > 3 &&
-      (!signupInfo.email || !signupInfo.passWord || !signupInfo.nickname)
-    ) {
-      navigate("/auth/register")
+    if (signupInfo.step <= 3) {
+      if (!signupInfo.email || !signupInfo.password || !signupInfo.nickname) {
+        navigate("/auth/register")
+      }
     }
-  }, [step, signupInfo, navigate])
+  }, [signupInfo, navigate])
 
   const backStep = () => {
-    if (step > 1) setStep(step - 1)
+    if (signupInfo.step > 1) {
+      setSignupInfo({ ...signupInfo, step: signupInfo.step - 1 })
+    } else if (signupInfo.step === 1) {
+      navigate("/auth/login")
+    }
   }
 
   const nextStep = () => {
-    if (step < 3) {
-      setStep(step + 1)
-    } else if (step === 3) {
-      setStep(step + 1)
-      navigate("/auth/register/info")
+    if (signupInfo.step < 3) {
+      setSignupInfo({ ...signupInfo, step: signupInfo.step + 1 })
+    } else if (signupInfo.step === 3) {
+      setSignupInfo({ ...signupInfo, step: signupInfo.step + 1 })
+      navigate("/auth/register/info", { state: { signupInfo } })
     }
   }
 
   return (
     <>
-      {step <= 3 ? (
+      {signupInfo.step <= 3 ? (
         <div className="auth-register-container">
           <BackArrow onClick={backStep} className="auth-register-back-button" />
           <div className="auth-register-progress-container">
-            <ProgressBar step={step} />
+            <ProgressBar step={signupInfo.step} />
           </div>
           <div>
-            {step === 1 && (
+            {signupInfo.step === 1 && (
               <StepOne
                 email={signupInfo.email}
                 setEmail={(email) => setSignupInfo({ ...signupInfo, email })}
@@ -66,11 +75,11 @@ const Register = () => {
                 setIsFocused={setIsFocused}
               />
             )}
-            {step === 2 && (
+            {signupInfo.step === 2 && (
               <StepTwo
-                passWord={signupInfo.passWord}
-                setPassWord={(passWord) =>
-                  setSignupInfo({ ...signupInfo, passWord })
+                password={signupInfo.password}
+                setPassword={(password) =>
+                  setSignupInfo({ ...signupInfo, password })
                 }
                 confirmPassword={signupInfo.confirmPassword}
                 setConfirmPassword={(confirmPassword) =>
@@ -81,13 +90,12 @@ const Register = () => {
                 setIsFocused={setIsFocused}
               />
             )}
-            {step === 3 && (
+            {signupInfo.step === 3 && (
               <StepThree
                 nickname={signupInfo.nickname}
                 setNickname={(nickname) =>
                   setSignupInfo({ ...signupInfo, nickname })
                 }
-                nicknames={nicknames}
                 isFocused={isFocused}
                 setIsFocused={setIsFocused}
                 nextStep={nextStep}
@@ -96,7 +104,7 @@ const Register = () => {
           </div>
         </div>
       ) : (
-        <Outlet context={signupInfo} />
+        <Outlet context={[signupInfo, setSignupInfo]} />
       )}
     </>
   )

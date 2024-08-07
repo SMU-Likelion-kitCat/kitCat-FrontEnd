@@ -1,19 +1,46 @@
-import React, { useEffect, useRef } from "react"
+import React, {
+  useEffect,
+  useImperativeHandle,
+  forwardRef,
+  useRef,
+} from "react"
 
-const KakaoMap = ({ location, path }) => {
-  const mapRef = useRef(null) // map 설정 저장 ref
-  const polylineRef = useRef(null) // 폴리라인 저장 ref
-  const markerRef = useRef(null) // map marker 위치 저장 ref
+const KakaoMap = forwardRef(
+  (
+    {
+      location,
+      path,
+      readWalkPath = false,
+      mapId,
+      recordWalkPath = false,
+      setLoading,
+    },
+    ref
+  ) => {
+    const mapRef = useRef(null)
+    const polylineRef = useRef(null)
+    const markerRef = useRef(null)
+    const startFlagRef = useRef(null)
 
-  // 마운트 될 때에만 적용
-  useEffect(() => {
-    const script = document.createElement("script")
-    const apiKey = process.env.REACT_APP_KAKAO_MAP_API_KEY
-    script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${apiKey}&autoload=false&libraries=services,clusterer,drawing`
-    script.async = true
-    script.onload = () => {
-      window.kakao.maps.load(() => {
-        const container = document.getElementById("map")
+    const userPingImageSrc = process.env.REACT_APP_USER_PING_SRC_URL
+    const startFlagImageSrc = process.env.REACT_APP_START_PING_SRC_URL
+
+    useImperativeHandle(ref, () => ({
+      centerMapOnCurrentLocation: () => {
+        if (mapRef.current) {
+          const map = mapRef.current
+          const latLng = new window.kakao.maps.LatLng(
+            location.latitude,
+            location.longitude
+          )
+          map.setCenter(latLng)
+        }
+      },
+    }))
+
+    useEffect(() => {
+      const initializeMap = () => {
+        const container = document.getElementById(mapId)
         const options = {
           center: new window.kakao.maps.LatLng(
             location.latitude,
@@ -21,66 +48,191 @@ const KakaoMap = ({ location, path }) => {
           ),
           level: 3,
         }
-        // 카카오맵 설정 적용
         const map = new window.kakao.maps.Map(container, options)
         mapRef.current = map
-        // 확대 불가
         map.setZoomable(false)
 
-        const marker = new window.kakao.maps.Marker({
-          position: new window.kakao.maps.LatLng(
-            location.latitude,
-            location.longitude
-          ),
-        })
-        marker.setMap(map)
-        markerRef.current = marker
+        const userPingImageSize = new window.kakao.maps.Size(46, 60)
+        const userPingImageOption = {
+          offset: new window.kakao.maps.Point(23, 60),
+        }
 
-        // linePath 위경도 정보를 path 속성에 적용하는 메서드
+        if (!readWalkPath) {
+          const userPingMarkerImage = new window.kakao.maps.MarkerImage(
+            userPingImageSrc,
+            userPingImageSize,
+            userPingImageOption
+          )
+
+          const marker = new window.kakao.maps.Marker({
+            position: new window.kakao.maps.LatLng(
+              location.latitude,
+              location.longitude
+            ),
+            image: userPingMarkerImage,
+          })
+          marker.setMap(map)
+          markerRef.current = marker
+        }
+
         const linePath = path.map(
           (loc) => new window.kakao.maps.LatLng(loc.latitude, loc.longitude)
         )
 
         const polyline = new window.kakao.maps.Polyline({
           path: linePath,
-          strokeWeight: 3,
-          strokeColor: "#FFAE00",
-          strokeOpacity: 1,
+          strokeWeight: 10,
+          strokeColor: "#00AF50",
+          strokeOpacity: 0.48,
           strokeStyle: "solid",
         })
 
-        // 폴리라인 그림
         polyline.setMap(map)
-
-        // 그려진 폴리라인 정보 저장
         polylineRef.current = polyline
-      })
-    }
-    // index.html의 header에 <script> 태그로 추가
-    document.head.appendChild(script)
-  }, [])
 
-  // 마운트와 path 속성이 변함에 따라
-  useEffect(() => {
-    // map이 렌더링 되었으면(ref의 존재 유무로 확인)
-    if (mapRef.current && polylineRef.current && markerRef.current) {
-      const newLinePath = path.map(
-        (loc) => new window.kakao.maps.LatLng(loc.latitude, loc.longitude)
-      )
-      polylineRef.current.setPath(newLinePath)
+        if (path.length > 0) {
+          const startFlagMarkerImage = new window.kakao.maps.MarkerImage(
+            startFlagImageSrc,
+            userPingImageSize,
+            userPingImageOption
+          )
 
-      const lastLocation = path[path.length - 1] // path 배열의 마지막 위경도
-      const markerPosition = new window.kakao.maps.LatLng(
-        lastLocation.latitude,
-        lastLocation.longitude
-      )
-      markerRef.current.setPosition(markerPosition)
+          const startFlag = new window.kakao.maps.Marker({
+            position: new window.kakao.maps.LatLng(
+              path[0].latitude,
+              path[0].longitude
+            ),
+            image: startFlagMarkerImage,
+          })
+          startFlag.setMap(map)
+          startFlagRef.current = startFlag
+        }
 
-      mapRef.current.setCenter(markerPosition)
-    }
-  }, [path])
+        // 맵이 로딩된 후 idle 이벤트를 감지하여 setLoading(false) 호출
+        window.kakao.maps.event.addListener(map, "idle", () => {
+          if (setLoading) {
+            setLoading(false)
+          }
+          console.log("맵 로딩 완료")
+        })
+      }
 
-  return <div id="map" style={{ width: "100%", height: "500px" }}></div>
-}
+      const historyWalkMap = () => {
+        if (!path || path.length === 0) {
+          console.error("기록된 경로가 없음")
+          return
+        }
 
-export default KakaoMap
+        const container = document.getElementById(mapId)
+        const options = {
+          center: new window.kakao.maps.LatLng(
+            path[0].latitude,
+            path[0].longitude
+          ),
+          level: 4,
+        }
+        const map = new window.kakao.maps.Map(container, options)
+        mapRef.current = map
+        map.setZoomable(false)
+
+        const userPingImageSize = new window.kakao.maps.Size(46, 60)
+        const userPingImageOption = {
+          offset: new window.kakao.maps.Point(23, 60),
+        }
+
+        const startFlagImageSize = new window.kakao.maps.Size(32, 32)
+        const startFlagImageOption = {
+          offset: new window.kakao.maps.Point(16, 32),
+        }
+
+        const startFlagMarkerImage = new window.kakao.maps.MarkerImage(
+          startFlagImageSrc,
+          startFlagImageSize,
+          startFlagImageOption
+        )
+
+        if (!startFlagRef.current) {
+          const startFlag = new window.kakao.maps.Marker({
+            position: new window.kakao.maps.LatLng(
+              path[0].latitude,
+              path[0].longitude
+            ),
+            image: startFlagMarkerImage,
+          })
+          startFlag.setMap(map)
+          startFlagRef.current = startFlag
+        }
+
+        const linePath = path.map(
+          (loc) => new window.kakao.maps.LatLng(loc.latitude, loc.longitude)
+        )
+
+        const polyline = new window.kakao.maps.Polyline({
+          path: linePath,
+          strokeWeight: 10,
+          strokeColor: "#00AF50",
+          strokeOpacity: 0.48,
+          strokeStyle: "solid",
+        })
+
+        polyline.setMap(map)
+        polylineRef.current = polyline
+
+        const lastLocation = path[path.length - 1]
+
+        const userPingMarkerImage = new window.kakao.maps.MarkerImage(
+          userPingImageSrc,
+          userPingImageSize,
+          userPingImageOption
+        )
+
+        const marker = new window.kakao.maps.Marker({
+          position: new window.kakao.maps.LatLng(
+            lastLocation.latitude,
+            lastLocation.longitude
+          ),
+          image: userPingMarkerImage,
+        })
+        marker.setMap(map)
+        markerRef.current = marker
+      }
+
+      const loadKakaoMaps = (callback) => {
+        if (!window.kakao) {
+          const script = document.createElement("script")
+          const apiKey = process.env.REACT_APP_KAKAO_MAP_API_KEY
+          script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${apiKey}&autoload=false&libraries=services,clusterer,drawing`
+          script.async = true
+          script.onload = () => {
+            window.kakao.maps.load(callback)
+          }
+          document.head.appendChild(script)
+        } else {
+          window.kakao.maps.load(callback)
+        }
+      }
+
+      loadKakaoMaps(readWalkPath ? historyWalkMap : initializeMap)
+    }, [location, path, readWalkPath, mapId, setLoading])
+
+    useEffect(() => {
+      if (startFlagRef.current && path.length > 0) {
+        startFlagRef.current.setPosition(
+          new window.kakao.maps.LatLng(path[0].latitude, path[0].longitude)
+        )
+      }
+    }, [path])
+
+    return (
+      <div
+        id={mapId}
+        style={{
+          width: "100%",
+          height: readWalkPath ? (recordWalkPath ? "144px" : "230px") : "100%",
+        }}
+      />
+    )
+  }
+)
+
+export default React.memo(KakaoMap)
